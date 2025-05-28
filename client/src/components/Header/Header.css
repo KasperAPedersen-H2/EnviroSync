@@ -1,47 +1,28 @@
-/* Header styling */
-.header {
-    background-color: #1565c0; /* Primær blå farve */
-    color: white;
-    padding: 15px 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-/* Flex container for header-indhold */
-.header-container {
+header {
+    border: 1px solid red;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    height: var(--headerHeight);
+    padding: 0 15px;
 }
 
-/* Titel styling */
-.header-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
+header .name {
+    width: 20%;
 }
 
-/* Navigation styling */
-.header-nav .header-menu {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
+header nav {
+    width: 70%;
+    text-align: center;
 }
 
-.header-nav .header-link {
+header nav a {
     text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    transition: color 0.2s;
+    color: black;
+    margin: 0 10px;
 }
 
-.header-nav .header-link:hover {
-    color: #64b5f6; /* Lys blå farve ved hover */
+header .welcome {
+    width: 10%;
+    text-align: right;
 }

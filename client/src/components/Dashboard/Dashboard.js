@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import useSessionCheck from "../../hooks/useSessionCheck";
-import Header from '../Header/Header';
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");
@@ -39,14 +38,11 @@ const Dashboard = () => {
 
     return (
         <>
-            <Header />
-            <div>
+            <section>
                 <h2>Dashboard</h2>
                 <p>Velkommen, {username}!</p>
-                <button onClick={handleLogout}>Logout</button>
-            </div>
+            </section>
         </>
-
     );
 };
 
