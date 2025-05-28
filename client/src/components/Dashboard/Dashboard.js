@@ -33,7 +33,6 @@ const Dashboard = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        alert("Du er logget ud.");
         window.location.href = "/login"; // Navigér væk
     };
 
