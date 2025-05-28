@@ -4,18 +4,47 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import SessionProvider from "./context/SessionProvider";
-import Header from "./components/Header/Header"; // Importerer Header-komponenten
+import SessionProvider, { useSession } from "./context/SessionProvider";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar"
 
 function App() {
-    return (
-        <SessionProvider>
-            <Router>
+    const AppContent = () => {
+        const session = useSession(); // Henter session ved hjælp af hook
+
+        if(session.session?.id) {
+            return (
+                <>
+                    <Sidebar />
+                    <main>
+                        <Header />
+                        <section className="dashboard-container">
+                            <Routes>
+                                <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+                                <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>test</h1>} />} />
+                            </Routes>
+                        </section>
+
+                    </main>
+                </>
+            );
+        }
+
+        return (
+            <>
                 <Routes>
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
                 </Routes>
+            </>
+        );
+    };
+
+    return (
+        <SessionProvider>
+            <Router>
+                <AppContent />
             </Router>
         </SessionProvider>
     );
