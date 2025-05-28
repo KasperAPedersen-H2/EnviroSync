@@ -1,0 +1,49 @@
+.register-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3f2fd;
+}
+
+.register-container .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 50%;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.register-container .card form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.register-container input,
+.register-container button {
+    padding: 10px 15px;
+    border: transparent;
+    border-left: 3px solid #CAE5FF;
+}
+
+.register-container button {
+    background-color: #CAE5FF;
+    color: #000;
+    cursor: pointer;
+}
+
+.register-container .register-title,
+.register-container .login-link {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.register-container .login-link {
+    font-size: 0.8rem;
+}
+
+.register-container .login-link a {
+    text-decoration: none;
+}

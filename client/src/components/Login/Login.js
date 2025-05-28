@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../context/SessionProvider";
 import { jwtDecode } from "jwt-decode";
+import "./Login.css"; // Import CSS-fil
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -23,7 +24,6 @@ const Login = () => {
                 const data = await response.json();
                 localStorage.setItem("token", data.token); // Gem token i localStorage
                 setSession(jwtDecode(data.token)); // Dekod token og opdater session
-                alert("Login successful!");
                 navigate("/dashboard");
             } else {
                 alert("Login failed! Check your credentials.");
@@ -34,26 +34,31 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
-            </form>
-        </div>
+        <section className="login-container">
+            <article className="card">
+                <h2 className="login-title">Login</h2>
+                <form onSubmit={handleLogin} className="login-form">
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="login-input"
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="login-input"
+                        required
+                    />
+                    <button type="submit" className="login-button">Login</button>
+                </form>
+                <p className="register-link" >Don't have an account? <a href="/register">Sign up</a></p>
+            </article>
+        </section>
     );
 };
 

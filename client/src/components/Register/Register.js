@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./Register.css"; // Import af CSS-fil
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -17,7 +18,6 @@ const Register = () => {
             });
 
             if (response.ok) {
-                alert("Bruger registreret! Du kan nu logge ind.");
                 navigate("/login");
             } else {
                 alert("Registrering fejlede! Prøv igen.");
@@ -28,26 +28,31 @@ const Register = () => {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Register</button>
-            </form>
-        </div>
+        <section className="register-container">
+            <article className="card">
+                <h2 className="register-title">Register</h2>
+                <form onSubmit={handleRegister} className="register-form">
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        className="register-input"
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="register-input"
+                        required
+                    />
+                    <button type="submit" className="register-button">Register</button>
+                </form>
+                <p className="login-link">Already have an account? <a href="/login">Login</a></p>
+            </article>
+        </section>
     );
 };
 
