@@ -1,24 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import { useSession } from "./SessionProvider";
+import useSessionCheck from "../../hooks/useSessionCheck";
 
 const Dashboard = () => {
     const [username, setUsername] = useState("");
-    const { session } = useSession(); // Hent session med id og username
-    const navigate = useNavigate();
+    const session = useSessionCheck(); // Tjek session via hook
 
     useEffect(() => {
         const fetchDashboardData = async () => {
-            if (!session || !session.id) {
-                alert("Ingen login-session. Du bliver videresendt til login.");
-                navigate("/login");
-                return;
-            }
-
             try {
-                // Eksempel: Hent brugerdata fra API med `id`
-                const response = await fetch(`http://localhost:5000/user/${session.id}`, {
+                // Hent brugerdata fra API med brugerens id
+                const response = await fetch(`http://localhost:5000/user/${session?.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`, // Inkludér token
                     },
@@ -26,7 +17,7 @@ const Dashboard = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setUsername(data.username); // Opdater brugernavn med svar
+                    setUsername(data.username);
                 } else {
                     alert("Kan ikke hente data. Prøv igen.");
                 }
@@ -35,13 +26,15 @@ const Dashboard = () => {
             }
         };
 
-        fetchDashboardData();
-    }, [navigate, session]);
+        if (session?.id) {
+            fetchDashboardData(); // Kun kald, hvis session.id er til stede
+        }
+    }, [session]);
 
     const handleLogout = () => {
         localStorage.removeItem("token");
         alert("Du er logget ud.");
-        navigate("/login");
+        window.location.href = "/login"; // Navigér væk
     };
 
     return (

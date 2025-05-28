@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useSession } from "./SessionProvider";
+import { useSession } from "../../context/SessionProvider";
 
 const ProtectedRoute = ({ element }) => {
     const { session } = useSession();
