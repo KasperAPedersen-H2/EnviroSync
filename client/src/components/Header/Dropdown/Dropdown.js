@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
-import { AccountCircle, Settings, Logout } from "@mui/icons-material"; // Importer MUI-ikoner
+import { AccountCircle, Settings, Logout } from "@mui/icons-material";
 import "./Dropdown.css";
 
 const Dropdown = ({ username }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const dropdownRef = useRef(null); // Reference til dropdown-menuen
+    const dropdownRef = useRef(null);
 
-    // Funktion til at åbne/lukke dropdown via klik
     const toggleDropdown = () => {
         setDropdownVisible((prevVisible) => !prevVisible);
     };
 
-    // Funktion til at lukke dropdown ved klik udenfor
     const handleOutsideClick = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setDropdownVisible(false);
         }
     };
 
-    // Registrer/meld fra på event listener for klik
     useEffect(() => {
         if (dropdownVisible) {
             document.addEventListener("mousedown", handleOutsideClick);
@@ -26,7 +23,6 @@ const Dropdown = ({ username }) => {
             document.removeEventListener("mousedown", handleOutsideClick);
         }
 
-        // Rens op ved unmount
         return () => {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
@@ -34,7 +30,7 @@ const Dropdown = ({ username }) => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        window.location.href = "/login"; // Navigér væk
+        window.location.href = "/login";
     };
 
     return (
