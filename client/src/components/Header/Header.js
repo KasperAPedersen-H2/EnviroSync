@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useSessionCheck from "../../hooks/useSessionCheck";
 
+import Dropdown from "./Dropdown/Dropdown";
 import "./Header.css"; // Importerer styling
 
 const Header = () => {
@@ -33,22 +34,13 @@ const Header = () => {
         }
     }, [session]);
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        window.location.href = "/login"; // Navigér væk
-    };
-
     return (
         <header>
             <section className="name">
                 <h2>EnviroSync</h2>
             </section>
-            <nav>
-                <a href="#">Home</a>
-                <a href="#" onClick={handleLogout}>Logout</a>
-            </nav>
             <section className="welcome">
-                <p>{ username }</p>
+                <Dropdown username={username} />
             </section>
         </header>
     );

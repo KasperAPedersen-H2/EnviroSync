@@ -8,21 +8,10 @@ header {
 }
 
 header .name {
-    width: 20%;
-}
-
-header nav {
-    width: 70%;
-    text-align: center;
-}
-
-header nav a {
-    text-decoration: none;
-    color: black;
-    margin: 0 10px;
+    width: calc(100% - 50px);
 }
 
 header .welcome {
-    width: 10%;
+    width: 50px;
     text-align: right;
 }
