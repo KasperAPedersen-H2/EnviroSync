@@ -1,36 +1,23 @@
-
-import React from 'react';
-import {
-  Container,
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box
-} from '@mui/material';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import SessionProvider from "./components/SessionProvider";
 
 function App() {
-  return (
-      <div>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Min MUI App
-            </Typography>
-            <Button color="inherit">Login</Button>
-          </Toolbar>
-        </AppBar>
-
-        <Container maxWidth="sm">
-          <Box sx={{ my: 4 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Velkommen til min React MUI app
-            </Typography>
-            <Button variant="contained">Klik mig</Button>
-          </Box>
-        </Container>
-      </div>
-  );
+    return (
+        <SessionProvider>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+                </Routes>
+            </Router>
+        </SessionProvider>
+    );
 }
 
 export default App;
