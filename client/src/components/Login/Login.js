@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "../../context/SessionProvider";
 import { jwtDecode } from "jwt-decode";
+import { useAlert } from "../../context/AlertContext";
 import "./Login.css"; // Import CSS-fil
 
 const Login = () => {
@@ -9,6 +10,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const { setSession } = useSession();
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -26,12 +29,20 @@ const Login = () => {
                 setSession(jwtDecode(data.token)); // Dekod token og opdater session
                 navigate("/dashboard");
             } else {
-                alert("Login failed! Check your credentials.");
+                showAlert("error", "Login failed!");
+
+                document.querySelectorAll(".login-input").forEach((element) => element.classList.add("login-error"));
+                document.querySelector(".login-input").focus();
+                setPassword("");
             }
         } catch (error) {
             console.error("Error:", error);
         }
     };
+
+    document.querySelectorAll(".login-input").forEach((element) => element.addEventListener("change", (e) => {
+        e.target.classList.remove("login-error");
+    }));
 
     return (
         <section className="login-container">

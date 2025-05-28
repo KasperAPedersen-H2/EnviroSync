@@ -11,7 +11,7 @@ const authenticateToken = (req, res, next) => {
         return res.status(401).json({ message: "Access denied. No token provided." });
     }
 
-    const token = authHeader.split(" ")[1]; // Fjern "Bearer " og få selve token
+    const token = authHeader.split(" ")[1]; // Fjern "Bearer" og få selve token
     try {
         // Verificér token
         const decoded = jwt.verify(token, JWT_SECRET);

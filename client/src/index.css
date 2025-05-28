@@ -24,4 +24,5 @@
     height: calc(100vh - var(--headerHeight));
     padding: 15px;
     background-color: #EFEFEF;
+    position: relative;
 }

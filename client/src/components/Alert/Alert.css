@@ -1,0 +1,28 @@
+.alert-container {
+    position: absolute;
+    width: 300px;
+    top: 15px;
+    right: 15px;
+    z-index: 999;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.alert {
+    color: #fff;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 15px;
+    animation: fadeIn 0.5s ease;
+    border-radius: 5px;
+}
+
+.alert.success { background-color: #51b751; }
+.alert.error   { background-color: #f44336; }
+.alert.info    { background-color: #2196f3; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-16px);}
+    to   { opacity: 1; transform: translateY(0);}
+}
