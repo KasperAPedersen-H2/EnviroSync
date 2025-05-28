@@ -1,5 +1,5 @@
 :root {
-    --headerHeight: 50px;
+    --headerHeight: 75px;
     --sidebarWidth: 200px;
 }
 
@@ -22,6 +22,6 @@
 
 #root .dashboard-container {
     height: calc(100vh - var(--headerHeight));
-    border: 1px solid red;
     padding: 15px;
+    background-color: #EFEFEF;
 }
