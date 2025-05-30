@@ -3,7 +3,9 @@ import "./ProfileDashboard.css"; // Import af CSS-fil
 
 const ProfileDashboard = () => {
     return (
-        <h1>Profile</h1>
+        <>
+            <h1>Profile dashboard</h1>
+        </>
     );
 };
 
