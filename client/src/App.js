@@ -26,7 +26,6 @@ function App() {
                                     <Route path="/dashboard" element={<ProtectedRoute element={<h1>Dashboard 1</h1>} />} />
                                     <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
                                     <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-
                                 </Routes>
                             </section>
 
@@ -40,9 +39,12 @@ function App() {
             <>
                 <AlertProvider>
                     <Routes>
+                        <Route path="/" element={<Login />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/dashboard" element={<ProtectedRoute />} />
+                        <Route path="/dashboard-test" element={<ProtectedRoute />} />
+                        <Route path="/profile" element={<ProtectedRoute />} />
                     </Routes>
                 </AlertProvider>
             </>
