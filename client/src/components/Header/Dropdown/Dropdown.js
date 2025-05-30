@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { AccountCircle, Settings, Logout } from "@mui/icons-material";
 import "./Dropdown.css";
 
@@ -39,18 +40,20 @@ const Dropdown = ({ username }) => {
             <div className={`dropdown-menu ${dropdownVisible ? "visible" : ""}`}>
                 <h3>Welcome, {username}</h3>
                 <nav>
-                    <a href="#">
+                    <Link to="#">
                         <AccountCircle />
                         Account
-                    </a>
-                    <a href="#">
+                    </Link>
+
+                    <Link to="#">
                         <Settings />
                         Settings
-                    </a>
-                    <a href="#" onClick={handleLogout}>
+                    </Link>
+
+                    <Link to="#" onClick={handleLogout}>
                         <Logout />
                         Logout
-                    </a>
+                    </Link>
                 </nav>
             </div>
         </div>
