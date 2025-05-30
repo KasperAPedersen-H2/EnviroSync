@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../context/SessionProvider";
 import { jwtDecode } from "jwt-decode";
 import { useAlert } from "../../context/AlertContext";
@@ -47,7 +47,7 @@ const Login = () => {
     return (
         <section className="login-container">
             <article className="card">
-                <h2 className="login-title">Login</h2>
+                <img src="logo.png" alt="EnviroSync Logo"/>
                 <form onSubmit={handleLogin} className="login-form">
                     <input
                         type="text"
@@ -67,7 +67,7 @@ const Login = () => {
                     />
                     <button type="submit" className="login-button">Login</button>
                 </form>
-                <p className="register-link" >Don't have an account? <a href="/register">Sign up</a></p>
+                <p className="register-link" >Don't have an account? <Link to="/register">Sign up</Link></p>
             </article>
         </section>
     );

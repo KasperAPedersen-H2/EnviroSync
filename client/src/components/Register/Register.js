@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Register.css"; // Import af CSS-fil
 
 const Register = () => {
@@ -30,7 +30,7 @@ const Register = () => {
     return (
         <section className="register-container">
             <article className="card">
-                <h2 className="register-title">Register</h2>
+                <img src="logo.png" alt="EnviroSync Logo"/>
                 <form onSubmit={handleRegister} className="register-form">
                     <input
                         type="text"
@@ -50,7 +50,7 @@ const Register = () => {
                     />
                     <button type="submit" className="register-button">Register</button>
                 </form>
-                <p className="login-link">Already have an account? <a href="/login">Login</a></p>
+                <p className="login-link">Already have an account? <Link to="/login">Login</Link></p>
             </article>
         </section>
     );

@@ -8,6 +8,7 @@ import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar"
+import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 
 function App() {
     const AppContent = () => {
@@ -24,6 +25,8 @@ function App() {
                                 <Routes>
                                     <Route path="/dashboard" element={<ProtectedRoute element={<h1>Dashboard 1</h1>} />} />
                                     <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
+                                    <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
+
                                 </Routes>
                             </section>
 
