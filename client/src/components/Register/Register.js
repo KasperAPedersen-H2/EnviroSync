@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAlert } from "../../context/AlertContext";
 import "./Register.css"; // Import af CSS-fil
 
 const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const { showAlert } = useAlert();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ const Register = () => {
             if (response.ok) {
                 navigate("/login");
             } else {
-                alert("Registrering fejlede! Prøv igen.");
+                showAlert("error", "Registrering fejlede! Prøv igen.");
             }
         } catch (error) {
             console.error("Fejl:", error);

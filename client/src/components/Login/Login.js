@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSession } from "../../context/SessionProvider";
 import { jwtDecode } from "jwt-decode";
-import { useAlert } from "../../context/AlertContext";
+import {useAlert} from "../../context/AlertContext";
 import "./Login.css"; // Import CSS-fil
 
 const Login = () => {
