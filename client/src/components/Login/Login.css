@@ -1,5 +1,6 @@
 :root {
     --border-color: #CAE5FF;
+    --loginWidth: 25%;
 }
 
 .login-container {
@@ -13,10 +14,16 @@
 
 .login-container .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    width: 50%;
+    width: var(--loginWidth);
     padding: 15px;
     background-color: #fff;
     border-radius: 5px;
+}
+
+.login-container .card img {
+    width: var(--sidebarWidth);
+    display: flex;
+    justify-self: center;
 }
 
 .login-container .card form {

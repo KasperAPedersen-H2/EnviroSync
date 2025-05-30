@@ -40,7 +40,7 @@ const Dropdown = ({ username }) => {
             <div className={`dropdown-menu ${dropdownVisible ? "visible" : ""}`}>
                 <h3>Welcome, {username}</h3>
                 <nav>
-                    <Link to="#">
+                    <Link to="/profile">
                         <AccountCircle />
                         Account
                     </Link>
