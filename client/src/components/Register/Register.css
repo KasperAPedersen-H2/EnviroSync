@@ -28,6 +28,14 @@
     border-left: 3px solid #CAE5FF;
 }
 
+.register-container input {
+    outline: none;
+}
+
+.register-container input:focus {
+    border-left: 3px solid #46afff;
+}
+
 .register-container button {
     background-color: #CAE5FF;
     color: #000;
