@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard"; // Importer Dashboard-ikonet
 import "./Sidebar.css"; // Import af CSS-fil
 
@@ -9,14 +10,14 @@ const Sidebar = () => {
                 <img src="logo.png" alt="EnviroSync Logo"/>
             </section>
             <nav className="sidebar-nav">
-                <a href="/dashboard" className="sidebar-link">
+                <Link to="/dashboard" className="sidebar-link">
                     <DashboardIcon />
                     Dashboard
-                </a>
-                <a href="/dashboard-test" className="sidebar-link">
+                </Link>
+                <Link to="/profile" className="sidebar-link">
                     <DashboardIcon />
                     Test
-                </a>
+                </Link>
             </nav>
         </aside>
     );
