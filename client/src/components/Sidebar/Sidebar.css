@@ -9,6 +9,16 @@ aside .sidebar-title {
     text-align: center;
 }
 
+aside .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+aside img {
+    width: 75%;
+}
+
 aside nav {
     display: flex;
     flex-direction: column;

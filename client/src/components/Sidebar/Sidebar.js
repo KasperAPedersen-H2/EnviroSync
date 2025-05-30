@@ -5,7 +5,9 @@ import "./Sidebar.css"; // Import af CSS-fil
 const Sidebar = () => {
     return (
         <aside className="sidebar">
-            <h2 className="sidebar-title">:)</h2>
+            <section className="logo">
+                <img src="logo.png" alt="EnviroSync Logo"/>
+            </section>
             <nav className="sidebar-nav">
                 <a href="/dashboard" className="sidebar-link">
                     <DashboardIcon />
