@@ -147,5 +147,5 @@ For at køre projektet, vær sikker på at følgende er installeret:
 
 Hvis du har spørgsmål eller forslag, er du velkommen til at kontakte projektteamet.
 
-- **Email**: [team@envirosync.com](mailto:kasper@launchify.dk)
+- **Email**: [kasper@launchify.dk](mailto:kasper@launchify.dk)
 - **GitHub Repository**: [EnviroSync på GitHub](#)
