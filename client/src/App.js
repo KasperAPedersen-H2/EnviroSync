@@ -12,7 +12,7 @@ import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 
 function App() {
     const AppContent = () => {
-        const session = useSession(); // Henter session ved hjælp af hook
+        const session = useSession();
 
         if(session.session?.id) {
             return (

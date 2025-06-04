@@ -1,5 +1,4 @@
 import { Router } from "express";
-import Models from "../orm/models.js";
 
 const router = Router();
 
