@@ -17,7 +17,7 @@ app.use(Express.json());
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
-app.use("/user", userRoute);
-app.use(apiRoute);
+app.use("/user", authenticateToken, userRoute);
+app.use("/api", apiRoute);
 
 app.listen(5000, (e) => console.log(e ? e : 'Server started'));

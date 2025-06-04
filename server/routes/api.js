@@ -3,7 +3,7 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
-router.post('/api/data', async (req, res) => {
+router.post('/data', async (req, res) => {
     console.log('Raw body:', req.body);
     res.end();
 })
