@@ -9,68 +9,98 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e3f2fd;
+    background-color: var(--light-bg);
+    background-image: linear-gradient(135deg, rgba(79, 176, 198, 0.1) 0%, rgba(79, 134, 198, 0.1) 100%)
 }
 
 .login-container .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     width: var(--loginWidth);
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 5px;
+    padding: 25px;
+    background-color: var(--white);
+    border-radius: 8px;
+    border-top: 4px solid var(--moonstone);
 }
 
 .login-container .card img {
     width: var(--sidebarWidth);
     display: flex;
     justify-self: center;
+    margin: 0 auto 20px;
 }
 
 .login-container .card form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 15px;
 }
 
 .login-container input,
 .login-container button {
-    padding: 10px 15px;
-    border: transparent;
-    border-left: 3px solid var(--border-color);
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 .login-container input {
+    border-left: 3px solid var(--silver-lake-blue);
     outline: none;
+    background-color: rgba(79, 134, 198, 0.05);
 }
 
 .login-container input:focus {
-    --border-color:  #46afff;
+    border-left: 3px solid var(--moonstone);
+    box-shadow: 0 0 0 2px rgba(79, 176, 198, 0.2);
 }
 
 .login-container .login-error {
-    --border-color: #ff9595;
+    border-left: 3px solid var(--error-light);
+    background-color: rgba(255, 149, 149, 0.05);
 }
 
 .login-container .login-error:focus {
-    --border-color: #ff3636;
+    border-left: 3px solid var(--error-dark);
+    box-shadow: 0 0 0 2px rgba(255, 54, 54, 0.2);
 }
 
 .login-container button {
-    background-color: #CAE5FF;
-    color: #000;
+    background-color: var(--moonstone);
+    color: var(--white);
     cursor: pointer;
+    border: none;
+    font-weight: 500;
+    margin-top: 5px;
 }
 
-.login-container .login-title,
+.login-container button:hover {
+    background-color: var(--dark-cyan);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .login-container .register-link {
-    margin: 15px 0;
+    margin: 20px 0 0;
     text-align: center;
-}
-
-.login-container .register-link {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-dark);
 }
 
 .login-container .register-link a {
     text-decoration: none;
+    color: var(--silver-lake-blue);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.login-container .register-link a:hover {
+    color: var(--dark-cyan);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .login-container .card {
+        width: 80%;
+        max-width: 400px;
+    }
 }

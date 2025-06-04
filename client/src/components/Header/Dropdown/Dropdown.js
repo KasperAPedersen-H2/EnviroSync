@@ -41,17 +41,17 @@ const Dropdown = ({ username }) => {
                 <h3>Welcome, {username}</h3>
                 <nav>
                     <Link to="/profile">
-                        <AccountCircle />
+                        <AccountCircle className="nav-icon" />
                         Account
                     </Link>
 
                     <Link to="#">
-                        <Settings />
+                        <Settings className="nav-icon" />
                         Settings
                     </Link>
 
                     <Link to="#" onClick={handleLogout}>
-                        <Logout />
+                        <Logout className="nav-icon" />
                         Logout
                     </Link>
                 </nav>

@@ -1,0 +1,42 @@
+https://coolors.co/visualizer/17301c-379392-4fb0c6-4f86c6
+
+/* CSS HEX */
+--dark-green: #17301cff;
+--dark-cyan: #379392ff;
+--moonstone: #4fb0c6ff;
+--silver-lake-blue: #4f86c6ff;
+
+/* CSS HSL */
+--dark-green: hsla(132, 35%, 14%, 1);
+--dark-cyan: hsla(179, 46%, 40%, 1);
+--moonstone: hsla(191, 51%, 54%, 1);
+--silver-lake-blue: hsla(212, 51%, 54%, 1);
+
+/* SCSS HEX */
+$dark-green: #17301cff;
+$dark-cyan: #379392ff;
+$moonstone: #4fb0c6ff;
+$silver-lake-blue: #4f86c6ff;
+
+/* SCSS HSL */
+$dark-green: hsla(132, 35%, 14%, 1);
+$dark-cyan: hsla(179, 46%, 40%, 1);
+$moonstone: hsla(191, 51%, 54%, 1);
+$silver-lake-blue: hsla(212, 51%, 54%, 1);
+
+/* SCSS RGB */
+$dark-green: rgba(23, 48, 28, 1);
+$dark-cyan: rgba(55, 147, 146, 1);
+$moonstone: rgba(79, 176, 198, 1);
+$silver-lake-blue: rgba(79, 134, 198, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-right: linear-gradient(90deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-bottom: linear-gradient(180deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-left: linear-gradient(270deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-top-right: linear-gradient(45deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-bottom-right: linear-gradient(135deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-top-left: linear-gradient(225deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-bottom-left: linear-gradient(315deg, #17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
+$gradient-radial: radial-gradient(#17301cff, #379392ff, #4fb0c6ff, #4f86c6ff);
