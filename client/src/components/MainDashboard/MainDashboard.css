@@ -15,7 +15,6 @@
 .dashboard-container .live .card p:nth-child(2) {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 15px;
 }
 
 .dashboard-container .live .card:nth-child(1) {
