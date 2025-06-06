@@ -26,6 +26,10 @@ let Data = sequelize.define('data', {
     pressure: {
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    tvoc: {
+        type: DataTypes.FLOAT,
+        allowNull: false
     }
 }, {
     tableName: 'data',

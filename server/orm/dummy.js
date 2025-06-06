@@ -36,9 +36,9 @@ const Dummy = async () => {
         console.log('Devices added!');
 
         await Models.Data.bulkCreate([
-            { device_id: devices[0].id, temperature: 22.5, humidity: 45, pressure: 1013 },
-            { device_id: devices[1].id, temperature: 19.0, humidity: 55, pressure: 1015 },
-            { device_id: devices[2].id, temperature: 25.0, humidity: 60, pressure: 1012 }
+            { device_id: devices[0].id, temperature: 22.5, humidity: 45, pressure: 1013, tvoc: 150 },
+            { device_id: devices[1].id, temperature: 19.0, humidity: 55, pressure: 1015, tvoc: 185 },
+            { device_id: devices[2].id, temperature: 25.0, humidity: 60, pressure: 1012, tvoc: 200 }
         ]);
 
         console.log('Sensor data added!');
