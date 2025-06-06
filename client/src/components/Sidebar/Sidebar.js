@@ -14,7 +14,7 @@ const Sidebar = () => {
                     <DashboardIcon />
                     Dashboard
                 </Link>
-                <Link to="/profile" className="sidebar-link">
+                <Link to="/dashboard-test" className="sidebar-link">
                     <DashboardIcon />
                     Test
                 </Link>
