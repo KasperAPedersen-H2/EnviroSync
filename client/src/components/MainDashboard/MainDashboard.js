@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./MainDashboard.css";
 import { useRoomDevice } from "../../context/RoomDeviceContext";
+import HistoricChart from "./HistoricChart/HistoricChart";
+import DeviceChat from "./DeviceChat/DeviceChat";
 
 const MainDashboard = () => {
-    const { selectedRoom, selectedDevice } = useRoomDevice();
+    const { selectedDevice } = useRoomDevice();
     const [ liveData, setLiveData ] = useState(null);
+    const [ selectedDataType, setSelectedDataType ] = useState("temperature");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,26 +35,39 @@ const MainDashboard = () => {
         }
     }, [selectedDevice]);
 
+    const handleCardClick = (type) => {
+        setSelectedDataType(type);
+    }
+
     return (
         <>
             <section className="live">
-                {console.log(liveData)}
-                <article className="card">
+                <article className="card" onClick={() => handleCardClick("temperature")}>
                     <p>Temperature</p>
-                    <p>{ liveData && liveData.temperature }</p>
+                    <p>{liveData && liveData.temperature}</p>
                 </article>
 
-                <article className="card">
+                <article className="card" onClick={() => handleCardClick("humidity")}>
                     <p>Humidity</p>
-                    <p>{ liveData && liveData.humidity }</p>
+                    <p>{liveData && liveData.humidity}</p>
                 </article>
 
-                <article className="card">
+                <article className="card" onClick={() => handleCardClick("pressure")}>
                     <p>Pressure</p>
-                    <p>{ liveData && liveData.pressure }</p>
+                    <p>{liveData && liveData.pressure}</p>
                 </article>
 
+                <article className="card" onClick={() => handleCardClick("tvoc")}>
+                    <p>TVOC (ppb)</p>
+                    <p>{liveData && liveData.tvoc}</p>
+                </article>
             </section>
+
+            <section className="other">
+                <HistoricChart deviceId={selectedDevice} selectedDataType={selectedDataType} />
+                <DeviceChat deviceId={selectedDevice} />
+            </section>
+
         </>
     );
 };

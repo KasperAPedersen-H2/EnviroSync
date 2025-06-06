@@ -3,7 +3,7 @@ import Models from './models.js';
 
 const Dummy = async () => {
     try {
-        if(await Models.Users.count() > 0) return;
+        if (await Models.Users.count() > 0) return;
 
         const usersData = [
             { username: 'user1', password: 'password1' },
@@ -42,9 +42,19 @@ const Dummy = async () => {
         ]);
 
         console.log('Sensor data added!');
+
+        await Models.Messages.bulkCreate([
+            { user_id: users[0].id, device_id: devices[0].id, text: 'Temperature is high in the Living Room.', createdAt: new Date() },
+            { user_id: users[1].id, device_id: devices[1].id, text: 'Light levels are normal in the Bedroom.', createdAt: new Date() },
+            { user_id: users[2].id, device_id: devices[2].id, text: 'Humidity is optimal in the Kitchen.', createdAt: new Date() },
+            { user_id: users[0].id, device_id: devices[0].id, text: 'Pressure levels are stable.', createdAt: new Date() },
+            { user_id: users[1].id, device_id: devices[1].id, text: 'TVOC levels are slightly above average.', createdAt: new Date() }
+        ]);
+
+        console.log('Messages added!');
     } catch (err) {
         console.error('Error seeding database:', err);
     }
-};
+}
 
 export default Dummy;
