@@ -2,18 +2,13 @@ header {
     background-color: #fff;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     height: var(--headerHeight);
-    padding: 0 20px;
-    border-bottom: 2px solid #e5e5e5;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 0 15px;
 }
 
 header nav {
-    display: flex;
-    gap: 15px;
-    align-items: center;
+    width: calc(100% - 50px);
 }
 
 header nav select {
@@ -45,13 +40,8 @@ header nav select:disabled {
     cursor: not-allowed;
 }
 
-header .welcome {
-    font-size: 1rem;
-    font-weight: bold;
-    color: #007bff;
-    text-align: right;
-}
 
-header .welcome p {
-    margin: 0;
+header .welcome {
+    width: 50px;
+    text-align: right;
 }
