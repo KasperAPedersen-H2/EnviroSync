@@ -33,7 +33,6 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
 
                 const data = await response.json();
 
-                // Begræns data til de seneste 20 poster
                 const limitedData = data.slice(-20);
 
                 const labels = limitedData.map(d => new Date(d.createdAt).toLocaleString());
@@ -44,7 +43,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                     tvoc: limitedData.map(d => d.tvoc),
                 };
 
-                const selectedData = dataSets[selectedDataType]; // Vælg relevant data
+                const selectedData = dataSets[selectedDataType];
 
                 setChartData({
                     labels,
@@ -55,7 +54,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                             borderColor: "rgba(75, 192, 192, 1)",
                             backgroundColor: "rgba(75, 192, 192, 0.2)",
                             fill: true,
-                            tension: 0.4, // Glatte linjer
+                            tension: 0.4,
                         },
                     ],
                 });
@@ -65,7 +64,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
         };
 
         fetchData();
-    }, [deviceId, selectedDataType]); // Genindlæs når `selectedDataType` ændres
+    }, [deviceId, selectedDataType]);
 
     if (!chartData) return <p>Loading chart...</p>;
 
