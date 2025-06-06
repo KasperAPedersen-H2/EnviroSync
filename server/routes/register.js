@@ -12,14 +12,14 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const existingUser = await Models.User.findOne({ where: { username } });
+        const existingUser = await Models.Users.findOne({ where: { username } });
         if (existingUser) {
             return res.status(409).json({ message: "Couldn't create user." });
         }
 
         const hashedPassword = bcrypt.hashSync(password, 10);
 
-        const newUser = await Models.User.create({
+        const newUser = await Models.Users.create({
             username,
             password: hashedPassword,
         });
