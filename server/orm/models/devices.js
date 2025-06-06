@@ -1,24 +1,27 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../database.js';
 
-let User = sequelize.define('user', {
+let Devices = sequelize.define('devices', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    username: {
-        type: DataTypes.STRING,
+    room_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
+        references: {
+            model: 'rooms',
+            key: 'id'
+        }
     },
-    password: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     }
 }, {
-    tableName: 'user',
+    tableName: 'devices',
     timestamps: false
 });
 
-export default User;
+export default Devices;

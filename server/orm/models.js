@@ -1,7 +1,13 @@
 import sequelize from './database.js';
-import User from './models/user.js';
+import Users from './models/users.js';
+import Rooms from './models/rooms.js';
+import Devices from './models/devices.js';
+import Data from './models/data.js';
 
 export default {
     sequelize,
-    User
+    Users,
+    Rooms,
+    Devices,
+    Data
 };

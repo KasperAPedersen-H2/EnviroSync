@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     }
 
     try {
-        const user = await Models.User.findOne({ where: { username } });
+        const user = await Models.Users.findOne({ where: { username } });
         if (!user) {
             return res.status(404).json({ message: "Invalid username or password" });
         }
