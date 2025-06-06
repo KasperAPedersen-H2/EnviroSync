@@ -29,7 +29,7 @@ let Data = sequelize.define('data', {
     }
 }, {
     tableName: 'data',
-    timestamps: false
+    timestamps: true
 });
 
 export default Data;

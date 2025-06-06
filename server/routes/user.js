@@ -34,6 +34,23 @@ router.get('/rooms/:roomId/devices', async (req, res) => {
     }
 });
 
+router.get('/data/latest/:deviceId', async (req, res) => {
+    const { deviceId } = req.params;
+    const data = await Models.Data.findOne({
+        where: { device_id: deviceId },
+        order: [['createdAt', 'DESC']]
+    });
+    return res.status(200).json(data);
+})
+
+router.get('/data/:deviceId', async (req, res) => {
+    const { deviceId } = req.params;
+    const data = await Models.Data.findAll({
+        where: { device_id: deviceId }
+    });
+    return res.status(200).json(data);
+});
+
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
