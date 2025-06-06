@@ -1,0 +1,50 @@
+import bcrypt from 'bcryptjs';
+import Models from './models.js';
+
+const Dummy = async () => {
+    try {
+        if(await Models.Users.count() > 0) return;
+
+        const usersData = [
+            { username: 'user1', password: 'password1' },
+            { username: 'user2', password: 'password2' },
+            { username: 'user3', password: 'password3' }
+        ];
+
+        const hashedUsersData = usersData.map(user => ({
+            username: user.username,
+            password: bcrypt.hashSync(user.password, 10)
+        }));
+
+        const users = await Models.Users.bulkCreate(hashedUsersData);
+        console.log('Users added with hashed passwords!');
+
+        const rooms = await Models.Rooms.bulkCreate([
+            { user_id: users[0].id, name: 'Living Room' },
+            { user_id: users[1].id, name: 'Bedroom' },
+            { user_id: users[2].id, name: 'Kitchen' }
+        ]);
+
+        console.log('Rooms added!');
+
+        const devices = await Models.Devices.bulkCreate([
+            { room_id: rooms[0].id, name: 'Thermostat' },
+            { room_id: rooms[1].id, name: 'Light Sensor' },
+            { room_id: rooms[2].id, name: 'Humidifier' }
+        ]);
+
+        console.log('Devices added!');
+
+        await Models.Data.bulkCreate([
+            { device_id: devices[0].id, temperature: 22.5, humidity: 45, pressure: 1013 },
+            { device_id: devices[1].id, temperature: 19.0, humidity: 55, pressure: 1015 },
+            { device_id: devices[2].id, temperature: 25.0, humidity: 60, pressure: 1012 }
+        ]);
+
+        console.log('Sensor data added!');
+    } catch (err) {
+        console.error('Error seeding database:', err);
+    }
+};
+
+export default Dummy;
