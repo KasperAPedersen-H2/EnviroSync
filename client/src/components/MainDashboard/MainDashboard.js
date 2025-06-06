@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./MainDashboard.css";
 import { useRoomDevice } from "../../context/RoomDeviceContext";
-import HistoricChart from "./HistoricChart/HistoricChart"; // Sti til HistoricChart
+import HistoricChart from "./HistoricChart/HistoricChart";
+import DeviceChat from "./DeviceChat/DeviceChat";
 
 const MainDashboard = () => {
     const { selectedDevice } = useRoomDevice();
@@ -64,6 +65,7 @@ const MainDashboard = () => {
 
             <section className="other">
                 <HistoricChart deviceId={selectedDevice} selectedDataType={selectedDataType} />
+                <DeviceChat deviceId={selectedDevice} />
             </section>
 
         </>
