@@ -62,7 +62,6 @@ const MainDashboard = () => {
                 </article>
             </section>
 
-            {/* Indsæt grafkomponent */}
             <section className="other">
                 <HistoricChart deviceId={selectedDevice} selectedDataType={selectedDataType} />
             </section>
