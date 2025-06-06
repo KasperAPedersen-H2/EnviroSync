@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-import SessionProvider, { useSession } from "./context/SessionProvider";
 
+import SessionProvider, { useSession } from "./context/SessionProvider";
+import RoomDeviceProvider from "./context/RoomDeviceContext";
 import { AlertProvider } from "./context/AlertContext";
+
+
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar"
 import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
+import MainDashboard from "./components/MainDashboard/MainDashboard";
 
 function App() {
     const AppContent = () => {
@@ -18,18 +22,20 @@ function App() {
             return (
                 <>
                     <AlertProvider>
-                        <Sidebar />
-                        <main>
-                            <Header />
-                            <section className="dashboard-container">
-                                <Routes>
-                                    <Route path="/dashboard" element={<ProtectedRoute element={<h1>Dashboard 1</h1>} />} />
-                                    <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
-                                    <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-                                </Routes>
-                            </section>
+                        <RoomDeviceProvider>
+                            <Sidebar />
+                            <main>
+                                <Header />
+                                <section className="dashboard-container">
+                                    <Routes>
+                                        <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
+                                        <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
+                                        <Route path="/dashboard" element={<ProtectedRoute element={<MainDashboard />} />} />
+                                    </Routes>
+                                </section>
 
-                        </main>
+                            </main>
+                        </RoomDeviceProvider>
                     </AlertProvider>
                 </>
             );
@@ -42,9 +48,9 @@ function App() {
                         <Route path="/" element={<Login />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/dashboard" element={<ProtectedRoute />} />
                         <Route path="/dashboard-test" element={<ProtectedRoute />} />
                         <Route path="/profile" element={<ProtectedRoute />} />
+                        <Route path="/dashboard" element={<ProtectedRoute />} />
                     </Routes>
                 </AlertProvider>
             </>
