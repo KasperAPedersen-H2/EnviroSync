@@ -15,7 +15,7 @@ const DeviceChat = ({ deviceId }) => {
             try {
                 if(!deviceId) return;
 
-                const response = await fetch(`http://localhost:5000/user/messages/${deviceId}`, {
+                const response = await fetch(`http://localhost:5000/message/${deviceId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -39,7 +39,7 @@ const DeviceChat = ({ deviceId }) => {
         if (!newMessageText.trim()) return;
 
         try {
-            const response = await fetch(`http://localhost:5000/user/messages`, {
+            const response = await fetch(`http://localhost:5000/message/send`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

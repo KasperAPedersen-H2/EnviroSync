@@ -12,7 +12,7 @@ const MainDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/user/data/latest/${selectedDevice}`, {
+                const response = await fetch(`http://localhost:5000/data/latest/${selectedDevice}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },

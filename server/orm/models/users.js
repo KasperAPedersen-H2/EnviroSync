@@ -15,6 +15,10 @@ let Users = sequelize.define('users', {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    avatar: {
+        type: DataTypes.BLOB('long'),
+        allowNull: true
     }
 }, {
     tableName: 'users',

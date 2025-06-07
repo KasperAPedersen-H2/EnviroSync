@@ -57,7 +57,7 @@ EnviroSync
 │   ├── orm/   
 │   │   ├── models/
 │   │   │   ├── data.js
-│   │   │   ├── devices.js
+│   │   │   ├── messages.js
 │   │   │   ├── messages.js
 │   │   │   ├── rooms.js
 │   │   │   ├── users.js

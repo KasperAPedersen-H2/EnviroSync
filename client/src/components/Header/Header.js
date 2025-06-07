@@ -43,7 +43,7 @@ const Header = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("http://localhost:5000/user/rooms", {
+                const response = await fetch("http://localhost:5000/room/all", {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -68,7 +68,7 @@ const Header = () => {
 
         (async () => {
             try {
-                const response = await fetch(`http://localhost:5000/user/rooms/${selectedRoom}/devices`, {
+                const response = await fetch(`http://localhost:5000/device/${selectedRoom}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
