@@ -40,22 +40,45 @@ EnviroSync er udviklet for at tilbyde en sømløs integration mellem backend og 
 
 ```
 EnviroSync
-├── EnviroSync-Frontend/  # Frontend-applikation
-│   ├── node_modules/     
+├── client/                     # Frontend-applikation
 │   ├── public/           
 │   ├── src/              
 │   ├── .env              
-│   ├── package.json      
-│   ├── README.md         
+│   ├── package.json       
 │
-├── EnviroSync-Backend/   # Backend-applikation
-│   ├── node_modules/     
-│   ├── src/              
+├── documents/                  #
+│   ├── erd.png
+│   ├── color_palette.txt
+│
+├── server/                     # Backend-applikation
+│   ├── middleware/
+│   │   ├── auth.js
+│   │                 
+│   ├── orm/   
+│   │   ├── models/
+│   │   │   ├── data.js
+│   │   │   ├── devices.js
+│   │   │   ├── messages.js
+│   │   │   ├── rooms.js
+│   │   │   ├── users.js
+│   │   │   
+│   │   ├── database.js
+│   │   ├── dummy.js
+│   │   ├── models.js
+│   │              
+│   ├── routes/          
+│   │   ├── api.js
+│   │   ├── login.js
+│   │   ├── register.js
+│   │   ├── user.js
+│   │
+│   ├── app.js              
+│   ├── secret.js              
 │   ├── .env              
-│   ├── package.json      
-│   ├── README.md         
+│   ├── package.json         
 │
-├── README.md              # Overordnet projekt-dokumentation
+├── README.md                   # Overordnet projekt-dokumentation
+├── package.json
 ```
 
 
@@ -68,7 +91,7 @@ EnviroSync
 For at køre projektet, vær sikker på at følgende er installeret:
 
 - [Node.js](https://nodejs.org) (mindst version 16.0.0)
-- [NPM](https://www.npmjs.com/) eller [Yarn](https://yarnpkg.com/)
+- [NPM](https://www.npmjs.com/)
 - MySQL-server opsat og kørende
 
 ---
@@ -85,7 +108,15 @@ For at køre projektet, vær sikker på at følgende er installeret:
    npm install
    ```
 
-3. Opret en `.env`-fil og konfigurer miljøvariabler (f.eks. database, JWT-secret osv.).
+3. Opret en `.env`-fil og konfigurer miljøvariabler:
+   ```bash
+   DB_NAME=
+   DB_USER=root
+   DB_PASS=
+   DB_HOST=localhost
+   DB_DIALECT=mysql
+   JWT_SECRET=
+   ```
 
 4. Start backend:
    ```bash
@@ -115,13 +146,14 @@ For at køre projektet, vær sikker på at følgende er installeret:
 
 ## Scripts
 
-- **Backend**:
-    - `npm start`: Starter backend-serveren
-    - `npm run dev`: Kører backend med live-opdateringer (kræver `nodemon`)
+- **Start både backend og frontenden**:
+  - `npm run start:all`
 
-- **Frontend**:
-    - `npm start`: Starter udviklingsserveren
-    - `npm run build`: Bygger produktionsklar frontend-kode
+- **Start frontend**:
+    - `npm run start:frontend`
+
+- **Start backend**:
+    - `npm run start:backend`
 
 ---
 
