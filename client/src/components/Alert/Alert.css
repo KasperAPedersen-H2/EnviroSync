@@ -9,7 +9,7 @@
     overflow-y: auto;
 }
 
-.alert {
+.alert-container .alert {
     color: #fff;
     margin-bottom: 5px;
     width: 100%;
@@ -18,9 +18,9 @@
     border-radius: 5px;
 }
 
-.alert.success { background-color: #51b751; }
-.alert.error   { background-color: #f44336; }
-.alert.info    { background-color: #2196f3; }
+.alert-container .alert.success { background-color: #51b751; }
+.alert-container .alert.error   { background-color: #f44336; }
+.alert-container .alert.info    { background-color: #2196f3; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-16px);}

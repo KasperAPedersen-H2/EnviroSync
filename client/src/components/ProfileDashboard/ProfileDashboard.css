@@ -1,4 +1,9 @@
-.dashboard-container .card {
+.profile-dashboard {
+    height: 100%;
+    width: 100%;
+}
+
+.profile-dashboard  .card {
     display: flex;
     flex-direction: column;
     justify-self: center;
@@ -7,12 +12,12 @@
     border-radius: 5px;
 }
 
-.dashboard-container .card .title {
+.profile-dashboard  .card .title {
     margin-bottom: 15px;
     text-align: center;
 }
 
-.dashboard-container .card figure {
+.profile-dashboard  .card figure {
     position: relative;
     width: 250px;
     height: 250px;
@@ -21,7 +26,7 @@
     transition: transform 0.3s ease;
 }
 
-.dashboard-container .card figure div {
+.profile-dashboard  .card figure div {
     position: relative;
     width: 100%;
     height: 100%;
@@ -29,18 +34,18 @@
     overflow: hidden;
 }
 
-.dashboard-container .card figure img {
+.profile-dashboard  .card figure img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.dashboard-container .card figure:hover img {
+.profile-dashboard  .card figure:hover img {
     transform: scale(1.1);
 }
 
-.dashboard-container .card figure figcaption {
+.profile-dashboard  .card figure figcaption {
     position: absolute;
     top: 0;
     left: 0;
@@ -57,30 +62,30 @@
     border-radius: 50%;
 }
 
-.dashboard-container .card figure:hover figcaption {
+.profile-dashboard  .card figure:hover figcaption {
     opacity: 1;
 }
 
-.dashboard-container .card figure figcaption svg {
+.profile-dashboard  .card figure figcaption svg {
     font-size: 30px;
     margin-bottom: 8px;
 }
 
-.dashboard-container .card figure figcaption span {
+.profile-dashboard  .card figure figcaption span {
     font-size: 14px;
 }
 
-.dashboard-container .card form {
+.profile-dashboard  .card form {
     margin-top: 20px;
     display: flex;
     justify-content: center;
 }
 
-.dashboard-container .card form input[type="file"] {
+.profile-dashboard  .card form input[type="file"] {
     display: none;
 }
 
-.dashboard-container .card form button {
+.profile-dashboard  .card form button {
     background-color: #4FB0C6;
     color: white;
     border: none;
@@ -91,11 +96,11 @@
     min-width: 200px;
 }
 
-.dashboard-container .card form button:hover:not(:disabled) {
+.profile-dashboard  .card form button:hover:not(:disabled) {
     background-color: #4F86C6;
 }
 
-.dashboard-container .card form button:disabled {
+.profile-dashboard  .card form button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }

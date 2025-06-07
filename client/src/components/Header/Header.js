@@ -4,9 +4,11 @@ import useSessionCheck from "../../hooks/useSessionCheck";
 import { useRoomDevice } from '../../context/RoomDeviceContext';
 import Dropdown from "./Dropdown/Dropdown";
 import "./Header.css";
+import { useAvatar } from "../../context/AvatarContext";
 
 const Header = () => {
     const [username, setUsername] = useState("");
+    const { globalAvatar } = useAvatar();
     const [avatar, setAvatar] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [devices, setDevices] = useState([]);
@@ -36,7 +38,6 @@ const Header = () => {
 
                 const data = await response.json();
                 setUsername(data.username);
-                setAvatar(data.avatar);
             } catch (error) {
                 console.error("Fejl under hentning af data:", error);
             }
@@ -128,7 +129,7 @@ const Header = () => {
 
             </nav>
             <section className="welcome">
-                <Dropdown username={username} avatarData={avatar} />
+                <Dropdown username={username} avatarData={globalAvatar} />
             </section>
         </header>
     );
