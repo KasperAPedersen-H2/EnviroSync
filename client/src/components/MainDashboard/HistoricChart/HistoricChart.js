@@ -18,8 +18,12 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
     const [chartData, setChartData] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
             try {
+                if(deviceId === null || deviceId === "") {
+                    return;
+                }
+
                 const response = await fetch(`http://localhost:5000/user/data/${deviceId}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -61,12 +65,10 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
             } catch (error) {
                 console.error("Error fetching historic data:", error);
             }
-        };
-
-        fetchData();
+        })();
     }, [deviceId, selectedDataType]);
 
-    if (!chartData) return <p>Loading chart...</p>;
+    if (!chartData) return <div className="chart-container"><p className="no-device-selected">Select device to display charts</p></div>;
 
     return (
         <div className="chart-container">
