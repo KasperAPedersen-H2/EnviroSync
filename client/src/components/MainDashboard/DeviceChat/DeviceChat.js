@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./DeviceChat.css";
 
+import { useAvatar } from "../../../context/AvatarContext";
+
+
 const DeviceChat = ({ deviceId }) => {
+    const { globalAvatar } = useAvatar();
     const [messages, setMessages] = useState([]);
     const [newMessageText, setNewMessageText] = useState("");
     const messagesEndRef = useRef(null);
@@ -68,7 +72,18 @@ const DeviceChat = ({ deviceId }) => {
             <div className="chat-messages">
                 {messages.map((message) => (
                     <div key={message.id} className="chat-message">
-                        <p className="name">{message.username}</p>
+                        <div className="message-header">
+                            <img
+                                src={message.avatar ?
+                                    `data:image/png;base64,${message.avatar}` :
+                                    'img_avatar3.png'
+                                }
+                                alt={`${message.username}'s avatar`}
+                                className="chat-avatar"
+                            />
+                            <p className="name">{message.username}</p>
+                        </div>
+
                         <p className="content">{message.message}</p>
                     </div>
                 ))}

@@ -1,18 +1,18 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useSession } from './SessionProvider';
 
 const AvatarContext = createContext();
 
 export const AvatarProvider = ({ children }) => {
     const [globalAvatar, setGlobalAvatar] = useState(null);
+    const { session } = useSession();
 
-    // Hent initial avatar når komponenten mountes
     useEffect(() => {
         const fetchInitialAvatar = async () => {
-            const userId = JSON.parse(localStorage.getItem('session'))?.id;
-            if (!userId) return;
+            if (!session?.id) return;
 
             try {
-                const response = await fetch(`http://localhost:5000/user/${userId}`, {
+                const response = await fetch(`http://localhost:5000/user/${session.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -30,7 +30,7 @@ export const AvatarProvider = ({ children }) => {
         };
 
         fetchInitialAvatar();
-    }, []);
+    }, [session]);
 
     return (
         <AvatarContext.Provider value={{ globalAvatar, setGlobalAvatar }}>

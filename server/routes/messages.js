@@ -13,6 +13,7 @@ router.get('/:deviceId', async (req, res) => {
         for(let message of messages) {
             const user = await Models.Users.findByPk(message.user_id);
             message.dataValues.username = user.username;
+            message.dataValues.avatar = user.avatar ? user.avatar.toString('base64') : null;
         }
 
         res.status(200).json(messages);
