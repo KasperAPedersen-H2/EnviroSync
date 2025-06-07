@@ -27,7 +27,7 @@ const Login = () => {
                 const data = await response.json();
                 localStorage.setItem("token", data.token); // Gem token i localStorage
                 setSession(jwtDecode(data.token)); // Dekod token og opdater session
-                navigate("/dashboard");
+                navigate("/");
             } else {
                 showAlert("error", "Login failed!");
 
