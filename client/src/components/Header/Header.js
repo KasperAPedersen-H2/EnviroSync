@@ -15,32 +15,33 @@ const Header = () => {
 
 
     useEffect(() => {
-        const fetchDashboardData = async () => {
+        (async () => {
             try {
+                if(!session?.id) return;
+
                 const response = await fetch(`http://localhost:5000/user/${session?.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setUsername(data.username);
-                } else {
-                    alert("Kan ikke hente data. Prøv igen.");
+                if(!response.ok) {
+                    if(response.status === 401 || response.status === 403) {
+                        localStorage.removeItem("token");
+                        session.setSession(null);
+                    }
+                    return;
                 }
+
+                setUsername((await response.json()).username);
             } catch (error) {
                 console.error("Fejl under hentning af data:", error);
             }
-        };
-
-        if (session?.id) {
-            fetchDashboardData();
-        }
+        })();
     }, [session]);
 
     useEffect(() => {
-        const fetchRooms = async () => {
+        (async () => {
             try {
                 const response = await fetch("http://localhost:5000/user/rooms", {
                     headers: {
@@ -48,43 +49,41 @@ const Header = () => {
                     },
                 });
 
-                if (response.ok) {
-                    const data = await response.json();
-                    setRooms(data);
+                if (!response.ok) {
+                    return;
                 }
+
+                setRooms(await response.json());
             } catch (error) {
                 console.error("Error fetching rooms:", error);
             }
-        };
-
-        fetchRooms();
+        })();
     }, []);
 
     useEffect(() => {
-        if (selectedRoom) {
-            const fetchDevices = async () => {
-                try {
-                    const response = await fetch(`http://localhost:5000/user/rooms/${selectedRoom}/devices`, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    });
-
-                    if (response.ok) {
-                        const data = await response.json();
-                        setDevices(data);
-                    }
-                } catch (error) {
-                    console.error("Error fetching devices:", error);
-                }
-            };
-
-            fetchDevices();
-        } else {
+        if (!selectedRoom) {
             setDevices([]);
+            return;
         }
-    }, [selectedRoom]);
 
+        (async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/user/rooms/${selectedRoom}/devices`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    return;
+                }
+
+                setDevices(await response.json());
+            } catch (error) {
+                console.error("Error fetching devices:", error);
+            }
+        })();
+    }, [selectedRoom]);
 
 
     return (

@@ -21,38 +21,36 @@ function App() {
         if(session.session?.id) {
             return (
                 <>
-                    <AlertProvider>
-                        <RoomDeviceProvider>
-                            <Sidebar />
-                            <main>
-                                <Header />
-                                <section className="dashboard-container">
-                                    <Routes>
-                                        <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
-                                        <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-                                        <Route path="/dashboard" element={<ProtectedRoute element={<MainDashboard />} />} />
-                                    </Routes>
-                                </section>
+                    <RoomDeviceProvider>
+                        <Sidebar />
+                        <main>
+                            <Header />
+                            <section className="dashboard-container">
+                                <Routes>
+                                    <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
+                                    <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
 
-                            </main>
-                        </RoomDeviceProvider>
-                    </AlertProvider>
+                                    <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
+                                </Routes>
+                            </section>
+
+                        </main>
+                    </RoomDeviceProvider>
                 </>
             );
         }
 
         return (
             <>
-                <AlertProvider>
-                    <Routes>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/dashboard-test" element={<ProtectedRoute />} />
-                        <Route path="/profile" element={<ProtectedRoute />} />
-                        <Route path="/dashboard" element={<ProtectedRoute />} />
-                    </Routes>
-                </AlertProvider>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+
+                    <Route path="/profile" element={<ProtectedRoute />} />
+                    <Route path="/dashboard-test" element={<ProtectedRoute />} />
+
+                </Routes>
             </>
         );
     };
@@ -60,7 +58,9 @@ function App() {
     return (
         <SessionProvider>
             <Router>
-                <AppContent />
+                <AlertProvider>
+                    <AppContent />
+                </AlertProvider>
             </Router>
         </SessionProvider>
     );

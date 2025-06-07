@@ -10,7 +10,7 @@ const Sidebar = () => {
                 <img src="logo.png" alt="EnviroSync Logo"/>
             </section>
             <nav className="sidebar-nav">
-                <Link to="/dashboard" className="sidebar-link">
+                <Link to="/" className="sidebar-link">
                     <DashboardIcon />
                     Dashboard
                 </Link>

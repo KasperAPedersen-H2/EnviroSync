@@ -11,8 +11,10 @@ const DeviceChat = ({ deviceId }) => {
     };
 
     useEffect(() => {
-        const fetchMessages = async () => {
+        (async () => {
             try {
+                if(!deviceId) return;
+
                 const response = await fetch(`http://localhost:5000/user/messages/${deviceId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
@@ -26,11 +28,7 @@ const DeviceChat = ({ deviceId }) => {
             } catch (error) {
                 console.error("Error fetching messages:", error);
             }
-        };
-
-        if (deviceId) {
-            fetchMessages();
-        }
+        })();
     }, [deviceId]);
 
     useEffect(() => {
@@ -70,10 +68,8 @@ const DeviceChat = ({ deviceId }) => {
             <div className="chat-messages">
                 {messages.map((message) => (
                     <div key={message.id} className="chat-message">
-                        <p>
-                            <strong>{message.username}:</strong> {message.message}
-                        </p>
-                        <span>{new Date(message.createdAt).toLocaleString()}</span>
+                        <p className="name">{message.username}</p>
+                        <p className="content">{message.message}</p>
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
