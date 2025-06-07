@@ -4,9 +4,12 @@ import useSessionCheck from "../../hooks/useSessionCheck";
 import { useRoomDevice } from '../../context/RoomDeviceContext';
 import Dropdown from "./Dropdown/Dropdown";
 import "./Header.css";
+import { useAvatar } from "../../context/AvatarContext";
 
 const Header = () => {
     const [username, setUsername] = useState("");
+    const { globalAvatar } = useAvatar();
+    const [avatar, setAvatar] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [devices, setDevices] = useState([]);
 
@@ -33,7 +36,8 @@ const Header = () => {
                     return;
                 }
 
-                setUsername((await response.json()).username);
+                const data = await response.json();
+                setUsername(data.username);
             } catch (error) {
                 console.error("Fejl under hentning af data:", error);
             }
@@ -43,7 +47,7 @@ const Header = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("http://localhost:5000/user/rooms", {
+                const response = await fetch("http://localhost:5000/room/all", {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -68,7 +72,7 @@ const Header = () => {
 
         (async () => {
             try {
-                const response = await fetch(`http://localhost:5000/user/rooms/${selectedRoom}/devices`, {
+                const response = await fetch(`http://localhost:5000/device/${selectedRoom}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -125,7 +129,7 @@ const Header = () => {
 
             </nav>
             <section className="welcome">
-                <Dropdown username={username} />
+                <Dropdown username={username} avatarData={globalAvatar} />
             </section>
         </header>
     );

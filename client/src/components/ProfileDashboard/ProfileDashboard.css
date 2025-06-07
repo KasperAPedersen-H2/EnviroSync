@@ -1,0 +1,106 @@
+.profile-dashboard {
+    height: 100%;
+    width: 100%;
+}
+
+.profile-dashboard  .card {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.profile-dashboard  .card .title {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.profile-dashboard  .card figure {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.profile-dashboard  .card figure div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-dashboard  .card figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.profile-dashboard  .card figure:hover img {
+    transform: scale(1.1);
+}
+
+.profile-dashboard  .card figure figcaption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(79, 176, 198, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    border-radius: 50%;
+}
+
+.profile-dashboard  .card figure:hover figcaption {
+    opacity: 1;
+}
+
+.profile-dashboard  .card figure figcaption svg {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.profile-dashboard  .card figure figcaption span {
+    font-size: 14px;
+}
+
+.profile-dashboard  .card form {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-dashboard  .card form input[type="file"] {
+    display: none;
+}
+
+.profile-dashboard  .card form button {
+    background-color: #4FB0C6;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 2.5px;
+    cursor: pointer;
+    transition: 0.5s;
+    min-width: 200px;
+}
+
+.profile-dashboard  .card form button:hover:not(:disabled) {
+    background-color: #4F86C6;
+}
+
+.profile-dashboard  .card form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

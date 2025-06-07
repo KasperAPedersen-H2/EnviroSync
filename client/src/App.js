@@ -6,6 +6,7 @@ import SessionProvider, { useSession } from "./context/SessionProvider";
 import RoomDeviceProvider from "./context/RoomDeviceContext";
 import { AlertProvider } from "./context/AlertContext";
 
+import { AvatarProvider } from "./context/AvatarContext";
 
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
@@ -22,24 +23,23 @@ function App() {
             return (
                 <>
                     <RoomDeviceProvider>
-                        <Sidebar />
-                        <main>
-                            <Header />
-                            <section className="dashboard-container">
-                                <Routes>
-                                    <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
-                                    <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-
-                                    <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
-                                </Routes>
-                            </section>
-
-                        </main>
+                        <AvatarProvider>
+                            <Sidebar />
+                            <main>
+                                <Header />
+                                <section className="dashboard-container">
+                                    <Routes>
+                                        <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
+                                        <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
+                                        <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
+                                    </Routes>
+                                </section>
+                            </main>
+                        </AvatarProvider>
                     </RoomDeviceProvider>
                 </>
             );
         }
-
         return (
             <>
                 <Routes>
@@ -54,7 +54,6 @@ function App() {
             </>
         );
     };
-
     return (
         <SessionProvider>
             <Router>

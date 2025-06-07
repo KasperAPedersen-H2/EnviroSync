@@ -1,4 +1,9 @@
-.dashboard-container .live {
+.main-dashboard {
+    height: 100%;
+    width: 100%;
+}
+
+.main-dashboard .live {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     width: 100%;
@@ -6,7 +11,7 @@
     height: 100px;
 }
 
-.dashboard-container .live .card {
+.main-dashboard .live .card {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,28 +21,28 @@
     cursor: pointer;
 }
 
-.dashboard-container .live .card p:nth-child(2) {
+.main-dashboard .live .card p:nth-child(2) {
     font-size: 2rem;
     font-weight: bold;
 }
 
-.dashboard-container .live .card:nth-child(1) {
+.main-dashboard .live .card:nth-child(1) {
     background-color: #379392;
 }
 
-.dashboard-container .live .card:nth-child(2) {
+.main-dashboard .live .card:nth-child(2) {
     background-color: #4FB0C6;
 }
 
-.dashboard-container .live .card:nth-child(3) {
+.main-dashboard .live .card:nth-child(3) {
     background-color: #4F86C6;
 }
 
-.dashboard-container .live .card:nth-child(4) {
+.main-dashboard .live .card:nth-child(4) {
     background-color: #4FB0C6;
 }
 
-.dashboard-container .other {
+.main-dashboard .other {
     margin-top: 15px;
     height: calc(100% - 100px - 15px);
     width: 100%;
