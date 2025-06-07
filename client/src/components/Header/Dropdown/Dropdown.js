@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AccountCircle, Settings, Logout } from "@mui/icons-material";
 import "./Dropdown.css";
 
-const Dropdown = ({ username }) => {
+const Dropdown = ({ username, avatarData }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -16,6 +16,13 @@ const Dropdown = ({ username }) => {
             setDropdownVisible(false);
         }
     };
+
+    const getAvatarSource = () => {
+        if(avatarData) {
+            return `data:image/png;base64,${avatarData}`;
+        }
+        return "img_avatar3.png";
+    }
 
     useEffect(() => {
         if (dropdownVisible) {
@@ -36,7 +43,7 @@ const Dropdown = ({ username }) => {
 
     return (
         <div ref={dropdownRef} className="dropdown">
-            <img src="img_avatar3.png" alt="Avatar icon" className="dropdown-trigger" onClick={toggleDropdown}/>
+            <img src={getAvatarSource()} alt="Avatar icon" className="dropdown-trigger" onClick={toggleDropdown}/>
             <div className={`dropdown-menu ${dropdownVisible ? "visible" : ""}`}>
                 <h3>Welcome, {username}</h3>
                 <nav>

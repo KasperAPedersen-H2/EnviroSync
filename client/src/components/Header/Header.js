@@ -7,6 +7,7 @@ import "./Header.css";
 
 const Header = () => {
     const [username, setUsername] = useState("");
+    const [avatar, setAvatar] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [devices, setDevices] = useState([]);
 
@@ -33,7 +34,9 @@ const Header = () => {
                     return;
                 }
 
-                setUsername((await response.json()).username);
+                const data = await response.json();
+                setUsername(data.username);
+                setAvatar(data.avatar);
             } catch (error) {
                 console.error("Fejl under hentning af data:", error);
             }
@@ -125,7 +128,7 @@ const Header = () => {
 
             </nav>
             <section className="welcome">
-                <Dropdown username={username} />
+                <Dropdown username={username} avatarData={avatar} />
             </section>
         </header>
     );
