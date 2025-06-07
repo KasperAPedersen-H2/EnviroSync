@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./DeviceChat.css";
 
+import { useSession } from "../../../context/SessionProvider";
 import { useAvatar } from "../../../context/AvatarContext";
 
 
@@ -9,6 +10,8 @@ const DeviceChat = ({ deviceId }) => {
     const [messages, setMessages] = useState([]);
     const [newMessageText, setNewMessageText] = useState("");
     const messagesEndRef = useRef(null);
+    const { session } = useSession();
+
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,7 +60,11 @@ const DeviceChat = ({ deviceId }) => {
 
             if (response.ok) {
                 const newMessage = await response.json();
-                setMessages((prevMessages) => [...prevMessages, newMessage]);
+                setMessages((prevMessages) => [...prevMessages, {
+                    ...newMessage,
+                    avatar: globalAvatar,
+                    username: session.username
+                }]);
                 setNewMessageText("");
             } else {
                 console.error("Failed to send message");
@@ -66,6 +73,7 @@ const DeviceChat = ({ deviceId }) => {
             console.error("Error sending message:", error);
         }
     };
+
 
     return (
         <div className="chat-container">
