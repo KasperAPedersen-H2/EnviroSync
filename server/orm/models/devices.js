@@ -7,6 +7,11 @@ let Devices = sequelize.define('devices', {
         autoIncrement: true,
         primaryKey: true
     },
+    serial_number: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        unique: true
+    },
     room_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
