@@ -1,4 +1,3 @@
-/* Color Palette, taken from link in pal.txt */
 :root {
     --dark-green: #17301C;
     --dark-cyan: #379392;
@@ -11,8 +10,7 @@
     --text-light: #777777;
     --error-light: #ff9595;
     --error-dark: #ff3636;
-
-
+    
     --headerHeight: 75px;
     --sidebarWidth: 200px;
 }
@@ -36,6 +34,7 @@
 
 #root .dashboard-container {
     height: calc(100vh - var(--headerHeight));
-    background-color: var(--light-bg);
+    padding: 15px;
+    background-color: #EFEFEF;
     position: relative;
 }
