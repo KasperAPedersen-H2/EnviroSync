@@ -15,7 +15,7 @@ import devicesRoute from './routes/devices.js';
 
 const app = new Express();
 DotEnv.config();
-console.log("noooo not agian")
+
 app.use(cors());
 
 app.use(Express.json());
