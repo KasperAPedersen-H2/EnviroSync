@@ -15,7 +15,7 @@ import devicesRoute from './routes/devices.js';
 
 const app = new Express();
 DotEnv.config();
-
+console.log("my name is Jeff");
 app.use(cors());
 
 app.use(Express.json());
