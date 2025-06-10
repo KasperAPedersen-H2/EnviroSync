@@ -8,11 +8,11 @@ let Data = sequelize.define('data', {
         primaryKey: true
     },
     device_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         references: {
             model: 'devices',
-            key: 'id'
+            key: 'serial_number'
         }
     },
     temperature: {
