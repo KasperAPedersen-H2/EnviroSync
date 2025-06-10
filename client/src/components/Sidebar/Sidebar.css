@@ -1,61 +1,40 @@
-aside {
+.sidebar {
     width: var(--sidebarWidth);
     height: 100vh;
-    background-color: var(--dark-green);
-    color: var(--white);
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #CAE5FF;
 }
 
-aside .logo {
+.sidebar .sidebar-title {
+    margin: 50px 0;
+    text-align: center;
+}
+
+.sidebar .logo {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-aside img {
-    width: 50%;
-    margin: 2.5vh 0 0 0;
+.sidebar img {
+    width: 75%;
 }
 
-aside h1 {
-    color: var(--white);
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin: 1vh 0 2.5vh 0;
-}
-
-aside nav {
+.sidebar nav {
     display: flex;
     flex-direction: column;
 }
 
-aside nav a {
+.sidebar nav a {
     display: flex;
     align-items: center;
     gap: 5px;
     padding: 15px;
     text-decoration: none;
-    color: var(--white);
+    color: black;
     transition: 0.5s;
-    border-left: 5px solid transparent;
 }
 
-aside nav a svg {
-    color: var(--white);
-}
-
-aside nav a:hover {
-    background-color: rgba(79, 176, 198, 0.15);
-    border-left: 3px solid var(--white);
-    transition: all 0.3s ease;
-}
-
-aside nav a.active {
-    background-color: rgba(55, 147, 146, 0.2);
-    border-left: 3px solid var(--dark-cyan);
-}
-
-aside nav a.active svg {
-    color: var(--dark-cyan);
+.sidebar nav a:hover {
+    background-color: #e3f2fd;
+    transition: 0.5s;
 }
