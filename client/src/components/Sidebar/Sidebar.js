@@ -7,15 +7,14 @@ const Sidebar = () => {
     return (
         <aside className="sidebar">
             <section className="logo">
-                <img src="logo_mono.png" alt="EnviroSync Logo"/>
-                <h1>EnviroSync</h1>
+                <img src="logo.png" alt="EnviroSync Logo"/>
             </section>
             <nav className="sidebar-nav">
-                <Link to="/dashboard" className="sidebar-link">
+                <Link to="/" className="sidebar-link">
                     <DashboardIcon />
                     Dashboard
                 </Link>
-                <Link to="/profile" className="sidebar-link">
+                <Link to="/dashboard-test" className="sidebar-link">
                     <DashboardIcon />
                     Test
                 </Link>
