@@ -17,6 +17,7 @@ const app = new Express();
 DotEnv.config();
 
 app.use(cors());
+
 app.use(Express.json());
 
 app.use("/login", loginRoute);
