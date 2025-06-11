@@ -17,7 +17,6 @@ const ProfileDashboard = () => {
             if (globalAvatar) {
                 setPreviewUrl(`data:image/png;base64,${globalAvatar}`);
             } else {
-                // Hent brugerens nuværende avatar hvis global ikke findes
                 const fetchUserData = async () => {
                     try {
                         const response = await fetch(`http://localhost:5000/user/${session?.id}`, {
@@ -89,6 +88,7 @@ const ProfileDashboard = () => {
     const triggerFileInput = () => {
         document.getElementById('avatar-upload').click();
     };
+
     return (
         <>
             <section className="profile-dashboard">

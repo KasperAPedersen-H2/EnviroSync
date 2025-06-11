@@ -1,5 +1,5 @@
 header {
-    background-color: #fff;
+    background-color: var(--header-bg, #fff);
     display: flex;
     align-items: center;
     width: 100%;
@@ -15,35 +15,52 @@ header nav {
 
 header nav select {
     appearance: none;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
+    border: 1px solid var(--header-border-color, #ddd);
+    background-color: var(--header-select-bg, #f9f9f9);
     font-size: 1rem;
     padding: 10px 15px;
     border-radius: 2.5px;
-    color: #333;
+    color: var(--header-select-text-color, #333);
     transition: border-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
 }
 
 header nav select:hover {
-    border-color: #888;
+    border-color: var(--header-hover-border-color, #888);
 }
 
 header nav select:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+    border-color: var(--header-focus-border-color, #007bff);
+    box-shadow: 0 0 0 3px var(--header-focus-shadow-color, rgba(0, 123, 255, 0.2));
 }
 
 header nav select:disabled {
-    background-color: #e9e9e9;
-    color: #aaa;
-    border-color: #ccc;
+    background-color: var(--header-disabled-bg, #e9e9e9);
+    color: var(--header-disabled-text-color, #aaa);
+    border-color: var(--header-disabled-border-color, #ccc);
     cursor: not-allowed;
 }
-
 
 header .welcome {
     width: 50px;
     text-align: right;
+    color: var(--header-welcome-text-color, #333);
+}
+
+/* Dark Mode */
+:root[data-theme="dark"] {
+    --header-bg: #1f1f1f;
+    --header-border-color: #444444;
+    --header-select-bg: #2b2b2b;
+    --header-select-text-color: #e0e0e0;
+    --header-hover-border-color: #cccccc;
+    --header-focus-border-color: #4099ff;
+    --header-focus-shadow-color: rgba(64, 153, 255, 0.3);
+
+    --header-disabled-bg: #333333;
+    --header-disabled-text-color: #aaaaaa;
+    --header-disabled-border-color: #555555;
+
+    --header-welcome-text-color: #dddddd;
 }
