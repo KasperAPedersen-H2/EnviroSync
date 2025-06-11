@@ -69,7 +69,6 @@ const MainDashboard = () => {
                     <DeviceChat deviceId={selectedDevice} />
                 </section>
             </section>
-
         </>
     );
 };
