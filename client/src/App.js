@@ -55,7 +55,6 @@ function App() {
                                         <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
                                         <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
                                         <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
-                                        <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
                                     </Routes>
                                 </section>
                             </main>
@@ -72,7 +71,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
 
                     <Route path="/profile" element={<ProtectedRoute />} />
-                    <Route path="/dashboard-test" element={<ProtectedRoute />} />
+                    <Route path="/settings" element={<ProtectedRoute />} />
                 </Routes>
             </>
         );
