@@ -31,13 +31,10 @@ let Data = sequelize.define('data', {
         type: DataTypes.FLOAT,
         allowNull: false
     },
-    timestamp: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    }
 }, {
     tableName: 'data',
-    timestamps: false
+    timestamps: true,
+    updatedAt: false
 });
 
 export default Data;
