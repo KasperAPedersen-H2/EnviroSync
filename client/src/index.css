@@ -54,4 +54,6 @@
     background-color: var(--dashboard-bg);
     color: var(--dashboard-text);
     position: relative;
+    overflow: hidden;
+    overflow-y: scroll;
 }
