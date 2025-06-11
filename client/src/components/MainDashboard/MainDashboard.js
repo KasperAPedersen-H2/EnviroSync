@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+
 import "./MainDashboard.css";
 import { useRoomDevice } from "../../context/RoomDeviceContext";
 import HistoricChart from "./HistoricChart/HistoricChart";
 import DeviceChat from "./DeviceChat/DeviceChat";
+import socketService from "../../services/socketService";
 
 const MainDashboard = () => {
     const { selectedDevice } = useRoomDevice();
@@ -10,6 +12,13 @@ const MainDashboard = () => {
     const [ selectedDataType, setSelectedDataType ] = useState("temperature");
 
     useEffect(() => {
+        socketService.connect();
+
+        socketService.on("new-data", () => {
+            console.log("new data on main dashboard");
+            fetchData();
+        })
+
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/data/latest/${selectedDevice}`, {
@@ -33,6 +42,10 @@ const MainDashboard = () => {
         if (selectedDevice) {
             fetchData();
         }
+
+        return () => {
+            socketService.disconnect();
+        };
     }, [selectedDevice]);
 
     const handleCardClick = (type) => {

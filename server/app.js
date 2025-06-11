@@ -2,6 +2,7 @@ import Express from 'express';
 import DotEnv from 'dotenv';
 import cors from 'cors';
 
+import Socket from './socket.js';
 import authenticateToken from "./middleware/auth.js";
 import loginRoute from './routes/login.js'
 import registerRoute from './routes/register.js'
@@ -29,4 +30,12 @@ app.use("/data", authenticateToken, dataRoute);
 app.use("/device", authenticateToken, devicesRoute);
 app.use("/api", apiRoute);
 
-app.listen(5000, (e) => console.log(e ? e : 'Server started'));
+const server = app.listen(5000, (e) => {
+    if(e) {
+        console.log(e);
+        return;
+    }
+
+    Socket.init(server);
+    console.log("Server started");
+});

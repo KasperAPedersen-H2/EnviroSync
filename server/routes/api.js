@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Models from "../orm/models.js";
+import Socket from "../socket.js";
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.post('/data', async (req, res) => {
     }
 
     await Models.Data.create({device_id: sn, temperature: temp, humidity: humidity, pressure: pressure, tvoc: tvoc})
+    Socket.getIO().emit('new-data', "new data")
     res.end();
 })
 
