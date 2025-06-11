@@ -130,7 +130,6 @@ const ProfileDashboard = () => {
                     </div>
                     <div className="profile-info">
                         <h2>{session?.username || "Username not available"}</h2>
-                        <p className="profile-id">User ID: {session?.id || "ID not available"}</p>
                     </div>
                 </div>
 
@@ -143,10 +142,6 @@ const ProfileDashboard = () => {
                         <div className="profile-field">
                             <label>Username:</label>
                             <span>{session?.username || "Not available"}</span>
-                        </div>
-                        <div className="profile-field">
-                            <label>User ID:</label>
-                            <span>{session?.id || "Not available"}</span>
                         </div>
                     </div>
 
