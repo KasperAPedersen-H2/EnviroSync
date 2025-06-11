@@ -9,7 +9,6 @@ import { useAvatar } from "../../context/AvatarContext";
 const Header = () => {
     const [username, setUsername] = useState("");
     const { globalAvatar } = useAvatar();
-    const [avatar, setAvatar] = useState(null);
     const [rooms, setRooms] = useState([]);
     const [devices, setDevices] = useState([]);
 
