@@ -30,10 +30,14 @@ let Data = sequelize.define('data', {
     tvoc: {
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    timestamp: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
     }
 }, {
     tableName: 'data',
-    timestamps: true
+    timestamps: false
 });
 
 export default Data;
