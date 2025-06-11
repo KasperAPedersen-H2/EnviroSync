@@ -14,6 +14,7 @@ import Header from "./components/Header/Header";
 import Sidebar from "./components/Sidebar/Sidebar"
 import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 import MainDashboard from "./components/MainDashboard/MainDashboard";
+import SettingsDashboard from "./components/SettingsDashboard/SettingsDashboard";
 
 function App() {
     const AppContent = () => {
@@ -31,6 +32,7 @@ function App() {
                                     <Routes>
                                         <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
                                         <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
+                                        <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard />} />} />
                                         <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
                                     </Routes>
                                 </section>

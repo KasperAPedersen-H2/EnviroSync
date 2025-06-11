@@ -1,4 +1,16 @@
 :root {
+    --dark-green: #17301C;
+    --dark-cyan: #379392;
+    --moonstone: #4FB0C6;
+    --silver-lake-blue: #4F86C6;
+    --light-bg: #f7f7f7;
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-medium: #555555;
+    --text-light: #777777;
+    --error-light: #ff9595;
+    --error-dark: #ff3636;
+
     --headerHeight: 75px;
     --sidebarWidth: 200px;
 }
