@@ -96,9 +96,7 @@ const ProfileDashboard = () => {
     };
   
     return (
-        <div className="profile-dashboard">
-            <h1 className="profile-title">User Profile</h1>
-
+        <section className="profile-dashboard">
             <div className="profile-card">
                 <div className="profile-header">
                     <div className="profile-avatar">
@@ -177,7 +175,7 @@ const ProfileDashboard = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
