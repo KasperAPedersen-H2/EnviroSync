@@ -1,0 +1,57 @@
+.main-dashboard {
+    height: 100%;
+    width: 100%;
+}
+
+.main-dashboard .live {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    gap: 15px;
+    height: 100px;
+}
+
+.main-dashboard .live .card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.main-dashboard .live .card p:nth-child(2) {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.main-dashboard .live .card:nth-child(1) {
+    background-color: var(--card-color-1-light, #379392);
+}
+
+.main-dashboard .live .card:nth-child(2) {
+    background-color: var(--card-color-2-light, #4FB0C6);
+}
+
+.main-dashboard .live .card:nth-child(3) {
+    background-color: var(--card-color-3-light, #4F86C6);
+}
+
+.main-dashboard .live .card:nth-child(4) {
+    background-color: var(--card-color-4-light, #4FB0C6);
+}
+
+.main-dashboard .other {
+    margin-top: 15px;
+    height: calc(100% - 100px - 15px);
+    width: 100%;
+    display: flex;
+}
+
+:root[data-theme="dark"] {
+    --card-color-1-light: #287d7c;
+    --card-color-2-light: #3b8fa2;
+    --card-color-3-light: #3b6ba2;
+    --card-color-4-light: #3b8fa2;
+}

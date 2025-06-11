@@ -18,7 +18,6 @@ const authenticateToken = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (error) {
-        console.error("Token verification failed:", error);
         return res.status(403).json({ message: "Invalid or expired token." });
     }
 };

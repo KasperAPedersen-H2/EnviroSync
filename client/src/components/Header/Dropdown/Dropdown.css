@@ -6,13 +6,15 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: var(--white);
-    transition: 0.5s;
+    background-color: var(--dropdown-trigger-bg, #fff);
+    color: var(--dropdown-trigger-color, #000);
+    transition: transform 0.5s, background-color 0.3s;
 }
 
 .dropdown-trigger:hover {
     transform: scale(1.1);
-    transition: 0.5s;
+    background-color: var(--dropdown-trigger-hover-bg, #f0f0f0);
+    transition: transform 0.5s, background-color 0.3s;
 }
 
 .dropdown-menu {
@@ -21,11 +23,12 @@
     right: -100%;
     height: 100vh;
     width: 250px;
-    background: var(--white);
-    box-shadow: -3px 0 15px rgba(0, 0, 0, 0.1);
+    background: var(--dropdown-menu-bg, #fff);
+    box-shadow: -3px 0 15px var(--dropdown-menu-shadow, rgba(0, 0, 0, 0.1));
     overflow-y: auto;
     transition: right 0.6s ease;
     z-index: 1000;
+    color: var(--dropdown-menu-text-color, #000);
 }
 
 .dropdown-menu.visible {
@@ -38,6 +41,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.2rem;
+    color: var(--dropdown-menu-header-color, #333);
 }
 
 .dropdown-menu nav {
@@ -53,18 +58,28 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    transition: 0.5s;
-    color: var(--text-dark);
+    transition: background-color 0.5s, color 0.3s;
+    color: var(--dropdown-link-color, #000);
     text-decoration: none;
-
 }
 
 .dropdown-menu nav a:hover {
-    background-color: rgba(79, 176, 198, 0.15);
-    transition: 0.5s;
+    background-color: var(--dropdown-link-hover-bg, rgba(79, 176, 198, 0.15));
+    color: var(--dropdown-link-hover-color, #000);
+    transition: background-color 0.5s, color 0.3s;
 }
 
-.nav-icon {
-    margin-right: 8px;
-    color: var(--silver-lake-blue);
+:root[data-theme="dark"] {
+    --dropdown-trigger-bg: #2b2b2b;
+    --dropdown-trigger-color: #e0e0e0;
+    --dropdown-trigger-hover-bg: #444444;
+
+    --dropdown-menu-bg: #1e1e1e;
+    --dropdown-menu-text-color: #e0e0e0;
+    --dropdown-menu-shadow: rgba(0, 0, 0, 0.5);
+    --dropdown-menu-header-color: #f5f5f5;
+
+    --dropdown-link-color: #cccccc;
+    --dropdown-link-hover-bg: #333333;
+    --dropdown-link-hover-color: #ffffff;
 }

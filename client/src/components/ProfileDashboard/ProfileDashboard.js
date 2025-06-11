@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SecurityIcon from '@mui/icons-material/Security';
 import EditIcon from '@mui/icons-material/Edit';
+
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
 
@@ -22,7 +23,6 @@ const ProfileDashboard = () => {
             if (globalAvatar) {
                 setPreviewUrl(`data:image/png;base64,${globalAvatar}`);
             } else {
-                // Hent brugerens nuværende avatar hvis global ikke findes
                 const fetchUserData = async () => {
                     try {
                         const response = await fetch(`http://localhost:5000/user/${session?.id}`, {
@@ -94,6 +94,7 @@ const ProfileDashboard = () => {
     const triggerFileInput = () => {
         document.getElementById('avatar-upload').click();
     };
+  
     return (
         <div className="profile-dashboard">
             <h1 className="profile-title">User Profile</h1>

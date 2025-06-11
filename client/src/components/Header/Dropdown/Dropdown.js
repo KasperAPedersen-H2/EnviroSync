@@ -52,7 +52,7 @@ const Dropdown = ({ username, avatarData }) => {
                         Account
                     </Link>
 
-                    <Link to="#">
+                    <Link to="/settings">
                         <Settings />
                         Settings
                     </Link>

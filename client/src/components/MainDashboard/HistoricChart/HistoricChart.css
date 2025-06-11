@@ -1,0 +1,23 @@
+.chart-container {
+    background-color: var(--chart-bg-color, #fff);
+    height: 100%;
+    overflow: hidden;
+    width: calc(75% + (15px * 2));
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.chart-container .no-device-selected {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.5;
+    color: var(--chart-text-color, #000);
+}
+
+:root[data-theme="dark"] {
+    --chart-bg-color: #1f1f1f;
+    --chart-text-color: #e0e0e0;
+}

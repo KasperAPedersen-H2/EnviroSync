@@ -10,6 +10,8 @@
 
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
+import Models from './models.js';
+import Dummy from './dummy.js';
 
 dotenv.config();
 
@@ -23,7 +25,7 @@ let sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.
 
 (async () => {
     try {
-        await sequelize.authenticate(); // Test connectivity
+        await sequelize.authenticate();
         console.log('[CON]\t\tConnection has been established successfully.\n');
     } catch (e) {
         console.error('[CON]\t\tUnable to connect to the database:', e);
@@ -31,9 +33,11 @@ let sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.
 
     try {
         await sequelize.sync();
-        console.log('[SYN]\t\tmodels has been synchronized.\n')
+        console.log('[SYN]\t\tModels have been synchronized.\n');
+
+        await Dummy();
     } catch (e) {
-        console.error('[SYN]\t\tUnable to synchronize models:', e);
+        console.error('[SYN]\t\tUnable to synchronize models or seed database:', e);
     }
 })();
 
