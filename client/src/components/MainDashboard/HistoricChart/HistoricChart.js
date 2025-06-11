@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import socketService from "../../../services/socketService";
 import {
     Chart as ChartJS,
     Title,
@@ -8,17 +9,25 @@ import {
     LinearScale,
     PointElement,
     CategoryScale,
+    Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "./HistoricChart.css";
 
-ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale);
+ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale, Filler);
 
 const HistoricChart = ({ deviceId, selectedDataType }) => {
     const [chartData, setChartData] = useState(null);
 
     useEffect(() => {
-        (async () => {
+        socketService.connect();
+
+        socketService.on("new-data", () => {
+            console.log("new data on historic chart");
+            fetchData();
+        })
+
+        const fetchData = async () => {
             try {
                 if(deviceId === null || deviceId === "") {
                     return;
@@ -37,7 +46,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
 
                 const data = await response.json();
 
-                const limitedData = data.slice(-20);
+                const limitedData = data.slice(-10);
 
                 const labels = limitedData.map(d => new Date(d.createdAt).toLocaleString());
                 const dataSets = {
@@ -65,7 +74,16 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
             } catch (error) {
                 console.error("Error fetching historic data:", error);
             }
-        })();
+        };
+
+        if(deviceId) {
+            fetchData();
+        }
+
+        return () => {
+            socketService.disconnect();
+        };
+
     }, [deviceId, selectedDataType]);
 
     if (!chartData) return <div className="chart-container"><p className="no-device-selected">Select device to display charts</p></div>;
