@@ -9,7 +9,7 @@ let Devices = sequelize.define('devices', {
     },
     serial_number: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
         unique: true
     },
     room_id: {
