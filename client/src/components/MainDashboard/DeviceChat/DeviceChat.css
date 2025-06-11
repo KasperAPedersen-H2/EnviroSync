@@ -1,7 +1,7 @@
 .dashboard-container .chat-container {
     width: calc(25%);
     margin-left: 15px;
-    background-color: #fff;
+    background-color: var(--chat-bg-color, #fff);
     border-radius: 5px;
     padding: 15px;
 }
@@ -16,7 +16,7 @@
 .dashboard-container .chat-container .chat-messages .chat-message {
     margin-bottom: 5px;
     padding: 5px;
-    background-color: #f5f5f5;
+    background-color: var(--chat-message-bg, #f5f5f5);
     border-radius: 5px;
 }
 
@@ -32,16 +32,7 @@
     height: 30px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #4FB0C6;
-}
-
-.dashboard-container .chat-container .chat-messages .chat-message .message-header .name {
-    color: #4FB0C6;
-    font-weight: bold;
-}
-
-.dashboard-container .chat-container .chat-messages .chat-message .content {
-    word-wrap: break-word;
+    border: 2px solid var(--chat-avatar-border, #4FB0C6);
 }
 
 .dashboard-container .chat-container .chat-input {
@@ -55,13 +46,13 @@
 .dashboard-container .chat-container .chat-input input {
     width: 100%;
     padding: 15px 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--chat-input-border, #ddd);
     border-radius: 2.5px;
     outline: none;
 }
 
 .dashboard-container .chat-container .chat-input button {
-    background-color: #4FB0C6;
+    background-color: var(--chat-button-bg, #4FB0C6);
     border: transparent;
     color: #fff;
     border-radius: 2.5px;
@@ -71,73 +62,64 @@
 }
 
 .dashboard-container .chat-container .chat-input button:hover {
-    background-color: #4F86C6;
+    background-color: var(--chat-button-hover-bg, #4F86C6);
     transition: 0.5s;
-}.dashboard-container .chat-container {
-    width: calc(25%);
-    margin-left: 15px;
-    background-color: #fff;
-    border-radius: 5px;
-    padding: 15px;
 }
 
-.dashboard-container .chat-container .chat-messages {
-    height: calc(90% - 15px);
-    margin-bottom: 15px;
-    overflow: hidden;
-    overflow-y: auto;
+:root[data-theme="dark"] {
+    --chat-bg-color: #1e1e1e;
+    --chat-message-bg: #2a2a2a;
+    --chat-avatar-border: #3b8fa2;
+    --chat-input-border: #444444;
+    --chat-button-bg: #3b8fa2;
+    --chat-button-hover-bg: #336a92;
 }
 
-.dashboard-container .chat-container .chat-messages .chat-message {
-    margin-bottom: 5px;
-    padding: 5px;
-    background-color: #f5f5f5;
-    border-radius: 5px;
-}
-
-.dashboard-container .chat-container .chat-messages .chat-message .message-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 5px;
-}
-
-.dashboard-container .chat-container .chat-messages .chat-message .chat-avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #4FB0C6;
-}
-
-
-.dashboard-container .chat-container .chat-input {
-    height: 10%;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    justify-content: center;
-}
-
-.dashboard-container .chat-container .chat-input input {
+input {
     width: 100%;
     padding: 15px 10px;
-    border: 1px solid #ddd;
-    border-radius: 2.5px;
+    border: 1px solid var(--input-border-color, #ddd);
+    border-radius: 5px;
     outline: none;
+    background-color: var(--input-bg-color, #fff);
+    color: var(--input-text-color, #000);
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.dashboard-container .chat-container .chat-input button {
-    background-color: #4FB0C6;
-    border: transparent;
-    color: #fff;
-    border-radius: 2.5px;
+input:focus {
+    border-color: var(--input-focus-border-color, #4FB0C6);
+    box-shadow: 0 0 5px var(--input-focus-shadow-color, rgba(79, 176, 198, 0.5));
+}
+
+input::placeholder {
+    color: var(--input-placeholder-color, #aaa);
+}
+
+button {
     padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-bg-color, #4FB0C6);
+    color: var(--button-text-color, #fff);
     cursor: pointer;
-    transition: 0.5s;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
-.dashboard-container .chat-container .chat-input button:hover {
-    background-color: #4F86C6;
-    transition: 0.5s;
+button:hover {
+    background-color: var(--button-hover-bg-color, #4F86C6);
+}
+
+:root[data-theme="dark"] {
+    --input-border-color: #444444;
+    --input-bg-color: #1e1e1e;
+    --input-text-color: #f5f5f5;
+    --input-focus-border-color: #3b8fa2;
+    --input-focus-shadow-color: rgba(59, 143, 162, 0.5);
+    --input-placeholder-color: #888;
+
+    --button-bg-color: #3b8fa2;
+    --button-hover-bg-color: #336a92;
+    --button-text-color: #ffffff;
 }

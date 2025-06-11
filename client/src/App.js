@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
@@ -11,16 +13,36 @@ import { AvatarProvider } from "./context/AvatarContext";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Header from "./components/Header/Header";
-import Sidebar from "./components/Sidebar/Sidebar"
+import Sidebar from "./components/Sidebar/Sidebar";
 import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 import MainDashboard from "./components/MainDashboard/MainDashboard";
 import SettingsDashboard from "./components/SettingsDashboard/SettingsDashboard";
 
 function App() {
+    const [darkMode, setDarkMode] = useState(false);
+
+    const theme = createTheme({
+        palette: {
+            mode: darkMode ? "dark" : "light",
+        },
+    });
+
+    useEffect(() => {
+        if (darkMode) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    }, [darkMode]);
+
+    const toggleDarkMode = () => {
+        setDarkMode((prevMode) => !prevMode);
+    };
+
     const AppContent = () => {
         const session = useSession();
 
-        if(session.session?.id) {
+        if (session.session?.id) {
             return (
                 <>
                     <RoomDeviceProvider>
@@ -32,7 +54,7 @@ function App() {
                                     <Routes>
                                         <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
                                         <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-                                        <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard />} />} />
+                                        <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
                                         <Route path="/dashboard-test" element={<ProtectedRoute element={<h1>Dashboard 2</h1>} />} />
                                     </Routes>
                                 </section>
@@ -51,19 +73,22 @@ function App() {
 
                     <Route path="/profile" element={<ProtectedRoute />} />
                     <Route path="/dashboard-test" element={<ProtectedRoute />} />
-
                 </Routes>
             </>
         );
     };
+
     return (
-        <SessionProvider>
-            <Router>
-                <AlertProvider>
-                    <AppContent />
-                </AlertProvider>
-            </Router>
-        </SessionProvider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <SessionProvider>
+                <Router>
+                    <AlertProvider>
+                        <AppContent />
+                    </AlertProvider>
+                </Router>
+            </SessionProvider>
+        </ThemeProvider>
     );
 }
 
