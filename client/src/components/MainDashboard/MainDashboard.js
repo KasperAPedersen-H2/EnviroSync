@@ -14,8 +14,12 @@ const MainDashboard = () => {
     useEffect(() => {
         socketService.connect();
 
-        socketService.on("new-data", () => {
-            console.log("new data on main dashboard");
+        socketService.on("new-data", (data) => {
+            const { deviceId } = data;
+            if(deviceId !== selectedDevice) {
+                return;
+            }
+
             fetchData();
         })
 
