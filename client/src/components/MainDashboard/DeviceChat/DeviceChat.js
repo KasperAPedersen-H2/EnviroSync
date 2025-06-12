@@ -44,7 +44,7 @@ const DeviceChat = ({ deviceId }) => {
 
     const sendMessage = async () => {
         if (!newMessageText.trim()) return;
-
+        console.log(deviceId);
         try {
             const response = await fetch(`http://localhost:5000/message/send`, {
                 method: "POST",

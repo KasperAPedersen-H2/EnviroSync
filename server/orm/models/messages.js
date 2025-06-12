@@ -12,7 +12,7 @@ let Messages = sequelize.define('messages', {
         allowNull: false,
         references: {
             model: 'devices',
-            key: 'id'
+            key: 'serial_number'
         }
     },
     user_id: {
