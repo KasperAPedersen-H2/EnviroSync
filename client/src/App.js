@@ -7,7 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import SessionProvider, { useSession } from "./context/SessionProvider";
 import RoomDeviceProvider from "./context/RoomDeviceContext";
 import { AlertProvider } from "./context/AlertContext";
-
+import DataLimitProvider from "./context/DataLimitContext";
 import { AvatarProvider } from "./context/AvatarContext";
 
 import Login from "./components/Login/Login";
@@ -46,19 +46,21 @@ function App() {
             return (
                 <>
                     <RoomDeviceProvider>
-                        <AvatarProvider>
-                            <Sidebar />
-                            <main>
-                                <Header />
-                                <section className="dashboard-container">
-                                    <Routes>
-                                        <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
-                                        <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
-                                        <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
-                                    </Routes>
-                                </section>
-                            </main>
-                        </AvatarProvider>
+                        <DataLimitProvider>
+                            <AvatarProvider>
+                                <Sidebar />
+                                <main>
+                                    <Header />
+                                    <section className="dashboard-container">
+                                        <Routes>
+                                            <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
+                                            <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
+                                            <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
+                                        </Routes>
+                                    </section>
+                                </main>
+                            </AvatarProvider>
+                        </DataLimitProvider>
                     </RoomDeviceProvider>
                 </>
             );

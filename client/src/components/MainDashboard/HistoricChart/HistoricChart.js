@@ -13,11 +13,15 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import "./HistoricChart.css";
+import { useDataLimit } from "../../../context/DataLimitContext"; // Import context
+
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale, Filler);
 
 const HistoricChart = ({ deviceId, selectedDataType }) => {
     const [chartData, setChartData] = useState(null);
+    const { dataLimit } = useDataLimit(); // Hent context
+
 
     useEffect(() => {
         socketService.connect();
@@ -46,7 +50,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
 
                 const data = await response.json();
 
-                const limitedData = data.slice(-20);
+                const limitedData = data.slice(-dataLimit);
 
                 const labels = limitedData.map(d => new Date(d.createdAt).toLocaleString());
                 const dataSets = {
@@ -84,7 +88,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
             socketService.disconnect();
         };
 
-    }, [deviceId, selectedDataType]);
+    }, [deviceId, selectedDataType, dataLimit]);
 
     if (!chartData) return <div className="chart-container"><p className="no-device-selected">Select device to display charts</p></div>;
 
