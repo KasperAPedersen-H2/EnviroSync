@@ -8,7 +8,7 @@ let Messages = sequelize.define('messages', {
         primaryKey: true
     },
     device_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         references: {
             model: 'devices',

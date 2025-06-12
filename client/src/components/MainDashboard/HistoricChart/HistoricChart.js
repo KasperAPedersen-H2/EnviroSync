@@ -46,7 +46,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
 
                 const data = await response.json();
 
-                const limitedData = data.slice(-10);
+                const limitedData = data.slice(-20);
 
                 const labels = limitedData.map(d => new Date(d.createdAt).toLocaleString());
                 const dataSets = {
