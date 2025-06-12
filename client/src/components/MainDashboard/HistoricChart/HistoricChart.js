@@ -23,6 +23,21 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
     const { dataLimit } = useDataLimit(); // Hent context
 
 
+    const getYAxisLabel = (dataType) => {
+        switch (dataType) {
+            case 'temperature':
+                return 'Celsius (°C)';
+            case 'humidity':
+                return 'Humidity (%)';
+            case 'pressure':
+                return 'Pressure (hPa)';
+            case 'tvoc':
+                return 'TVOC (ppb)';
+            default:
+                return 'Value';
+        }
+    };
+
     useEffect(() => {
         socketService.connect();
 
@@ -119,7 +134,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                             beginAtZero: true,
                             title: {
                                 display: true,
-                                text: "Value",
+                                text: getYAxisLabel(selectedDataType),
                             },
                         },
                     },

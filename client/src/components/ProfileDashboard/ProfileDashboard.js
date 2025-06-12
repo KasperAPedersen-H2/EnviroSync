@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SecurityIcon from '@mui/icons-material/Security';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
@@ -14,8 +15,13 @@ const ProfileDashboard = () => {
     const [avatar, setAvatar] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const session = useSessionCheck();
     const { globalAvatar, setGlobalAvatar } = useAvatar();
+    const [editFormData, setEditFormData] = useState({
+        username: '',
+        email: ''
+    });
 
 
     useEffect(() => {
@@ -37,6 +43,11 @@ const ProfileDashboard = () => {
                                 setPreviewUrl(`data:image/png;base64,${userData.avatar}`);
                                 setGlobalAvatar(userData.avatar);
                             }
+
+                            setEditFormData({
+                                username: userData.username || '',
+                                email: userData.email || ''
+                            });
                         }
                     } catch (error) {
                         console.error("Error fetching user data:", error);
@@ -94,12 +105,56 @@ const ProfileDashboard = () => {
     const triggerFileInput = () => {
         document.getElementById('avatar-upload').click();
     };
-  
+
+    const handeEditProfile = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsModalOpen(false);
+    }
+
+    const handleEditFormChange = (event) => {
+        const { name, value } = event.target;
+        setEditFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    }
+
+    const handleEditFormSubmit = async (event) => {
+        event.preventDefault();
+        console.log(editFormData);
+
+        try {
+            console.log('awaiting fetch');
+            const response = await fetch(`http://localhost:5000/user/${session?.id}/edit`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify(editFormData)
+            });
+
+            if (response.ok) {
+                closeEditModal();
+                window.location.reload();
+            } else {
+                throw new Error('Profile update failed');
+            }
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+    };
+
+
+
     return (
         <section className="profile-dashboard">
-            <div className="profile-card">
-                <div className="profile-header">
-                    <div className="profile-avatar">
+            <article className="profile-card">
+                <section className="profile-header">
+                    <section className="profile-avatar">
                         <h1 className="title">Change Avatar</h1>
                         <article>
                             <figure onClick={triggerFileInput}>
@@ -126,14 +181,14 @@ const ProfileDashboard = () => {
                                 )}
                             </form>
                         </article>
-                    </div>
-                    <div className="profile-info">
+                    </section>
+                    <section className="profile-info">
                         <h2>{session?.username || "Username not available"}</h2>
-                    </div>
-                </div>
+                    </section>
+                </section>
 
-                <div className="profile-details">
-                    <div className="profile-section">
+                <section className="profile-details">
+                    <article className="profile-article">
                         <h3>
                             <PersonIcon className="section-icon" />
                             Account Information
@@ -142,9 +197,9 @@ const ProfileDashboard = () => {
                             <label>Username:</label>
                             <span>{session?.username || "Not available"}</span>
                         </div>
-                    </div>
+                    </article>
 
-                    <div className="profile-section">
+                    <article className="profile-article">
                         <h3>
                             <SecurityIcon className="section-icon" />
                             Security
@@ -156,10 +211,10 @@ const ProfileDashboard = () => {
                         <button className="btn change-password">
                             Change Password
                         </button>
-                    </div>
-                </div>
+                    </article>
+                </section>
 
-                <div className="profile-section future-section">
+                <article className="profile-article future-section">
                     <h3>
                         <BadgeIcon className="section-icon" />
                         Additional Information
@@ -167,14 +222,53 @@ const ProfileDashboard = () => {
                     <p className="placeholder-text">
                         Section reserved for when additional user information or fields are required
                     </p>
-                </div>
+                </article>
 
-                <div className="profile-actions">
-                    <button className="btn primary">
+                <footer className="profile-actions">
+                    <button className="btn primary" onClick={handeEditProfile}>
                         <EditIcon className="btn-icon" /> Edit Profile
                     </button>
+                </footer>
+            </article>
+
+            {isModalOpen && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h2>Edit Profile</h2>
+                            <button className="close-modal-btn" onClick={closeEditModal}>
+                                <CloseIcon />
+                            </button>
+                        </div>
+                        <form onSubmit={handleEditFormSubmit} className="edit-profile-form">
+                            <div className="form-group">
+                                <label htmlFor="username">Username</label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    value={editFormData.username}
+                                    onChange={handleEditFormChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={editFormData.email}
+                                    onChange={handleEditFormChange}
+                                />
+                            </div>
+                            <div className="modal-actions">
+                                <button type="button" className="btn secondary" onClick={closeEditModal}>Cancel</button>
+                                <button type="submit" className="btn primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            )}
         </section>
     );
 };
