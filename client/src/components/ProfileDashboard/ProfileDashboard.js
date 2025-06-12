@@ -25,7 +25,7 @@ const ProfileDashboard = () => {
             } else {
                 const fetchUserData = async () => {
                     try {
-                        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}`, {
+                        const response = await fetch(`http://${window.location.hostname}:5000/user/${session?.id}`, {
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem("token")}`,
                             },
@@ -69,7 +69,7 @@ const ProfileDashboard = () => {
         formData.append('avatar', avatar);
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}/avatar`, {
+            const response = await fetch(`http://${window.location.hostname}:5000/user/${session?.id}/avatar`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,

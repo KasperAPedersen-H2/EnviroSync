@@ -17,7 +17,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/login`, {
+            const response = await fetch(`http://${window.location.hostname}:5000/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
