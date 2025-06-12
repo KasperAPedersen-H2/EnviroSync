@@ -12,7 +12,7 @@ let Data = sequelize.define('data', {
         allowNull: false,
         references: {
             model: 'devices',
-            key: 'id'
+            key: 'serial_number'
         }
     },
     temperature: {

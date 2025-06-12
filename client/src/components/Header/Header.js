@@ -21,7 +21,7 @@ const Header = () => {
             try {
                 if(!session?.id) return;
 
-                const response = await fetch(`http://localhost:5000/user/${session?.id}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -46,7 +46,7 @@ const Header = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch("http://localhost:5000/room/all", {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
@@ -71,7 +71,7 @@ const Header = () => {
 
         (async () => {
             try {
-                const response = await fetch(`http://localhost:5000/device/${selectedRoom}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/device/${selectedRoom}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
