@@ -29,7 +29,6 @@ router.get("/:roomId/devices", async (req, res) => {
 
         return res.status(200).json(devices);
     } catch (error) {
-        console.error("Error fetching devices for room:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
@@ -46,7 +45,6 @@ router.post("/", async (req, res) => {
         const newRoom = await Models.Rooms.create({ name, user_id });
         return res.status(201).json(newRoom);
     } catch (error) {
-        console.error("Error creating room:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
@@ -71,7 +69,6 @@ router.put("/:roomId", async (req, res) => {
 
         return res.status(200).json(room);
     } catch (error) {
-        console.error("Error updating room:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
@@ -90,7 +87,6 @@ router.delete("/:roomId", async (req, res) => {
 
         return res.status(200).json({ message: "Room deleted successfully" });
     } catch (error) {
-        console.error("Error deleting room:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
