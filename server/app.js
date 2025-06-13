@@ -17,15 +17,14 @@ import devicesRoute from './routes/devices.js';
 const app = new Express();
 DotEnv.config();
 
-const allowedDomains = [
-    'https://es.launchify.dk',
-    'http://167.172.185.146'
-];
+const allowedDomains = process.env.ALLOWED_DOMAINS
+    ? process.env.ALLOWED_DOMAINS.split(',')
+    : ['https://es.launchify.dk'];
 
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || allowedDomains.some(domain => origin.startsWith(domain))) {
-            callback(null, true); // Tillad oprindelsen
+            callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }

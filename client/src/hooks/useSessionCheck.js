@@ -12,7 +12,7 @@ const useSessionCheck = () => {
         }
     }, [session, navigate]);
 
-    return session; // Returnér session, hvis nødvendigt
+    return session;
 };
 
 export default useSessionCheck;
