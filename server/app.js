@@ -17,7 +17,10 @@ import devicesRoute from './routes/devices.js';
 const app = new Express();
 DotEnv.config();
 
-const allowedDomains = process.env.ALLOWED_DOMAINS ? process.env.ALLOWED_DOMAINS.split(',') : [];
+
+const allowedDomains = process.env.ALLOWED_DOMAINS
+    ? process.env.ALLOWED_DOMAINS.split(',')
+    : ['https://es.launchify.dk'];
 
 app.use(cors({
     origin: (origin, callback) => {
