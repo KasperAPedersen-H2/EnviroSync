@@ -17,9 +17,7 @@ import devicesRoute from './routes/devices.js';
 const app = new Express();
 DotEnv.config();
 
-const allowedDomains = process.env.ALLOWED_DOMAINS
-    ? process.env.ALLOWED_DOMAINS.split(',')
-    : ['https://es.launchify.dk'];
+const allowedDomains = process.env.ALLOWED_DOMAINS ? process.env.ALLOWED_DOMAINS.split(',') : ['https://es.launchify.dk'];
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -29,7 +27,7 @@ app.use(cors({
             callback(new Error('Not allowed by CORS'));
         }
     },
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }));
 
