@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import useSessionCheck from "../../hooks/useSessionCheck";
 import "./ProfileDashboard.css";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SecurityIcon from '@mui/icons-material/Security';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
@@ -22,7 +22,10 @@ const ProfileDashboard = () => {
         username: '',
         email: ''
     });
-
+    const [expandedFields, setExpandedFields] = useState({
+        username: false,
+        email: false
+    });
 
     useEffect(() => {
         if (session?.id) {
@@ -122,6 +125,13 @@ const ProfileDashboard = () => {
         }));
     }
 
+    const toggleField = (fieldName) => {
+        setExpandedFields(prev => ({
+            ...prev,
+            [fieldName]: !prev[fieldName]
+        }));
+    }
+
     const handleEditFormSubmit = async (event) => {
         event.preventDefault();
         console.log(editFormData);
@@ -148,14 +158,11 @@ const ProfileDashboard = () => {
         }
     };
 
-
-
     return (
         <section className="profile-dashboard">
             <article className="profile-card">
                 <section className="profile-header">
                     <section className="profile-avatar">
-                        <h1 className="title">Change Avatar</h1>
                         <article>
                             <figure onClick={triggerFileInput}>
                                 <div>
@@ -182,37 +189,35 @@ const ProfileDashboard = () => {
                             </form>
                         </article>
                     </section>
-                    <section className="profile-info">
-                        <h2>{session?.username || "Username not available"}</h2>
+                    <section className="profile-details">
+                        <article className="profile-article">
+                            <h3>
+                                <PersonIcon className="section-icon" />
+                                Account Information
+                            </h3>
+                            <div className="profile-field">
+                                <label>Username:</label>
+                                <span>{session?.username || "Not available"}</span>
+                            </div>
+                        </article>
+
+                        <article className="profile-article">
+                            <h3>
+                                <SecurityIcon className="section-icon" />
+                                Security
+                            </h3>
+                            <div className="profile-field">
+                                <label>Password:</label>
+                                <span>*********</span>
+                            </div>
+                            <button className="btn change-password">
+                                Change Password
+                            </button>
+                        </article>
                     </section>
                 </section>
 
-                <section className="profile-details">
-                    <article className="profile-article">
-                        <h3>
-                            <PersonIcon className="section-icon" />
-                            Account Information
-                        </h3>
-                        <div className="profile-field">
-                            <label>Username:</label>
-                            <span>{session?.username || "Not available"}</span>
-                        </div>
-                    </article>
 
-                    <article className="profile-article">
-                        <h3>
-                            <SecurityIcon className="section-icon" />
-                            Security
-                        </h3>
-                        <div className="profile-field">
-                            <label>Password:</label>
-                            <span>*********</span>
-                        </div>
-                        <button className="btn change-password">
-                            Change Password
-                        </button>
-                    </article>
-                </section>
 
                 <article className="profile-article future-section">
                     <h3>
@@ -241,25 +246,37 @@ const ProfileDashboard = () => {
                             </button>
                         </div>
                         <form onSubmit={handleEditFormSubmit} className="edit-profile-form">
-                            <div className="form-group">
-                                <label htmlFor="username">Username</label>
-                                <input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    value={editFormData.username}
-                                    onChange={handleEditFormChange}
-                                />
+                            <div className={`form-group dropdown ${expandedFields.username ? 'expanded' : ''}`}>
+                                <div className="dropdown-header" onClick={() => toggleField('username')}>
+                                    <label htmlFor="username">Change Username</label>
+                                    <KeyboardArrowDownIcon className="dropdown-icon" />
+                                </div>
+                                <div className="dropdown-content">
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        name="username"
+                                        value={editFormData.username}
+                                        onChange={handleEditFormChange}
+                                        placeholder="Enter new username"
+                                    />
+                                </div>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    value={editFormData.email}
-                                    onChange={handleEditFormChange}
-                                />
+                            <div className={`form-group dropdown ${expandedFields.email ? 'expanded' : ''}`}>
+                                <div className="dropdown-header" onClick={() => toggleField('email')}>
+                                    <label htmlFor="email">Change Email</label>
+                                    <KeyboardArrowDownIcon className="dropdown-icon" />
+                                </div>
+                                <div className="dropdown-content">
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={editFormData.email}
+                                        onChange={handleEditFormChange}
+                                        placeholder="Enter new email"
+                                    />
+                                </div>
                             </div>
                             <div className="modal-actions">
                                 <button type="button" className="btn secondary" onClick={closeEditModal}>Cancel</button>

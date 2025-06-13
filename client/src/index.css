@@ -1,15 +1,23 @@
 :root {
-    --dark-green: #17301C;
+    --dark-blue: #14283D;
     --dark-cyan: #379392;
     --moonstone: #4FB0C6;
     --silver-lake-blue: #4F86C6;
     --light-bg: #f7f7f7;
+    --light-bg-hover: #e7e7e7;
+    --primary-button-bg: #4FB0C6;
+    --primary-button-bg-hover: #379392;
+    --secondary-button-bg: #f7f7f7;
+    --secondary-button-bg-hover: #e7e7e7;
     --white: #ffffff;
     --text-dark: #333333;
     --text-medium: #555555;
     --text-light: #777777;
     --error-light: #ff9595;
     --error-dark: #ff3636;
+
+    --border: #eee;
+    --border-focus: #4FB0C6;
 
     --headerHeight: 75px;
     --sidebarWidth: 200px;
