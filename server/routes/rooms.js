@@ -10,7 +10,6 @@ router.get("/all", async (req, res) => {
         const rooms = await Models.Rooms.findAll({ where: { user_id: id } });
         return res.status(200).json(rooms);
     } catch (error) {
-        console.error("Error fetching rooms:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });
