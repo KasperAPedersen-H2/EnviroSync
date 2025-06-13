@@ -7,7 +7,7 @@ class SocketService {
 
     connect() {
         if (!this.socket) {
-            this.socket = openSocket("http://localhost:5000");
+            this.socket = openSocket(process.env.REACT_APP_SERVER_URL);
         }
     }
 
