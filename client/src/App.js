@@ -17,7 +17,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 import MainDashboard from "./components/MainDashboard/MainDashboard";
 import SettingsDashboard from "./components/SettingsDashboard/SettingsDashboard";
-import DeviceDashboard from "./components/DeviceDashboard/DeviceDashboard";
+
 function App() {
     const [darkMode, setDarkMode] = useState(false);
 
@@ -56,8 +56,6 @@ function App() {
                                             <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
                                             <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
                                             <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
-                                            <Route path="/manage" element={<ProtectedRoute element={<DeviceDashboard />} />} />
-
                                         </Routes>
                                     </section>
                                 </main>

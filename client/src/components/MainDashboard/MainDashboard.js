@@ -62,22 +62,22 @@ const MainDashboard = () => {
                 <section className="live">
                     <article className="card" onClick={() => handleCardClick("temperature")}>
                         <p>Temperature</p>
-                        <p>{liveData && liveData.temperature}°</p>
+                        <p>{liveData && liveData.temperature}</p>
                     </article>
 
                     <article className="card" onClick={() => handleCardClick("humidity")}>
                         <p>Humidity</p>
-                        <p>{liveData && liveData.humidity}%</p>
+                        <p>{liveData && liveData.humidity}</p>
                     </article>
 
                     <article className="card" onClick={() => handleCardClick("pressure")}>
                         <p>Pressure</p>
-                        <p>{liveData && liveData.pressure}ppm</p>
+                        <p>{liveData && liveData.pressure}</p>
                     </article>
 
                     <article className="card" onClick={() => handleCardClick("tvoc")}>
-                        <p>TVOC</p>
-                        <p>{liveData && liveData.tvoc}ppb</p>
+                        <p>TVOC (ppb)</p>
+                        <p>{liveData && liveData.tvoc}</p>
                     </article>
                 </section>
 
