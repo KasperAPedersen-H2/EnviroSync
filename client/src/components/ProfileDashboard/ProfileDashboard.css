@@ -430,6 +430,7 @@
     --light-bg: #3a3a3a;
     --light-bg-hover: #4a4a4a;
     --border: #444444;
+
 }
 
 @media (max-width: 768px) {
