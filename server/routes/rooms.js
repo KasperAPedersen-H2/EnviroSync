@@ -10,12 +10,12 @@ router.get("/all", async (req, res) => {
         const rooms = await Models.Rooms.findAll({ where: { user_id: id } });
         return res.status(200).json(rooms);
     } catch (error) {
-        console.error('Error fetching rooms:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        console.error("Error fetching rooms:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
 
-router.get('/:roomId/devices', async (req, res) => {
+router.get("/:roomId/devices", async (req, res) => {
     const { roomId } = req.params;
 
     try {
@@ -24,13 +24,74 @@ router.get('/:roomId/devices', async (req, res) => {
         });
 
         if (!devices.length) {
-            return res.status(404).json({ message: 'No devices found for this room' });
+            return res.status(404).json({ message: "No devices found for this room" });
         }
 
         return res.status(200).json(devices);
     } catch (error) {
-        console.error('Error fetching devices for room:', error);
-        return res.status(500).json({ message: 'Internal server error' });
+        console.error("Error fetching devices for room:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.post("/", async (req, res) => {
+    const { name } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ message: "Room name is required" });
+    }
+
+    try {
+        const { id: user_id } = req.user;
+        const newRoom = await Models.Rooms.create({ name, user_id });
+        return res.status(201).json(newRoom);
+    } catch (error) {
+        console.error("Error creating room:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.put("/:roomId", async (req, res) => {
+    const { roomId } = req.params;
+    const { name } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ message: "Room name is required" });
+    }
+
+    try {
+        const room = await Models.Rooms.findByPk(roomId);
+
+        if (!room) {
+            return res.status(404).json({ message: "Room not found" });
+        }
+
+        room.name = name;
+        await room.save();
+
+        return res.status(200).json(room);
+    } catch (error) {
+        console.error("Error updating room:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+router.delete("/:roomId", async (req, res) => {
+    const { roomId } = req.params;
+
+    try {
+        const room = await Models.Rooms.findByPk(roomId);
+
+        if (!room) {
+            return res.status(404).json({ message: "Room not found" });
+        }
+
+        await room.destroy();
+
+        return res.status(200).json({ message: "Room deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting room:", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 });
 
