@@ -65,4 +65,44 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
     }
 });
 
+router.put("/:id/edit", async (req, res) => {
+    const { id } = req.params;
+    const { username, email } = req.body;
+    console.log(req.body);
+
+
+    try {
+        const user = await Models.Users.findOne({
+            where: { id }
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User data not found" });
+        }
+        console.log("User found:", user);
+
+        await user.update({
+            username: username || user.username,
+            email: email || user.email
+        });
+        console.log("User updated:", user);
+
+        const updatedUserData = {
+            id: user.id,
+            username: user.username,
+            email: user.email
+        };
+        console.log("Updated user data:", updatedUserData);
+
+        return res.status(200).json(updatedUserData);
+    } catch (error) {
+        console.error("Error fetching user:", error);
+
+        if (error.name === 'SequelizeUniqueConstraintError') {
+            return res.status(409).json({ message: "Username already exists" });
+        }
+
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 export default router;

@@ -14,6 +14,11 @@ const Sidebar = () => {
                     <DashboardIcon />
                     Dashboard
                 </Link>
+
+                <Link to="/manage" className="sidebar-link">
+                    <DashboardIcon />
+                    Management
+                </Link>
             </nav>
         </aside>
     );
