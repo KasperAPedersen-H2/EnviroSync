@@ -179,7 +179,7 @@ const ManagementDashboard = () => {
     };
 
     return (
-        <Box sx={{  }}>
+        <Box sx={{  }} className="management-dashboard">
             <Box
                 sx={{
                     display: "flex",
@@ -198,7 +198,7 @@ const ManagementDashboard = () => {
                                 marginBottom: 2,
                             }}
                         >
-                            <Typography variant="h5" sx={{ color: "var(--text-dark)" }}>
+                            <Typography variant="h5" sx={{ color: "var(--text-color-h5)" }}>
                                 Rooms
                             </Typography>
                             <Button
@@ -209,9 +209,9 @@ const ManagementDashboard = () => {
                                 onClick={() => setRoomModalOpen(true)}
                                 sx={{
                                     padding: "6px 16px",
-                                    backgroundColor: "var(--moonstone)",
+                                    backgroundColor: "var(--btn-bg)",
                                     fontWeight: "bold",
-                                    "&:hover": { backgroundColor: "var(--silver-lake-blue)" },
+                                    "&:hover": { backgroundColor: "var(--btn-bg-hover)" },
                                 }}
                             >
                                 Add Room
@@ -273,7 +273,7 @@ const ManagementDashboard = () => {
                                 marginBottom: 2,
                             }}
                         >
-                            <Typography variant="h5" sx={{ color: "var(--text-dark)" }}>
+                            <Typography variant="h5" sx={{ color: "var(--text-color-h5)" }}>
                                 Devices
                             </Typography>
 
@@ -306,9 +306,9 @@ const ManagementDashboard = () => {
                                 onClick={() => setDeviceModalOpen(true)}
                                 sx={{
                                     padding: "6px 16px",
-                                    backgroundColor: "var(--moonstone)",
+                                    backgroundColor: "var(--btn-bg)",
                                     fontWeight: "bold",
-                                    "&:hover": { backgroundColor: "var(--silver-lake-blue)" },
+                                    "&:hover": { backgroundColor: "var(--btn-bg-hover)" },
                                 }}
                             >
                                 Add Device
@@ -382,7 +382,7 @@ const ManagementDashboard = () => {
                 <Box
                     sx={{
                         padding: 4,
-                        backgroundColor: "white",
+                        backgroundColor: "var(--card-bg)",
                         width: "30%",
                         margin: "20vh auto",
                         borderRadius: "8px",
@@ -402,7 +402,7 @@ const ManagementDashboard = () => {
                     <Button
                         variant="contained"
                         onClick={handleAddRoom}
-                        sx={{ backgroundColor: "var(--moonstone)" }}
+                        sx={{ backgroundColor: "var(--btn-bg)" }}
                     >
                         Create Room
                     </Button>
@@ -417,7 +417,7 @@ const ManagementDashboard = () => {
                 <Box
                     sx={{
                         padding: 4,
-                        backgroundColor: "white",
+                        backgroundColor: "var(--card-bg)",
                         width: "30%",
                         margin: "20vh auto",
                         borderRadius: "8px",
@@ -468,7 +468,7 @@ const ManagementDashboard = () => {
                         color="secondary"
                         onClick={handleAddDevice}
                         disabled={!newDeviceName || !newDeviceSerial || !selectedRoomForDevice}
-                        sx={{ backgroundColor: "var(--moonstone)" }}
+                        sx={{ backgroundColor: "var(--btn-bg)" }}
                     >
                         Create Device
                     </Button>
@@ -477,7 +477,7 @@ const ManagementDashboard = () => {
 
             {/* Edit Room Modal */}
             <Modal open={editRoomModalOpen} onClose={() => setEditRoomModalOpen(false)}>
-                <Box sx={{ padding: 4, backgroundColor: "white", margin: "20vh auto", width: "30%" }}>
+                <Box sx={{ padding: 4, backgroundColor: "var(--card-bg)", margin: "20vh auto", width: "30%" }}>
                     <Typography variant="h6">Edit Room</Typography>
                     <TextField
                         fullWidth
@@ -489,7 +489,7 @@ const ManagementDashboard = () => {
                     <Button
                         variant="contained"
                         onClick={handleEditRoom}
-                        sx={{ backgroundColor: "var(--moonstone)" }}
+                        sx={{ backgroundColor: "var(--btn-bg)" }}
                     >
                         Save Changes
                     </Button>
@@ -498,7 +498,7 @@ const ManagementDashboard = () => {
 
             {/* Edit Device Modal */}
             <Modal open={editDeviceModalOpen} onClose={() => setEditDeviceModalOpen(false)}>
-                <Box sx={{ padding: 4, backgroundColor: "white", margin: "20vh auto", width: "30%" }}>
+                <Box sx={{ padding: 4, backgroundColor: "var(--card-bg)", margin: "20vh auto", width: "30%" }}>
                     <Typography variant="h6">Edit Device</Typography>
                     <TextField
                         fullWidth
@@ -528,7 +528,7 @@ const ManagementDashboard = () => {
                     <Button
                         variant="contained"
                         onClick={handleEditDevice}
-                        sx={{ backgroundColor: "var(--moonstone)" }}
+                        sx={{ backgroundColor: "var(--btn-bg)" }}
                     >
                         Save Changes
                     </Button>
