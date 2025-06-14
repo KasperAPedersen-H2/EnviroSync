@@ -5,10 +5,10 @@
 
 .main-dashboard .live {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     width: 100%;
     gap: 15px;
-    height: 100px;
+    min-height: 100px;
 }
 
 .main-dashboard .live .card {

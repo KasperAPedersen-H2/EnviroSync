@@ -49,3 +49,20 @@
     --sidebar-hover-bg: #333333; /* Mørk hover-effekt for link */
     --sidebar-link-hover-color: #ffffff; /* Hvid hover-tekstfarve */
 }
+@media only screen and (max-width: 768px) {
+    .sidebar {
+        --sidebarWidth: 100vw;
+        height:var(--headerHeight);
+
+        display: flex;
+    }
+
+    .sidebar .logo {
+        height: 100%;
+        width: var(--headerHeight);
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+    }
+}

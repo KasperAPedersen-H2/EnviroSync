@@ -123,3 +123,9 @@ button:hover {
     --button-hover-bg-color: #336a92;
     --button-text-color: #ffffff;
 }
+
+@media only screen and (max-width: 768px) {
+    .dashboard-container .chat-container {
+        display: none;
+    }
+}
