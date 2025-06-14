@@ -1,21 +1,28 @@
 import React from 'react';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import { useAlert } from "../../../context/AlertContext";
 
 const EditRoomModal = ({ editRoomModalOpen, setEditRoomModalOpen, currentRoom, setCurrentRoom, setRooms, rooms }) => {
+    const { showAlert } = useAlert();
 
     const handleEditRoom = async () => {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${currentRoom.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({ name: currentRoom.name }),
-        });
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${currentRoom.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({ name: currentRoom.name }),
+            });
 
-        const updatedRoom = await response.json();
-        setRooms(rooms.map((room) => (room.id === updatedRoom.id ? updatedRoom : room)));
-        setEditRoomModalOpen(false);
+            const updatedRoom = await response.json();
+            setRooms(rooms.map((room) => (room.id === updatedRoom.id ? updatedRoom : room)));
+            setEditRoomModalOpen(false);
+            showAlert("success", "Room updated successfully");
+        } catch(error) {
+            showAlert("error", "Failed to update room");
+        }
     };
 
     return (

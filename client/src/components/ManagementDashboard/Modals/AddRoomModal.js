@@ -1,23 +1,30 @@
 import React, {useState} from 'react';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import { useAlert } from "../../../context/AlertContext";
 
-const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms }) => {
-  const [newRoomName, setNewRoomName] = useState("");
+const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
+    const [newRoomName, setNewRoomName] = useState("");
+    const { showAlert } = useAlert();
 
-  const handleAddRoom = async () => {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({name: newRoomName, user_id: 1}),
-        });
+    const handleAddRoom = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({name: newRoomName, user_id: 1}),
+            });
 
-        const newRoom = await response.json();
-        setRooms([...rooms, newRoom]);
-        setNewRoomName("");
-        setRoomModalOpen(false);
+            const newRoom = await response.json();
+            setRooms([...rooms, newRoom]);
+            setNewRoomName("");
+            setRoomModalOpen(false);
+            showAlert("success", "Room created successfully");
+        } catch (error) {
+            showAlert("error", "Failed to create room");
+        }
     };
 
     return (

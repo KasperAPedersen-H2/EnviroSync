@@ -17,6 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import'./ManagementDashboard.css';
+import { useAlert } from "../../context/AlertContext";
 
 // Modals
 import AddRoomModal from "./Modals/AddRoomModal";
@@ -34,27 +35,32 @@ const ManagementDashboard = () => {
     const [currentRoom, setCurrentRoom] = useState({});
     const [currentDevice, setCurrentDevice] = useState({});
     const [selectedFilterRoom, setSelectedFilterRoom] = useState("");
+    const { showAlert } = useAlert();
 
     useEffect(() => {
         const fetchRoomsAndDevices = async () => {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-            const roomsData = await response.json();
-            setRooms(roomsData);
-
-            const devicesPromises = roomsData.map(room =>
-                fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
+            try {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                })
-                    .then(response => response.json())
-                    .then(devices => devices || [])
-                    .catch(() => [])
-            );
+                });
+                const roomsData = await response.json();
+                setRooms(roomsData);
 
-            const devicesArrays = await Promise.all(devicesPromises);
-            const allDevices = devicesArrays.flat();
-            setDevices(allDevices || []);
+                const devicesPromises = roomsData.map(room =>
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                    })
+                        .then(response => response.json())
+                        .then(devices => devices || [])
+                        .catch(() => [])
+                );
+
+                const devicesArrays = await Promise.all(devicesPromises);
+                const allDevices = devicesArrays.flat();
+                setDevices(allDevices || []);
+            } catch (error) {
+                console.error("Error fetching rooms and devices!");
+            }
         };
 
 
@@ -63,21 +69,31 @@ const ManagementDashboard = () => {
 
 
     const handleDeleteRoom = async (roomId) => {
-        await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${roomId}`, {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        try {
+            await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${roomId}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
 
-        setRooms(rooms.filter((room) => room.id !== roomId));
+            setRooms(rooms.filter((room) => room.id !== roomId));
+            showAlert("success", "Room deleted successfully");
+        } catch (error) {
+            showAlert("error", "Failed to delete room");
+        }
     };
 
     const handleDeleteDevice = async (deviceId) => {
-        await fetch(`${process.env.REACT_APP_SERVER_URL}/device/${deviceId}`, {
-            method: "DELETE",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+        try {
+            await fetch(`${process.env.REACT_APP_SERVER_URL}/device/${deviceId}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
 
-        setDevices(devices.filter((device) => device.id !== deviceId));
+            setDevices(devices.filter((device) => device.id !== deviceId));
+            showAlert("success", "Device deleted successfully");
+        } catch (error) {
+            showAlert("error", "Failed to delete device");
+        }
     };
 
     return (

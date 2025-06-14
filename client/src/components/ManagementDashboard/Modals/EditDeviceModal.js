@@ -1,7 +1,9 @@
 import React from 'react';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import { useAlert } from "../../../context/AlertContext";
 
 const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentDevice, setCurrentDevice, rooms, setRooms, setDevices }) => {
+    const { showAlert } = useAlert();
 
     const handleEditDevice = async () => {
         try {
@@ -19,10 +21,9 @@ const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentD
             });
 
             if (!response.ok) {
-                throw new Error('Failed to update device');
+                showAlert("error", "Failed to update device");
+                return;
             }
-
-            await response.json();
 
             // Fetch updated rooms data
             const updatedRoomsResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
@@ -46,8 +47,9 @@ const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentD
             setDevices(allDevices);
 
             setEditDeviceModalOpen(false);
+            showAlert("success", "Device updated successfully");
         } catch (error) {
-            console.error("Error updating device:", error);
+            showAlert("error", "Failed to update device");
         }
     };
 

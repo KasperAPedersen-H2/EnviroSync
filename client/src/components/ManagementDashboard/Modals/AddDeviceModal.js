@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import { useAlert } from "../../../context/AlertContext";
 
 const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, setDevices }) => {
     const [newDeviceName, setNewDeviceName] = useState("");
     const [selectedRoomForDevice, setSelectedRoomForDevice] = useState("");
     const [newDeviceSerial, setNewDeviceSerial] = useState("");
+    const { showAlert } = useAlert();
 
     const handleAddDevice = async () => {
         try {
@@ -22,19 +24,16 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
             });
 
             if (!response.ok) {
-                throw new Error('Failed to create device');
+                showAlert("error", "Failed to create device");
+                return;
             }
 
-            const newDevice = await response.json();
-
-            // Fetch updated rooms data
             const updatedRoomsResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
             const roomsData = await updatedRoomsResponse.json();
             setRooms(roomsData);
 
-            // Fetch devices for all rooms
             const devicesPromises = roomsData.map(room =>
                 fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -48,13 +47,13 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
             const allDevices = devicesArrays.flat();
             setDevices(allDevices);
 
-            // Reset form
             setNewDeviceName("");
             setNewDeviceSerial("");
             setSelectedRoomForDevice("");
             setDeviceModalOpen(false);
+            showAlert("success", "Device created successfully");
         } catch (error) {
-            console.error("Error adding device:", error);
+            showAlert("error", "Failed to create device");
         }
     };
 
