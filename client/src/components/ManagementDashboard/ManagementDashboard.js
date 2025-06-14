@@ -36,25 +36,31 @@ const ManagementDashboard = () => {
     const [selectedFilterRoom, setSelectedFilterRoom] = useState("");
 
     useEffect(() => {
-        const fetchRooms = async () => {
+        const fetchRoomsAndDevices = async () => {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            const data = await response.json();
-            setRooms(data);
+            const roomsData = await response.json();
+            setRooms(roomsData);
+
+            const devicesPromises = roomsData.map(room =>
+                fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                })
+                    .then(response => response.json())
+                    .then(devices => devices || [])
+                    .catch(() => [])
+            );
+
+            const devicesArrays = await Promise.all(devicesPromises);
+            const allDevices = devicesArrays.flat();
+            setDevices(allDevices || []);
         };
 
-        const fetchDevices = async () => {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/device`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-            const data = await response.json();
-            setDevices(data);
-        };
 
-        fetchRooms();
-        fetchDevices();
+        fetchRoomsAndDevices();
     }, []);
+
 
     const handleDeleteRoom = async (roomId) => {
         await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${roomId}`, {
@@ -139,7 +145,7 @@ const ManagementDashboard = () => {
                                 }}
                             >
 
-                                <option value="" disabled selected hidden></option>
+                                <option value="" disabled hidden></option>
                                 <option value="all">All Rooms</option>
                                 {rooms.map((room) => (
                                     <option key={room.id} value={room.id}>

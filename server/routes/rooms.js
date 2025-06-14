@@ -22,8 +22,8 @@ router.get("/:roomId/devices", async (req, res) => {
             where: { room_id: roomId }
         });
 
-        if (!devices.length) {
-            return res.status(404).json({ message: "No devices found for this room" });
+        if (!devices || devices.length === 0) {
+            return res.status(200).json([]);
         }
 
         return res.status(200).json(devices);
@@ -31,6 +31,7 @@ router.get("/:roomId/devices", async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+
 
 router.post("/", async (req, res) => {
     const { name } = req.body;

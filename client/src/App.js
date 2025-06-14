@@ -76,6 +76,7 @@ function App() {
 
                     <Route path="/profile" element={<ProtectedRoute />} />
                     <Route path="/settings" element={<ProtectedRoute />} />
+                    <Route path="/manage" element={<ProtectedRoute />} />
                 </Routes>
             </>
         );

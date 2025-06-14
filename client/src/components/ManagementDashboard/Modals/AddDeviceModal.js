@@ -21,21 +21,34 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
                 }),
             });
 
+            if (!response.ok) {
+                throw new Error('Failed to create device');
+            }
+
             const newDevice = await response.json();
 
+            // Fetch updated rooms data
             const updatedRoomsResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            const updatedRooms = await updatedRoomsResponse.json();
+            const roomsData = await updatedRoomsResponse.json();
+            setRooms(roomsData);
 
-            const updatedDevicesResponse = await fetch(`${process.env.REACT_APP_SERVER_URL}/device`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-            const updatedDevices = await updatedDevicesResponse.json();
+            // Fetch devices for all rooms
+            const devicesPromises = roomsData.map(room =>
+                fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                })
+                    .then(response => response.json())
+                    .then(devices => devices || [])
+                    .catch(() => [])
+            );
 
-            setRooms(updatedRooms);
-            setDevices(updatedDevices);
+            const devicesArrays = await Promise.all(devicesPromises);
+            const allDevices = devicesArrays.flat();
+            setDevices(allDevices);
 
+            // Reset form
             setNewDeviceName("");
             setNewDeviceSerial("");
             setSelectedRoomForDevice("");
@@ -91,7 +104,7 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
                         native: true,
                     }}
                 >
-                    <option value="" disabled selected hidden></option>
+                    <option value="" disabled hidden></option>
                     {rooms.map((room) => (
                         <option key={room.id} value={room.id}>
                             {room.name}
