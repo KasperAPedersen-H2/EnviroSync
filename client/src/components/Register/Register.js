@@ -5,7 +5,9 @@ import "./Register.css"; // Import af CSS-fil
 
 const Register = () => {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const navigate = useNavigate();
     const { showAlert } = useAlert();
 
@@ -16,7 +18,7 @@ const Register = () => {
             const response = await fetch(`http://${window.location.hostname}:5000/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username, email, password, passwordConfirm }),
             });
 
             if (response.ok) {
@@ -43,10 +45,25 @@ const Register = () => {
                         required
                     />
                     <input
+                        type="text"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="register-input"
+                    />
+                    <input
                         type="password"
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="register-input"
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="confirm password"
+                        value={passwordConfirm}Add commentMore actions
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
                         className="register-input"
                         required
                     />
