@@ -1,0 +1,40 @@
+.management-dashboard .container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.management-dashboard .card {
+    flex: 1;
+    min-width: calc(50% - 16px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.management-dashboard .card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.management-dashboard .card .card-header-title {
+    color: var(--text-color-h5);
+}
+
+.management-dashboard .card .card-header-button {
+    padding: 6px 16px;
+    background-color: var(--btn-bg);
+    font-weight: bold;
+}
+
+.management-dashboard .card .card-header-button:hover {
+    background-color: var(--btn-bg-hover);
+}
+
+.management-dashboard .card .table-head .table-cell {
+    font-weight: bold;
+}
+
+.management-dashboard .card .table-cell:last-of-type {
+    text-align: right;
+}
