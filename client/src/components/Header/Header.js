@@ -46,7 +46,7 @@ const Header = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}:5000/room/all`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/all`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
