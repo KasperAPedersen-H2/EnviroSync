@@ -25,7 +25,7 @@ const MainDashboard = () => {
 
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://${window.location.hostname}:5000/data/latest/${selectedDevice}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/data/latest/${selectedDevice}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },

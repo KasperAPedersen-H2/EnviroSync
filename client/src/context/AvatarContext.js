@@ -12,7 +12,7 @@ export const AvatarProvider = ({ children }) => {
             if (!session?.id) return;
 
             try {
-                const response = await fetch(`http://${window.location.hostname}:5000/user/${session.id}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session.id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },

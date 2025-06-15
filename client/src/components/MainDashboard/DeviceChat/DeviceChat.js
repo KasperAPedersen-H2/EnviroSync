@@ -22,7 +22,7 @@ const DeviceChat = ({ deviceId }) => {
             try {
                 if(!deviceId) return;
 
-                const response = await fetch(`http://${window.location.hostname}:5000/message/${deviceId}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/message/${deviceId}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -46,7 +46,7 @@ const DeviceChat = ({ deviceId }) => {
         if (!newMessageText.trim()) return;
         console.log(deviceId);
         try {
-            const response = await fetch(`http://${window.location.hostname}:5000/message/send`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/message/send`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -37,7 +37,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                     return;
                 }
 
-                const response = await fetch(`http://${window.location.hostname}:5000/data/${deviceId}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/data/${deviceId}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
