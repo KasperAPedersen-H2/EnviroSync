@@ -20,11 +20,11 @@ const Register = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password, passwordConfirm }),
             });
-
+            const re = await response.json();
             if (response.ok) {
                 navigate("/login");
             } else {
-                showAlert("error", "Registrering fejlede! Prøv igen.");
+                showAlert("error", re.message);
             }
         } catch (error) {
             console.error("Fejl:", error);
