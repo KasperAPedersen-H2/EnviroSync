@@ -1,18 +1,44 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import Models from '../orm/models.js';
+import { fn, col, where, Op } from 'sequelize';
 
 const router = Router();
 
 router.post('/', async (req, res) => {
-    const { username, password } = req.body;
-
-    if (!username || !password) {
-        return res.status(400).json({ message: "Username and password are required" });
-    }
+    const { username, email, password, passwordConfirm } = req.body;
 
     try {
-        const existingUser = await Models.Users.findOne({ where: { username } });
+        let errorMessages = "";
+        //chack data
+        if (!username || !email || !password || !passwordConfirm) {errorMessages = "Username, email and password are required."}
+        //Username chack
+        else if (username.length < 3 || username.length > 20) {errorMessages = "Username must be between 3 and 20 characters."}
+        else if (username.match(/[^a-zA-Z0-9]/)) {errorMessages = "Username must not contain special characters."}
+        //Email chack
+        else if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {errorMessages = "Invalid email address."}
+        //Password chack
+        else if (password.length < 8) {errorMessages = "Password must be at least 8 characters long";}
+        else if (password.length > 20) {errorMessages = "Password must be less than 20 characters long."}
+        else if (!password.match(/[0-9]/)) {errorMessages = "Password must contain at least one number."}
+        else if (!password.match(/[a-z]/)) {errorMessages = "Password must contain at least one lowercase letter."}
+        else if (!password.match(/[A-Z]/)) {errorMessages = "Password must contain at least one uppercase letter."}
+        else if (!password.match(/[^a-zA-Z0-9]/)) {errorMessages = "Password must contain at least one special character."}
+        else if (password !== passwordConfirm) {errorMessages = "Passwords do not match."}
+
+        if (errorMessages.length  > 0) {
+            return res.status(400).json({ message: errorMessages });
+        }
+
+        const existingUser = await Models.Users.findOne({
+            where: {
+                [Op.or]: [
+                    where(fn('lower', col('username')), fn('lower', username)),
+                    where(fn('lower', col('email')), fn('lower', email))
+                ]
+            }
+        });
+
         if (existingUser) {
             return res.status(409).json({ message: "Couldn't create user." });
         }
@@ -21,6 +47,7 @@ router.post('/', async (req, res) => {
 
         const newUser = await Models.Users.create({
             username,
+            email,
             password: hashedPassword,
         });
 
