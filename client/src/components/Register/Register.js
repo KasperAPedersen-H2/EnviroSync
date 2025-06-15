@@ -62,7 +62,7 @@ const Register = () => {
                     <input
                         type="password"
                         placeholder="confirm password"
-                        value={passwordConfirm}Add commentMore actions
+                        value={passwordConfirm}
                         onChange={(e) => setPasswordConfirm(e.target.value)}
                         className="register-input"
                         required
