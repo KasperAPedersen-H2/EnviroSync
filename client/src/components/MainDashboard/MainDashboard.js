@@ -73,7 +73,7 @@ const MainDashboard = () => {
             case "humidity":
                 return `${value}%`;
             case "pressure":
-                return `${value} hPa`;
+                return `${value} ppm`;
             case "tvoc":
                 return `${value} ppb`;
             default:
