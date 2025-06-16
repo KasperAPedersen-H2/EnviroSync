@@ -24,7 +24,8 @@
     "url": "git+https://github.com/KasperAPedersen-H2/EnviroSync-Frontend.git"
   },
   "author": "KasperAPedersen",
-  "license": "ISC",
+  "private": true,
+  "license": "Proprietary",
   "bugs": {
     "url": "https://github.com/KasperAPedersen-H2/EnviroSync-Frontend/issues"
   },
