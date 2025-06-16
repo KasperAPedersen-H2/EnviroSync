@@ -31,7 +31,6 @@ giver færdigbyggede, responsive komponenter, der er nemme at tilpasse. Vi valgt
 at have ensartede og moderne UI-komponenter, så vi kunne fokusere på funktionalitet frem for
 design.
 
-
 ### Backend:
 
 #### Node.js
@@ -54,15 +53,23 @@ af vores tidligere erfaring med framework'et og hvor nemt det er at integrere de
 
 #### C++
 
+C++ er et programmeringssprog udviklet af Bjarne Stroustrup i 1985 som en udvidelse af C-sproget.
+C++ er et compiled language, hvilket betyder at kildekoden skal oversættes til maskinkode af en
+compiler, før programmet kan køres. Denne kompileringsproces konverterer den menneskeligt læsbare
+kode til direkte eksekverbare instruktioner for computeren. Fordelen ved compiled languages som C++
+er højere køretidseffektivitet og bedre ydelse, da oversættelsen til maskinkode kun sker én gang (
+ved kompilering) og ikke hver gang programmet køres. Vi var nødsaget til at burge C++ fordi 
+Arduino ikke understøtter andre sprog, og da vi skulle bruge en Arduino til at indsamle data
+fra sensorerne, var C++ det eneste valg. Vi havde dog ikke erfaring med C++ på forhånd, men pga 
+vores erfaring med andre sprog, som C# og JavaScript, var det lidt nemmere at forstå syntaxen og 
+grundlæggende koncepter.
 
 #### MySQL
 
 MySQL er et open-source relationelt database styringssystem udviklet i 1995. Det bruger
-Structured Query Language (SQL) til at interagere med data. MySQL er et compiled system, hvilket
-betyder at selve databaseprogrammet er oversat til maskinkode, før det køres på computeren, i
-modsætning til interpreted systemer hvor koden oversættes under kørslen. Dette giver generelt bedre
-ydeevne ved databaseoperationer, da instruktionerne allerede er kompileret og klar til udførelse.
-Vi valgte MySQL som vores database fordi det er det sprog vi har mest erfaring med og er det 
+Structured Query Language (SQL) til at interagere med data. MySQL er et compiled system, som 
+giver det de samme fordele som C++ i forhold til køretidseffektivitet og ydelse.
+Vi valgte MySQL som vores database fordi det er det sprog vi har mest erfaring med og er det
 sprog som skolen har undervist i.
 
 #### Sequelize
@@ -73,14 +80,13 @@ JavaScript-objekter i stedet for rå SQL-forespørgsler. Vi valgte Sequelize da 
 nemmere at arbejde med end at skrive SQL-forespørgsler direkte, og det giver os mulighed for at
 skrive mere læsbar og vedligeholdelig kode.
 
-
 ### Authentication:
 
 #### JSON Web Tokens (JWT)
 
 JWT er en åben standard (RFC 7519) fra 2015, der definerer en kompakt og selvstændig måde at sikre
 overførslen af information mellem parter som et JSON-objekt. JWTs er ikke et sprog, men en
-token-baseret autentifikationsmekanisme. 
+token-baseret autentifikationsmekanisme.
 "HVORFOR VALGTE VI JSON WEB TOKENS (JWT)?" - Kasper
 
 # Problemformulering:
