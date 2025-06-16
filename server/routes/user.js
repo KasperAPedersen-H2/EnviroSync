@@ -65,4 +65,33 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
     }
 });
 
+router.put("/:id/edit", async (req, res) => {
+    const { id } = req.params;
+    const { username, email } = req.body;
+
+    try {
+        const user = await Models.Users.findOne({
+            where: { id }
+        });
+        if (!user) {
+            return res.status(404).json({ message: "User data not found" });
+        }
+
+        await user.update({
+            username: username || user.username,
+            email: email || user.email
+        });
+
+        const updatedUserData = {
+            id: user.id,
+            username: user.username,
+            email: user.email
+        };
+
+        return res.status(200).json(updatedUserData);
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 export default router;

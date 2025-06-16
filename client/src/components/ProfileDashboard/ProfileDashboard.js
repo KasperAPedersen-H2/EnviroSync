@@ -10,6 +10,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
+import {useAlert} from "../../context/AlertContext";
 
 const ProfileDashboard = () => {
     const [avatar, setAvatar] = useState(null);
@@ -18,6 +19,7 @@ const ProfileDashboard = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const session = useSessionCheck();
     const { globalAvatar, setGlobalAvatar } = useAvatar();
+    const { showAlert } = useAlert();
     const [editFormData, setEditFormData] = useState({
         username: '',
         email: ''
@@ -53,7 +55,7 @@ const ProfileDashboard = () => {
                             });
                         }
                     } catch (error) {
-                        console.error("Error fetching user data:", error);
+                        showAlert("error", "Failed to fetch user data");
                     }
                 };
                 fetchUserData();
@@ -134,11 +136,8 @@ const ProfileDashboard = () => {
 
     const handleEditFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(editFormData);
-
         try {
-            console.log('awaiting fetch');
-            const response = await fetch(`http://localhost:5000/user/${session?.id}/edit`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}/edit`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -149,12 +148,11 @@ const ProfileDashboard = () => {
 
             if (response.ok) {
                 closeEditModal();
-                window.location.reload();
             } else {
-                throw new Error('Profile update failed');
+                showAlert("error", "Profile update failed");
             }
         } catch (error) {
-            console.error('Error updating profile:', error);
+            showAlert("error", "Profile update failed");
         }
     };
 
