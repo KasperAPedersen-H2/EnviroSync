@@ -6,13 +6,14 @@ const Dummy = async () => {
         if (await Models.Users.count() > 0) return;
 
         const usersData = [
-            { username: 'user1', password: 'password1' },
-            { username: 'user2', password: 'password2' },
-            { username: 'user3', password: 'password3' }
+            { username: 'user1', email:'user1@dummy.dk', password: 'password1' },
+            { username: 'user2', email:'user2@dummy.dk', password: 'password2' },
+            { username: 'user3', email:'user3@dummy.dk', password: 'password3' }
         ];
 
         const hashedUsersData = usersData.map(user => ({
             username: user.username,
+            email: user.email,
             password: bcrypt.hashSync(user.password, 10)
         }));
 
