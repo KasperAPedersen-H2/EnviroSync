@@ -58,16 +58,16 @@ C++ er et compiled language, hvilket betyder at kildekoden skal oversættes til 
 compiler, før programmet kan køres. Denne kompileringsproces konverterer den menneskeligt læsbare
 kode til direkte eksekverbare instruktioner for computeren. Fordelen ved compiled languages som C++
 er højere køretidseffektivitet og bedre ydelse, da oversættelsen til maskinkode kun sker én gang (
-ved kompilering) og ikke hver gang programmet køres. Vi var nødsaget til at burge C++ fordi 
+ved kompilering) og ikke hver gang programmet køres. Vi var nødsaget til at burge C++ fordi
 Arduino ikke understøtter andre sprog, og da vi skulle bruge en Arduino til at indsamle data
-fra sensorerne, var C++ det eneste valg. Vi havde dog ikke erfaring med C++ på forhånd, men pga 
-vores erfaring med andre sprog, som C# og JavaScript, var det lidt nemmere at forstå syntaxen og 
+fra sensorerne, var C++ det eneste valg. Vi havde dog ikke erfaring med C++ på forhånd, men pga
+vores erfaring med andre sprog, som C# og JavaScript, var det lidt nemmere at forstå syntaxen og
 grundlæggende koncepter.
 
 #### MySQL
 
 MySQL er et open-source relationelt database styringssystem udviklet i 1995. Det bruger
-Structured Query Language (SQL) til at interagere med data. MySQL er et compiled system, som 
+Structured Query Language (SQL) til at interagere med data. MySQL er et compiled system, som
 giver det de samme fordele som C++ i forhold til køretidseffektivitet og ydelse.
 Vi valgte MySQL som vores database fordi det er det sprog vi har mest erfaring med og er det
 sprog som skolen har undervist i.
@@ -96,11 +96,43 @@ og at der var et ønske om at få mere data omkring indeklimaet, for at kunne fo
 
 # Development (TDD):
 
-En kort redegørelse for hvad TDD er.
+Test Driven Development (TDD) er en softwareudviklingsmetode, hvor test skrives før koden, der
+implementerer funktionaliteten. TDD følger en cyklus kendt som "Red-Green-Refactor":
+
+1. **Red**: Skriv en test, der fejler, fordi den ønskede funktionalitet endnu ikke er implementeret.
+2. **Green**: Skriv den mindste mængde kode, der får testen til at bestå.
+3. **Refactor**: Forbedr koden uden at ændre dens funktionalitet, og sørg for at alle tests stadig
+   består.
+
+Teoretisk så hjælper TDD med at sikre at koden er testet og fungerer som forventet, før den
+implementeres.
+I praksis lyder det mest af alt til ikke at være en god metode i sin teoretiske form, da det i
+mange tilfælde ikke tager højde for konteksten koden skal bruges i. Det er ikke for at sige at TDD
+ikke kan bruges som et princip i udviklingen, men at man under udviklingen bør være opmærksom på
+sine tests og hvornår de kan være relevante at skrive. I vores projekt har vi ikke fulgt TDD som
+det formuleres i teori, men vi har haft fokus på at teste vores kode før vi pushede til produktion.
 
 # Versionsstyring (Git):
 
-En kort redegørelse af hvad Git er.
+Git er et distribueret versionsstyringsværktøj, som blev udviklet af Linus Torvalds i 2005 til
+udviklingen af Linux-kernen. Git holder styr på ændringer i kildekode over tid og muliggør
+samarbejde mellem flere udviklere. Systemet fungerer gennem en række grundlæggende operationer:
+
+1. COMMIT - Når en udvikler har lavet ændringer i koden, gemmes disse ændringer lokalt med en
+   commit, der indeholder et øjebliksbillede af filerne, metadata om ændringerne og en reference til
+   den foregående commit.
+2. BRANCH - Git tillader udviklere at arbejde i separate grene (branches), hvor ændringer kan laves
+   isoleret fra hovedkodebasen (main/master). Dette muliggør parallel udvikling af forskellige
+   funktioner.
+3. MERGE - Når arbejdet i en branch er færdigt, kan ændringerne integreres tilbage i hovedkodebasen
+   gennem en merge-operation, der kombinerer ændringerne fra begge branches.
+4. PUSH/PULL - Git's distribuerede natur betyder, at hver udvikler har en komplet kopi af
+   repositoriet. Med push sendes lokale commits til et remote repository, mens pull henter ændringer
+   fra et remote repository og integrerer dem i den lokale kopi.
+
+Git's distribuerede arkitektur giver høj hastighed, dataintegritetsgarantier og mulighed for at
+arbejde offline. Disse egenskaber, sammen med Git's effektive branching og merging, har gjort det
+til det foretrukne versionsstyringsværktøj for moderne softwareudvikling. 
 
 # Programmerings Metodik:
 
