@@ -186,7 +186,9 @@ Hvis du har spørgsmål eller forslag, er du velkommen til at kontakte projektte
 
 ## Ophavsret
 © Kasper Pedersen 2025. Alle rettigheder forbeholdes.
+
 Dette projekt er ophavsretligt beskyttet i henhold til den danske ophavsretslov og internationale konventioner.
+
 Det er ikke tilladt at kopiere, modificere, distribuere eller anvende hele eller dele af projektet uden udtrykkelig, skriftlig tilladelse fra ophavsmanden.
 
 Overtrædelser kan medføre juridiske konsekvenser.
