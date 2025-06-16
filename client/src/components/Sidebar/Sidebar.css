@@ -121,30 +121,6 @@
 /* Mobile styles */
 @media only screen and (max-width: 768px) {
     .sidebar-container .sidebar {
-        --sidebarWidth: 100vw;
-        height: var(--headerHeight, 60px);
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 15px;
-    }
-
-    .sidebar-container .sidebar .logo {
-        height: 100%;
-        width: auto;
-        padding: 5px 0;
-    }
-
-    .sidebar-container .sidebar img {
-        width: auto;
-        max-height: calc(var(--headerHeight, 60px) - 20px);
-    }
-
-    .sidebar-container .sidebar .menu-trigger {
-        display: flex;
-    }
-
-    .sidebar-container .sidebar nav.desktop-nav {
         display: none;
     }
 }
