@@ -74,3 +74,9 @@
 .login-container .register-link a {
     text-decoration: none;
 }
+
+@media screen and (max-width: 768px) {
+    .login-container .card {
+        width: 90%;
+    }
+}
