@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AccountCircle, Settings, Logout } from "@mui/icons-material";
-import "./ProfileDropdown.css";
+import "./Dropdown.css";
 
-const ProfileDropdown = ({ username, avatarData }) => {
+const Dropdown = ({ username, avatarData }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -67,4 +67,4 @@ const ProfileDropdown = ({ username, avatarData }) => {
     );
 };
 
-export default ProfileDropdown;
+export default Dropdown;

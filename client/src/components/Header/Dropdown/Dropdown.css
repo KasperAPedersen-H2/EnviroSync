@@ -11,6 +11,10 @@
     transition: transform 0.5s, background-color 0.3s;
 }
 
+* {
+     border: 1px solid red;
+}
+
 .dropdown-trigger:hover {
     transform: scale(1.1);
     background-color: var(--dropdown-trigger-hover-bg, #f0f0f0);
@@ -61,6 +65,7 @@
     transition: background-color 0.5s, color 0.3s;
     color: var(--dropdown-link-color, #000);
     text-decoration: none;
+    border: 1px solid red;
 }
 
 .dropdown-menu nav a:hover {

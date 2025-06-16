@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import useSessionCheck from "../../hooks/useSessionCheck";
 import { useRoomDevice } from '../../context/RoomDeviceContext';
-import ProfileDropdown from "./ProfileDropdown/ProfileDropdown";
+import Dropdown from "./Dropdown/Dropdown";
 import "./Header.css";
 import { useAvatar } from "../../context/AvatarContext";
 
@@ -127,7 +127,7 @@ const Header = () => {
             </nav>
             
             <section className="welcome">
-                <ProfileDropdown username={username} avatarData={globalAvatar} />
+                <Dropdown username={username} avatarData={globalAvatar} />
             </section>
         </header>
     );
