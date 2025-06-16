@@ -1,8 +1,7 @@
 .management-dashboard .container {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
     gap: 15px;
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .management-dashboard .card {
@@ -15,6 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
 }
 
 .management-dashboard .card .card-header-title {
@@ -37,4 +37,14 @@
 
 .management-dashboard .card .table-cell:last-of-type {
     text-align: right;
+}
+
+@media only screen and (max-width: 425px) {
+    .management-dashboard .card .card-header .card-header-title {
+        display: none;
+    }
+
+    .management-dashboard .card .card-header {
+        justify-content: right;
+    }
 }

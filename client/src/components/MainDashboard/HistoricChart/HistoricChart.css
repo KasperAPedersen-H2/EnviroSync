@@ -5,6 +5,9 @@
     width: calc(75% + (15px * 2));
     border-radius: 5px;
     padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 .chart-container .no-device-selected {
@@ -15,6 +18,13 @@
     align-items: center;
     opacity: 0.5;
     color: var(--chart-text-color, #000);
+    font-size: 1rem;
+    text-align: center;
+}
+
+.chart-container canvas {
+    max-height: 100%;
+    width: 100% !important;
 }
 
 :root[data-theme="dark"] {
@@ -22,8 +32,32 @@
     --chart-text-color: #e0e0e0;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
     .chart-container {
         width: 100%;
+        height: auto;
+        min-height: 300px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .chart-container {
+        padding: 10px;
+        min-height: 250px;
+    }
+
+    .chart-container .no-device-selected {
+        font-size: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .chart-container {
+        padding: 8px;
+        min-height: 200px;
+    }
+
+    .chart-container .no-device-selected {
+        font-size: 0.8rem;
     }
 }

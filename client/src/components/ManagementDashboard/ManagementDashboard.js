@@ -114,7 +114,7 @@ const ManagementDashboard = () => {
                         <Table>
                             <TableHead className="table-head">
                                 <TableRow>
-                                    <TableCell className="table-cell">Room Name</TableCell>
+                                    <TableCell className="table-cell">Room</TableCell>
                                     <TableCell className="table-cell">Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -183,7 +183,7 @@ const ManagementDashboard = () => {
                         <Table>
                             <TableHead className="table-head">
                                 <TableRow>
-                                    <TableCell className="table-cell">Device Name</TableCell>
+                                    <TableCell className="table-cell">Device</TableCell>
                                     <TableCell className="table-cell">Room</TableCell>
                                     <TableCell className="table-cell">Actions</TableCell>
                                 </TableRow>
