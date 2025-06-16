@@ -102,7 +102,7 @@ const ProfileDashboard = () => {
             }
         } catch (error) {
             setIsUploading(false);
-            console.error('Error uploading avatar:', error);
+            showAlert("error", "Upload failed");
         }
     };
 
