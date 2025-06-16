@@ -9,7 +9,7 @@ header {
     flex-wrap: nowrap;
 }
 
-header nav {
+header > nav {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -70,7 +70,7 @@ header .welcome .dropdown-trigger {
         min-height: var(--headerHeight);
     }
 
-    header nav {
+    header > nav {
         max-width: calc(100% - 60px);
     }
 
@@ -80,7 +80,7 @@ header .welcome .dropdown-trigger {
 }
 
 @media screen and (max-width: 600px) {
-    header nav select {
+    header > nav select {
         min-width: 100px;
         padding: 8px 10px;
         font-size: 0.9rem;
@@ -97,14 +97,14 @@ header .welcome .dropdown-trigger {
 }
 
 @media screen and (max-width: 480px) {
-    header nav {
+    header > nav {
         flex-direction: row;
         flex-wrap: wrap;
         gap: 5px;
         max-width: calc(100% - 55px);
     }
 
-    header nav select {
+    header > nav select {
         font-size: 0.85rem;
         padding: 6px 8px;
         min-width: 80px;

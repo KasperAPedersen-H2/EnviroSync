@@ -149,12 +149,7 @@
     }
 }
 
-/* For very small screens */
-@media only screen and (max-width: 480px) {
-    .sidebar-container .sidebar-menu {
-        width: 100%;
-    }
-}
+
 
 /* Dark Mode */
 :root[data-theme="dark"] {
