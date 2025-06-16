@@ -4,13 +4,6 @@
     height: 100%;
 }
 
-.profile-dashboard .profile-title {
-    margin-bottom: 20px;
-    color: var(--dark-green);
-    font-size: 1.8rem;
-    font-weight: 600;
-}
-
 .profile-dashboard .profile-card {
     background-color: var(--white);
     border-radius: 8px;
@@ -20,8 +13,10 @@
 }
 
 .profile-dashboard .profile-header {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
+    gap: 30px;
     margin-bottom: 30px;
     padding-bottom: 20px;
     border-bottom: 1px solid #eee;
@@ -29,17 +24,8 @@
 
 .profile-dashboard .profile-avatar {
     margin-right: 30px;
-    padding: 20px;
     background-color: var(--white);
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.profile-dashboard .profile-avatar .title {
-    margin-bottom: 15px;
-    text-align: center;
-    color: var(--dark-green);
-    font-size: 1.3rem;
 }
 
 .profile-dashboard .profile-avatar article {
@@ -144,22 +130,6 @@
     cursor: not-allowed;
 }
 
-.profile-dashboard .profile-info {
-    flex-grow: 1;
-}
-
-.profile-dashboard .profile-info h2 {
-    margin: 0 0 5px 0;
-    color: var(--dark-green);
-    font-size: 1.5rem;
-}
-
-.profile-dashboard .profile-id {
-    color: var(--text-light);
-    margin: 5px 0;
-    font-size: 0.9rem;
-}
-
 .profile-dashboard .profile-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -167,11 +137,11 @@
     margin-bottom: 30px;
 }
 
-.profile-dashboard .profile-section {
+.profile-dashboard .profile-article {
     margin-bottom: 20px;
 }
 
-.profile-dashboard .profile-section h3 {
+.profile-dashboard .profile-article h3 {
     margin-bottom: 15px;
     color: var(--dark-cyan);
     font-size: 1.1rem;
@@ -217,12 +187,12 @@
 }
 
 .profile-dashboard .btn.primary {
-    background-color: var(--moonstone);
+    background-color: var(--primary-button-bg);
     color: white;
 }
 
 .profile-dashboard .btn.primary:hover {
-    background-color: var(--dark-cyan);
+    background-color: var(--primary-button-bg-hover);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -258,6 +228,210 @@
     font-style: italic;
 }
 
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+    padding: 24px;
+    position: relative;
+    animation: modalFadeIn 0.3s ease;
+    border-top: 4px solid var(--moonstone);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: var(--dark-blue);
+    font-size: 1.5rem;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.close-modal-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--dark-cyan);
+}
+
+.edit-profile-form .form-group {
+    margin-bottom: 20px;
+}
+
+.edit-profile-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-dark);
+
+}
+
+.edit-profile-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.edit-profile-form input:focus {
+    border-color: var(--moonstone);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(42, 93, 93, 0.2);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn.secondary {
+    background-color: var(--secondary-button-bg);
+    color: var(--text-dark);
+}
+
+.btn.secondary:hover {
+    background-color: var(--secondary-button-bg-hover);
+}
+
+.form-group.dropdown {
+    margin-bottom: 15px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.form-group.dropdown .dropdown-header {
+    padding: 15px;
+    background-color: var(--light-bg);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.form-group.dropdown .dropdown-header:hover {
+    background-color: var(--light-bg-hover);
+}
+
+.form-group.dropdown .dropdown-header label {
+    font-weight: 500;
+    margin: 0;
+    color: var(--text-dark);
+    cursor: pointer;
+}
+
+.form-group.dropdown .dropdown-icon {
+    transition: transform 0.3s ease;
+    color: var(--text-dark);
+}
+
+.form-group.dropdown.expanded .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.form-group.dropdown .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 15px;
+}
+
+.form-group.dropdown.expanded .dropdown-content {
+    max-height: 70px;
+    padding: 15px;
+    border-top: 1px solid var(--border);
+}
+
+.form-group.dropdown.expanded .dropdown-header {
+    border-bottom-color: var(--border);
+}
+
+.form-group.dropdown input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group.dropdown input:focus {
+    outline: none;
+    border-color: #4FB0C6;
+    box-shadow: 0 0 0 2px rgba(79, 176, 198, 0.2);
+}
+
+:root[data-theme="dark"] {
+    --dark-blue: #235A84;
+    --dark-cyan: #287d7c;
+    --moonstone: #3b8fa2;
+    --silver-lake-blue: #3b6ba2;
+    --white: #1f1f1f;
+    --text-dark: #f5f5f5;
+    --text-medium: #cccccc;
+    --text-light: #999999;
+    --secondary-button-bg: #5a5a5a;
+    --secondary-button-bg-hover: #4a4a4a;
+    --error-light: #ff5858;
+    --error-dark: #d63031;
+    --dashboard-bg: #2a2a2a;
+    --dashboard-text: #f5f5f5;
+    --light-bg: #3a3a3a;
+    --light-bg-hover: #4a4a4a;
+    --border: #444444;
+
+}
 
 @media (max-width: 768px) {
     .profile-dashboard .profile-details {
