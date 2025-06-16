@@ -18,8 +18,7 @@
     "start:frontend": "cd client && npm start",
     "start:backend": "cd server && npm start",
     "start:all": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
-  }
-,
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KasperAPedersen-H2/EnviroSync-Frontend.git"
@@ -30,5 +29,4 @@
     "url": "https://github.com/KasperAPedersen-H2/EnviroSync-Frontend/issues"
   },
   "homepage": "https://github.com/KasperAPedersen-H2/EnviroSync-Frontend#readme"
-
 }

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import useSessionCheck from "../../hooks/useSessionCheck";
-
 import { useRoomDevice } from '../../context/RoomDeviceContext';
 import Dropdown from "./Dropdown/Dropdown";
 import "./Header.css";
@@ -107,7 +106,7 @@ const Header = () => {
                         <option key={room.id} value={room.id}>
                             {room.name}
                         </option>
-                    ))}x
+                    ))}
                 </select>
 
                 <select
@@ -125,8 +124,8 @@ const Header = () => {
                         </option>
                     ))}
                 </select>
-
             </nav>
+            
             <section className="welcome">
                 <Dropdown username={username} avatarData={globalAvatar} />
             </section>
