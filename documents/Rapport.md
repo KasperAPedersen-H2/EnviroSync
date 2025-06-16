@@ -99,10 +99,11 @@ og at der var et ønske om at få mere data omkring indeklimaet, for at kunne fo
 Test Driven Development (TDD) er en softwareudviklingsmetode, hvor test skrives før koden, der
 implementerer funktionaliteten. TDD følger en cyklus kendt som "Red-Green-Refactor":
 
-1. **Red**: Skriv en test, der fejler, fordi den ønskede funktionalitet endnu ikke er implementeret.
-2. **Green**: Skriv den mindste mængde kode, der får testen til at bestå.
-3. **Refactor**: Forbedr koden uden at ændre dens funktionalitet, og sørg for at alle tests stadig
-   består.
+> 1. **Red**: Skriv en test, der fejler, fordi den ønskede funktionalitet endnu ikke er
+     implementeret.
+> 2. **Green**: Skriv den mindste mængde kode, der får testen til at bestå.
+> 3. **Refactor**: Forbedr koden uden at ændre dens funktionalitet, og sørg for at alle tests stadig
+     består.
 
 Teoretisk så hjælper TDD med at sikre at koden er testet og fungerer som forventet, før den
 implementeres.
@@ -118,26 +119,61 @@ Git er et distribueret versionsstyringsværktøj, som blev udviklet af Linus Tor
 udviklingen af Linux-kernen. Git holder styr på ændringer i kildekode over tid og muliggør
 samarbejde mellem flere udviklere. Systemet fungerer gennem en række grundlæggende operationer:
 
-1. COMMIT - Når en udvikler har lavet ændringer i koden, gemmes disse ændringer lokalt med en
-   commit, der indeholder et øjebliksbillede af filerne, metadata om ændringerne og en reference til
-   den foregående commit.
-2. BRANCH - Git tillader udviklere at arbejde i separate grene (branches), hvor ændringer kan laves
-   isoleret fra hovedkodebasen (main/master). Dette muliggør parallel udvikling af forskellige
-   funktioner.
-3. MERGE - Når arbejdet i en branch er færdigt, kan ændringerne integreres tilbage i hovedkodebasen
-   gennem en merge-operation, der kombinerer ændringerne fra begge branches.
-4. PUSH/PULL - Git's distribuerede natur betyder, at hver udvikler har en komplet kopi af
-   repositoriet. Med push sendes lokale commits til et remote repository, mens pull henter ændringer
-   fra et remote repository og integrerer dem i den lokale kopi.
+> 1. **COMMIT** - Når en udvikler har lavet ændringer i koden, gemmes disse ændringer lokalt med en
+     commit, der indeholder et øjebliksbillede af filerne, metadata om ændringerne og en reference
+     til
+     den foregående commit.
+> 2. **BRANCH** - Git tillader udviklere at arbejde i separate grene (branches), hvor ændringer kan
+     laves
+     isoleret fra hovedkodebasen (main/master). Dette muliggør parallel udvikling af forskellige
+     funktioner.
+> 3. **MERGE** - Når arbejdet i en branch er færdigt, kan ændringerne integreres tilbage i
+     hovedkodebasen
+     gennem en merge-operation, der kombinerer ændringerne fra begge branches.
+> 4. **PUSH/PULL** - Git's distribuerede natur betyder, at hver udvikler har en komplet kopi af
+     repositoriet. Med push sendes lokale commits til et remote repository, mens pull henter
+     ændringer
+     fra et remote repository og integrerer dem i den lokale kopi.
 
 Git's distribuerede arkitektur giver høj hastighed, dataintegritetsgarantier og mulighed for at
 arbejde offline. Disse egenskaber, sammen med Git's effektive branching og merging, har gjort det
-til det foretrukne versionsstyringsværktøj for moderne softwareudvikling. 
+til det foretrukne versionsstyringsværktøj for moderne softwareudvikling.
 
 # Programmerings Metodik:
 
-En kort beskrivelse af hvad programmering metodik er og hvad agile principperne er, efterfulgt af en
-forklaring på hvordan vi har kørt vores projekt.
+Agile er den overordnede metodik som andre metodikker som Scrum og Kanban bygger på. Agile
+manifestet blev offentliggjort i 2001 af en gruppe softwareudviklere fra forskellige baggrunde.
+
+Manifestet fra agilemanifesto.org lyder:
+
+> We are uncovering better ways of developing  
+> software by doing it and helping others do it.  
+> Through this work we have come to value:
+> 
+> **Individuals and interactions** over processes and tools  
+> **Working software** over comprehensive documentation  
+> **Customer collaboration** over contract negotiation  
+> **Responding to change** over following a plan
+>
+> That is, while there is value in the items on  
+> the right, we value the items on the left more.
+
+
+Ud fra dette manifest er der blevet defineret 12 principper for agile softwareudvikling. Her vil
+vil vi gennemgå nogle af de principper som vi selv føler er de vigtigste for os:
+
+> 1. **Vores højeste prioritet er at tilfredsstille kunden gennem tidlig og kontinuerlig levering af
+   værdifuld software.** - Dette princip understøtter vores lyst til at levere funktionalitet.
+
+> 2. **Levér fungerende software hyppigt, fra et par uger til et par måneder, med en præference for
+   den korteste tidsskala.** - Dette princip for os, betyder at levere funktionalitet når det er
+   muligt, i stedet for at vente på en større release, og gør at vi løbende kan få aktuel
+   feedback på vores produkt.
+
+> 3. **Fungerende software er den primære måle enhed for fremskridt.** - Dette princip kan vi 
+    > forholde
+   os til, da vi har haft fokus på at levere funktionalitet i stedet for at fokusere på at lave
+   dokumentation og andre ting, som ikke direkte bidrager til produktet.
 
 # UML-diagram:
 
