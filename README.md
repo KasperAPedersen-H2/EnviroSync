@@ -14,6 +14,7 @@ EnviroSync er en komplet applikation, der består af både en **frontend** og en
 - [Scripts](#scripts)
 - [Teknologi Stack](#teknologi-stack)
 - [Kontakt](#kontakt)
+- [Ophavsret](#ophavsret)
 
 ---
 
