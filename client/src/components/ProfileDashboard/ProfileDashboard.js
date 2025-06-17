@@ -175,7 +175,13 @@ const ProfileDashboard = () => {
                 }));
 
             } else {
-                showAlert("error", "Profile update failed");
+                if (data.message === "Validation failed" && data.errors && data.errors.length > 0) {
+                    showAlert("error", data.errors[0]);
+                } else if (data.message) {
+                    showAlert("error", data.message);
+                } else {
+                    showAlert("error", "Profile update failed");
+                }
             }
         } catch (error) {
             showAlert("error", "Profile update failed");

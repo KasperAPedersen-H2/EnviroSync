@@ -24,7 +24,11 @@ const Register = () => {
             if (response.ok) {
                 navigate("/login");
             } else {
-                showAlert("error", re.message);
+                if (data.message) {
+                    showAlert("error", data.message);
+                } else {
+                    showAlert("error", "Registration failed");
+                }
             }
         } catch (error) {
             console.error("Fejl:", error);
