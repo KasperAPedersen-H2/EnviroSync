@@ -99,7 +99,7 @@ const MainDashboard = () => {
                 </article>
 
                 <article className={getCardClass()} onClick={() => handleCardClick("pressure")}>
-                    <p>Pressure</p>
+                    <p>CO₂</p>
                     <p>{formatValue("pressure", liveData?.pressure)}</p>
                 </article>
 

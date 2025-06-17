@@ -196,18 +196,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-dashboard .change-password {
-    background-color: transparent;
-    color: var(--silver-lake-blue);
-    text-decoration: underline;
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-.profile-dashboard .change-password:hover {
-    color: var(--dark-cyan);
-}
-
 .profile-dashboard .profile-actions {
     display: flex;
     gap: 10px;
@@ -247,11 +235,15 @@
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     width: 90%;
+    max-height: 85vh;
     max-width: 500px;
     padding: 24px;
     position: relative;
     animation: modalFadeIn 0.3s ease;
     border-top: 4px solid var(--moonstone);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 @keyframes modalFadeIn {
@@ -298,6 +290,12 @@
     color: var(--dark-cyan);
 }
 
+.edit-profile-form {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
 .edit-profile-form .form-group {
     margin-bottom: 20px;
 }
@@ -307,7 +305,6 @@
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--text-dark);
-
 }
 
 .edit-profile-form input {
@@ -325,6 +322,26 @@
     outline: none;
     box-shadow: 0 0 0 2px rgba(42, 93, 93, 0.2);
 }
+
+.edit-profile-form::-webkit-scrollbar {
+    width: 6px;
+}
+
+.edit-profile-form::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.edit-profile-form::-webkit-scrollbar-thumb {
+    background-color: var(--moonstone);
+    border-radius: 3px;
+}
+
+.edit-profile-form {
+    scrollbar-width: thin;
+    scrollbar-color: var(--moonstone) rgba(0, 0, 0, 0.05);
+}
+
 
 .modal-actions {
     display: flex;
@@ -389,7 +406,7 @@
 }
 
 .form-group.dropdown.expanded .dropdown-content {
-    max-height: 70px;
+    max-height: 350px;
     padding: 15px;
     border-top: 1px solid var(--border);
 }
@@ -401,6 +418,8 @@
 .form-group.dropdown input {
     width: 100%;
     padding: 10px;
+    background: var(--light-bg);
+    color: var(--text-dark);
     border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 14px;
@@ -410,6 +429,10 @@
     outline: none;
     border-color: #4FB0C6;
     box-shadow: 0 0 0 2px rgba(79, 176, 198, 0.2);
+}
+
+.password-change-fields .password-field:not(:first-child) label {
+    margin-top: 15px;
 }
 
 :root[data-theme="dark"] {
@@ -433,20 +456,91 @@
 
 }
 
-@media (max-width: 768px) {
-    .profile-dashboard .profile-details {
-        grid-template-columns: 1fr;
+/* Responsive styles for larger screens */
+@media screen and (max-width: 1200px) {
+    .profile-dashboard .profile-card {
+        padding: 20px;
     }
 
     .profile-dashboard .profile-header {
-        flex-direction: column;
+        gap: 25px;
+    }
+
+    .profile-dashboard .profile-avatar figure {
+        width: 180px;
+        height: 180px;
+    }
+
+    .profile-dashboard .profile-avatar figure figcaption svg {
+        font-size: 26px;
+    }
+}
+
+/* Responsive styles for medium screens */
+@media screen and (max-width: 992px) {
+    .profile-dashboard .profile-header {
+        grid-template-columns: 1fr;
+        gap: 20px;
         text-align: center;
     }
 
     .profile-dashboard .profile-avatar {
         margin-right: 0;
-        margin-bottom: 20px;
-        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .profile-dashboard .profile-details {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .profile-dashboard .profile-article h3 {
+        font-size: 1rem;
+        justify-content: center;
+    }
+
+    .profile-dashboard .profile-field {
+        justify-content: center;
+    }
+}
+
+/* Responsive styles for tablet screens */
+@media screen and (max-width: 768px) {
+    .profile-dashboard {
+        padding: 10px;
+    }
+
+    .profile-dashboard .profile-card {
+        padding: 15px;
+    }
+
+    .profile-dashboard .profile-avatar figure {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-dashboard .profile-avatar figure figcaption svg {
+        font-size: 22px;
+    }
+
+    .profile-dashboard .profile-avatar figure figcaption span {
+        font-size: 12px;
+    }
+
+    .profile-dashboard .profile-avatar form button {
+        padding: 10px 20px;
+        min-width: 150px;
+        font-size: 14px;
+    }
+
+    .profile-dashboard .profile-field {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-dashboard .profile-field label {
+        min-width: auto;
+        margin-bottom: 5px;
     }
 
     .profile-dashboard .profile-actions {
@@ -456,5 +550,133 @@
     .profile-dashboard .btn {
         width: 100%;
         margin-bottom: 10px;
+        font-size: 14px;
+    }
+
+    .modal-content {
+        max-height: 80vh;
+        padding: 18px;
+    }
+
+    .modal-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .edit-profile-form input {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Responsive styles for mobile screens */
+@media screen and (max-width: 480px) {
+    .profile-dashboard .profile-card {
+        padding: 12px;
+    }
+
+    .profile-dashboard .profile-header {
+        gap: 15px;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .profile-dashboard .profile-avatar figure {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profile-dashboard .profile-avatar figure figcaption svg {
+        font-size: 18px;
+        margin-bottom: 4px;
+    }
+
+    .profile-dashboard .profile-avatar figure figcaption span {
+        font-size: 10px;
+    }
+
+    .profile-dashboard .profile-avatar form button {
+        padding: 8px 16px;
+        min-width: 120px;
+        font-size: 12px;
+    }
+
+    .profile-dashboard .profile-article h3 {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+
+    .profile-dashboard .section-icon {
+        font-size: 0.9rem;
+    }
+
+    .profile-dashboard .profile-field label,
+    .profile-dashboard .profile-field span {
+        font-size: 14px;
+    }
+
+    .profile-dashboard .future-section {
+        padding: 10px;
+    }
+
+    .profile-dashboard .placeholder-text {
+        font-size: 12px;
+    }
+
+    .modal-content {
+        max-height: 75vh;
+        padding: 15px;
+    }
+
+    .modal-header {
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .modal-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .form-group.dropdown .dropdown-header {
+        padding: 12px;
+    }
+
+    .form-group.dropdown .dropdown-header label {
+        font-size: 14px;
+    }
+
+    .form-group.dropdown.expanded .dropdown-content {
+        padding: 12px;
+    }
+
+    .form-group.dropdown input {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .edit-profile-form {
+        padding-right: 12px;
+    }
+
+    .edit-profile-form label {
+        font-size: 14px;
+    }
+
+    .edit-profile-form input {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .modal-actions {
+        margin-top: 15px;
+        gap: 8px;
+    }
+
+    .btn.secondary, .btn.primary {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+
+    .edit-profile-form::-webkit-scrollbar {
+        width: 4px;
     }
 }
