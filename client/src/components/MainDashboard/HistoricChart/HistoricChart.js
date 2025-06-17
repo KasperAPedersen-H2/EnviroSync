@@ -23,6 +23,21 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const chartRef = useRef(null);
 
+    const getYAxisLabel = (dataType) => {
+        switch (dataType) {
+            case 'temperature':
+                return 'Temperature (°C)';
+            case 'humidity':
+                return 'Humidity (%)';
+            case 'pressure':
+                return 'CO₂ (ppm)';
+            case 'tvoc':
+                return 'TVOC (ppb)';
+            default:
+                return 'Value';
+        }
+    };
+
     // Track window size
     useEffect(() => {
         const handleResize = () => {
@@ -178,7 +193,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                     },
                     title: {
                         display: true,
-                        text: "Value",
+                        text: getYAxisLabel(selectedDataType),
                         font: {
                             size: isMobile ? 10 : 12
                         }

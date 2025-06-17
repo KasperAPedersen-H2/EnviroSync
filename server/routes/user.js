@@ -2,6 +2,7 @@ import { Router } from "express";
 import Models from "../orm/models.js";
 import multer from 'multer';
 import sharp from 'sharp';
+import bcrypt from 'bcryptjs';
 
 const router = Router();
 
@@ -67,7 +68,7 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
 
 router.put("/:id/edit", async (req, res) => {
     const { id } = req.params;
-    const { username, email } = req.body;
+    const { username, email, password, newPassword, confirmPassword } = req.body;
 
     try {
         const user = await Models.Users.findOne({
@@ -77,10 +78,38 @@ router.put("/:id/edit", async (req, res) => {
             return res.status(404).json({ message: "User data not found" });
         }
 
-        await user.update({
-            username: username || user.username,
-            email: email || user.email
-        });
+        if (password && newPassword && confirmPassword) {
+            const isPasswordValid = bcrypt.compareSync(password, user.password);
+            if (!isPasswordValid) {
+                return res.status(401).json({ message: "Current password is incorrect" });
+            }
+
+            let errorMessages = "";
+            if (newPassword.length < 8) {errorMessages = "Password must be at least 8 characters long";}
+            else if (newPassword.length > 20) {errorMessages = "Password must be less than 20 characters long.";}
+            else if (!newPassword.match(/[0-9]/)) {errorMessages = "Password must contain at least one number.";}
+            else if (!newPassword.match(/[a-z]/)) {errorMessages = "Password must contain at least one lowercase letter.";}
+            else if (!newPassword.match(/[A-Z]/)) {errorMessages = "Password must contain at least one uppercase letter.";}
+            else if (!newPassword.match(/[^a-zA-Z0-9]/)) {errorMessages = "Password must contain at least one special character.";}
+            else if (newPassword !== confirmPassword) {errorMessages = "Passwords do not match.";}
+
+            if (errorMessages.length > 0) {
+                return res.status(400).json({ message: errorMessages });
+            }
+
+            const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+            await user.update({
+                username: username || user.username,
+                email: email || user.email,
+                password: hashedPassword
+            });
+        } else {
+            await user.update({
+                username: username || user.username,
+                email: email || user.email
+            });
+        }
 
         const updatedUserData = {
             id: user.id,
@@ -90,6 +119,7 @@ router.put("/:id/edit", async (req, res) => {
 
         return res.status(200).json(updatedUserData);
     } catch (error) {
+        console.error("Error updating user:", error);
         return res.status(500).json({ message: "Internal server error" });
     }
 });

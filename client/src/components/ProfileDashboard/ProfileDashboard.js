@@ -22,11 +22,12 @@ const ProfileDashboard = () => {
     const { showAlert } = useAlert();
     const [editFormData, setEditFormData] = useState({
         username: '',
-        email: ''
+        email: '',
     });
     const [expandedFields, setExpandedFields] = useState({
         username: false,
-        email: false
+        email: false,
+        password: false
     });
 
     useEffect(() => {
@@ -51,7 +52,10 @@ const ProfileDashboard = () => {
 
                             setEditFormData({
                                 username: userData.username || '',
-                                email: userData.email || ''
+                                email: userData.email || '',
+                                password: '',
+                                newPassword: '',
+                                confirmPassword: ''
                             });
                         }
                     } catch (error) {
@@ -136,6 +140,17 @@ const ProfileDashboard = () => {
 
     const handleEditFormSubmit = async (event) => {
         event.preventDefault();
+
+        const isPasswordChangeAttempt = expandedFields.password &&
+            editFormData.password &&
+            editFormData.newPassword &&
+            editFormData.confirmPassword;
+
+        if (isPasswordChangeAttempt && editFormData.newPassword !== editFormData.confirmPassword) {
+            showAlert("error", "New passwords do not match");
+            return;
+        }
+
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}/edit`, {
                 method: 'PUT',
@@ -146,8 +161,19 @@ const ProfileDashboard = () => {
                 body: JSON.stringify(editFormData)
             });
 
+            const data = await response.json();
+
             if (response.ok) {
+                showAlert("success", "Profile updated successfully");
                 closeEditModal();
+
+                setEditFormData(prev => ({
+                    ...prev,
+                    password: '',
+                    newPassword: '',
+                    confirmPassword: ''
+                }));
+
             } else {
                 showAlert("error", "Profile update failed");
             }
@@ -208,9 +234,6 @@ const ProfileDashboard = () => {
                                 <label>Password:</label>
                                 <span>*********</span>
                             </div>
-                            <button className="btn change-password">
-                                Change Password
-                            </button>
                         </article>
                     </section>
                 </section>
@@ -274,6 +297,47 @@ const ProfileDashboard = () => {
                                         onChange={handleEditFormChange}
                                         placeholder="Enter new email"
                                     />
+                                </div>
+                            </div>
+                            <div className={`form-group dropdown ${expandedFields.password ? 'expanded' : ''}`}>
+                                <div className="dropdown-header" onClick={() => toggleField('password')}>
+                                    <label htmlFor="password">Change Password</label>
+                                    <KeyboardArrowDownIcon className="dropdown-icon" />
+                                </div>
+                                <div className="dropdown-content password-change-fields">
+                                    <div className="password-field">
+                                        <label htmlFor="currentPassword">Current Password</label>
+                                        <input
+                                            type="password"
+                                            id="currentPassword"
+                                            name="password"
+                                            value={editFormData.password}
+                                            onChange={handleEditFormChange}
+                                            placeholder="Enter current password"
+                                        />
+                                    </div>
+                                    <div className="password-field">
+                                        <label htmlFor="newPassword">New Password</label>
+                                        <input
+                                            type="password"
+                                            id="newPassword"
+                                            name="newPassword"
+                                            value={editFormData.newPassword}
+                                            onChange={handleEditFormChange}
+                                            placeholder="Enter new password"
+                                        />
+                                    </div>
+                                    <div className="password-field">
+                                        <label htmlFor="confirmPassword">Confirm Password</label>
+                                        <input
+                                            type="password"
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            value={editFormData.confirmPassword}
+                                            onChange={handleEditFormChange}
+                                            placeholder="Confirm new password"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className="modal-actions">

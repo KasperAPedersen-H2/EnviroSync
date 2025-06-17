@@ -196,18 +196,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.profile-dashboard .change-password {
-    background-color: transparent;
-    color: var(--silver-lake-blue);
-    text-decoration: underline;
-    padding: 5px 0;
-    margin-top: 5px;
-}
-
-.profile-dashboard .change-password:hover {
-    color: var(--dark-cyan);
-}
-
 .profile-dashboard .profile-actions {
     display: flex;
     gap: 10px;
@@ -307,7 +295,6 @@
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--text-dark);
-
 }
 
 .edit-profile-form input {
@@ -389,7 +376,7 @@
 }
 
 .form-group.dropdown.expanded .dropdown-content {
-    max-height: 70px;
+    max-height: 350px;
     padding: 15px;
     border-top: 1px solid var(--border);
 }
@@ -401,6 +388,8 @@
 .form-group.dropdown input {
     width: 100%;
     padding: 10px;
+    background: var(--light-bg);
+    color: var(--text-dark);
     border: 1px solid var(--border);
     border-radius: 4px;
     font-size: 14px;
@@ -410,6 +399,10 @@
     outline: none;
     border-color: #4FB0C6;
     box-shadow: 0 0 0 2px rgba(79, 176, 198, 0.2);
+}
+
+.password-change-fields .password-field:not(:first-child) label {
+    margin-top: 15px;
 }
 
 :root[data-theme="dark"] {
