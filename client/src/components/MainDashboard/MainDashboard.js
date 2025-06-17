@@ -17,8 +17,6 @@ const MainDashboard = () => {
 
         socketService.on("new-data", (data) => {
             const { deviceId } = data;
-            console.log("selectedDevice: ", selectedDevice);
-            console.log("deviceId: ", deviceId);
 
             if(Number(deviceId) !== Number(selectedDevice)) {
                 return;
