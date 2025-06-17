@@ -23,12 +23,12 @@ router.post('/register', async (req, res) => {
 // Add new data from sensor
 router.post('/data/new', async (req, res) => {
     try {
-        const { serial_number, temp, humidity, pressure, tvoc } = req.body;
-        if(!serial_number || !temp || !humidity || !pressure || !tvoc) {
+        const { serial_number, temp, humidity, co2, tvoc } = req.body;
+        if(!serial_number || !temp || !humidity || !co2 || !tvoc) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
-        if(isNaN(temp) || isNaN(humidity) || isNaN(pressure) || isNaN(tvoc)) {
+        if(isNaN(temp) || isNaN(humidity) || isNaN(co2) || isNaN(tvoc)) {
             return res.status(400).json({ message: 'Invalid data' });
         }
 
@@ -41,7 +41,7 @@ router.post('/data/new', async (req, res) => {
             sensor_id: sensor.id,
             temperature: temp,
             humidity: humidity,
-            pressure: pressure,
+            pressure: co2,
             tvoc: tvoc
         });
 

@@ -9,7 +9,6 @@ import sensorRoute from './routes/sensor.js';
 import loginRoute from './routes/login.js'
 import registerRoute from './routes/register.js'
 import userRoute from './routes/user.js';
-import apiRoute from './routes/api.js';
 import roomsRoute from './routes/rooms.js';
 import messagesRoute from './routes/messages.js';
 import dataRoute from './routes/data.js';
@@ -44,7 +43,6 @@ app.use("/room", authenticateToken, roomsRoute);
 app.use("/message", authenticateToken, messagesRoute);
 app.use("/data", authenticateToken, dataRoute);
 app.use("/device", authenticateToken, devicesRoute);
-app.use("/api", apiRoute);
 
 const server = app.listen(5000, (e) => {
     console.clear();
