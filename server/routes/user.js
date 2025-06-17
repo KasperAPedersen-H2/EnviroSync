@@ -3,9 +3,7 @@ import Models from "../orm/models.js";
 import multer from 'multer';
 import sharp from 'sharp';
 import bcrypt from 'bcryptjs';
-import {validatePasswordChange, validateUsername} from "../utils/validation.js";
-import { validateEmail } from "../utils/validation.js";
-import { validatePassword } from "../utils/validation.js";
+import { validateUsername, validateEmail, validatePasswordChange } from "../utils/validation.js";
 
 const router = Router();
 
@@ -40,14 +38,12 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Avatar upload route
 router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
-        // Resize og optimer billedet
         const optimizedImageBuffer = await sharp(req.file.buffer)
             .resize(200, 200, {
                 fit: 'cover',
@@ -56,7 +52,6 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
             .png()
             .toBuffer();
 
-        // Gem i databasen
         await Models.Users.update(
             { avatar: optimizedImageBuffer },
             { where: { id: req.params.id } }

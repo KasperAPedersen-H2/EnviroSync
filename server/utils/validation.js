@@ -129,7 +129,17 @@ function validateChecks(validationChecks) {
     return "";
 }
 
+/**
+ * Validates multiple values against multiple criteria
+ * @param {Array} values - Array of values to validate
+ * @param {Array} criteria - Array of criteria objects with test and message properties
+ * @returns {string} Error message if validation fails, empty string if valid
+ */
 function validateMultiple(values, criteria) {
+    if (!Array.isArray(values) || values.length === 0) {
+        return "Invalid validation input.";
+    }
+
     for (let criterion of criteria) {
         if (criterion.test(...values)) {
             return criterion.message;
