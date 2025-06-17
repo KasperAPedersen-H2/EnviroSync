@@ -4,6 +4,7 @@ import Socket from "../socket.js";
 
 const router = Router();
 
+// skal ændres
 router.post('/data', async (req, res) => {
     let { sn, temp, humidity, pressure, tvoc} = req.body;
 

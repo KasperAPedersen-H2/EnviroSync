@@ -34,7 +34,7 @@ const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentD
 
             // Fetch devices for all rooms
             const devicesPromises = roomsData.map(room =>
-                fetch(`${process.env.REACT_APP_SERVER_URL}/room/${room.id}/devices`, {
+                fetch(`${process.env.REACT_APP_SERVER_URL}/device/${room.id}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 })
                     .then(response => response.json())

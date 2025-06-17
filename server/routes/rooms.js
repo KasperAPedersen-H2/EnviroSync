@@ -3,6 +3,7 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
+// Get all rooms
 router.get("/all", async (req, res) => {
     try {
         const { id } = req.user;
@@ -14,28 +15,8 @@ router.get("/all", async (req, res) => {
     }
 });
 
-
-// fix
-router.get("/:roomId/devices", async (req, res) => {
-    const { roomId } = req.params;
-
-    try {
-        const devices = await Models.Devices.findAll({
-            where: { room_id: roomId }
-        });
-
-        if (!devices || devices.length === 0) {
-            return res.status(200).json([]);
-        }
-
-        return res.status(200).json(devices);
-    } catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
-    }
-});
-
-
-router.post("/", async (req, res) => {
+// Create new room
+router.post("/new", async (req, res) => {
     const { name } = req.body;
 
     if (!name) {
@@ -51,6 +32,7 @@ router.post("/", async (req, res) => {
     }
 });
 
+// Update room
 router.put("/:roomId", async (req, res) => {
     const { roomId } = req.params;
     const { name } = req.body;
@@ -75,6 +57,7 @@ router.put("/:roomId", async (req, res) => {
     }
 });
 
+// Delete room
 router.delete("/:roomId", async (req, res) => {
     const { roomId } = req.params;
 

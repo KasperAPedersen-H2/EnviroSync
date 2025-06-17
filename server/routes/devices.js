@@ -3,17 +3,7 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
-
-// fix
-router.get("/", async (req, res) => {
-    try {
-        const devices = await Models.Devices.findAll();
-        return res.status(200).json(devices);
-    } catch (error) {
-        return res.status(500).json({ message: "Internal server error" });
-    }
-});
-
+// Get all devices assigned to the specific room_id
 router.get("/:roomId", async (req, res) => {
     const { roomId } = req.params;
 
@@ -22,8 +12,8 @@ router.get("/:roomId", async (req, res) => {
             where: { room_id: roomId },
         });
 
-        if (!devices.length) {
-            return res.status(404).json({ message: "No devices found for this room" });
+        if (!devices || devices.length === 0) {
+            return res.status(200).json([]);
         }
 
         return res.status(200).json(devices);
@@ -32,7 +22,8 @@ router.get("/:roomId", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+// Create new device
+router.post("/new", async (req, res) => {
     const { name, room_id, serial_number } = req.body;
 
     if (!name || !room_id || !serial_number) {
@@ -57,6 +48,7 @@ router.post("/", async (req, res) => {
     }
 });
 
+// Update device
 router.put("/:deviceId", async (req, res) => {
     const { deviceId } = req.params;
     const { name, room_id } = req.body;
@@ -82,6 +74,7 @@ router.put("/:deviceId", async (req, res) => {
     }
 });
 
+// Delete device
 router.delete("/:deviceId", async (req, res) => {
     const { deviceId } = req.params;
 

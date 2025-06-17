@@ -3,6 +3,7 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
+// Get newest data from sensor
 router.get('/latest/:sensorId', async (req, res) => {
     const { sensorId } = req.params;
 
@@ -16,6 +17,7 @@ router.get('/latest/:sensorId', async (req, res) => {
     return res.status(200).json(data);
 })
 
+// Get all data from sensor
 router.get('/:sensorId', async (req, res) => {
     const { sensorId } = req.params;
 
