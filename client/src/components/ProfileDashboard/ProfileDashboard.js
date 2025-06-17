@@ -10,7 +10,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
-import {useAlert} from "../../context/AlertContext";
+import { useAlert } from "../../context/AlertContext";
 
 const ProfileDashboard = () => {
     const [avatar, setAvatar] = useState(null);
@@ -20,6 +20,10 @@ const ProfileDashboard = () => {
     const session = useSessionCheck();
     const { globalAvatar, setGlobalAvatar } = useAvatar();
     const { showAlert } = useAlert();
+    const [userData, setUserData] = useState({
+        username: '',
+        email: ''
+    });
     const [editFormData, setEditFormData] = useState({
         username: '',
         email: '',
@@ -32,6 +36,11 @@ const ProfileDashboard = () => {
 
     useEffect(() => {
         if (session?.id) {
+            setUserData({
+                username: session?.username || '',
+                email: session?.email || ''
+            });
+            
             if (globalAvatar) {
                 setPreviewUrl(`data:image/png;base64,${globalAvatar}`);
             } else {
@@ -44,15 +53,20 @@ const ProfileDashboard = () => {
                         });
 
                         if (response.ok) {
-                            const userData = await response.json();
-                            if (userData.avatar) {
-                                setPreviewUrl(`data:image/png;base64,${userData.avatar}`);
-                                setGlobalAvatar(userData.avatar);
+                            const fetchedUserData = await response.json();
+                            if (fetchedUserData.avatar) {
+                                setPreviewUrl(`data:image/png;base64,${fetchedUserData.avatar}`);
+                                setGlobalAvatar(fetchedUserData.avatar);
                             }
+                            
+                            setUserData({
+                                username: fetchedUserData.username || '',
+                                email: fetchedUserData.email || ''
+                            });
 
                             setEditFormData({
-                                username: userData.username || '',
-                                email: userData.email || '',
+                                username: fetchedUserData.username || '',
+                                email: fetchedUserData.email || '',
                                 password: '',
                                 newPassword: '',
                                 confirmPassword: ''
@@ -72,7 +86,6 @@ const ProfileDashboard = () => {
         const file = event.target.files[0];
         if (file) {
             setAvatar(file);
-            // Vis preview af det valgte billede
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreviewUrl(reader.result);
@@ -115,7 +128,7 @@ const ProfileDashboard = () => {
         document.getElementById('avatar-upload').click();
     };
 
-    const handeEditProfile = () => {
+    const handleEditProfile = () => {
         setIsModalOpen(true);
     };
 
@@ -165,6 +178,12 @@ const ProfileDashboard = () => {
 
             if (response.ok) {
                 showAlert("success", "Profile updated successfully");
+                
+                setUserData({
+                    username: editFormData.username || '',
+                    email: editFormData.email || ''
+                });
+                
                 closeEditModal();
 
                 setEditFormData(prev => ({
@@ -227,7 +246,11 @@ const ProfileDashboard = () => {
                             </h3>
                             <div className="profile-field">
                                 <label>Username:</label>
-                                <span>{session?.username || "Not available"}</span>
+                                <span>{userData.username || "Not available"}</span>
+                            </div>
+                            <div className="profile-field">
+                                <label>Email:</label>
+                                <span>{userData.email || "Not available"}</span>
                             </div>
                         </article>
 
@@ -257,103 +280,112 @@ const ProfileDashboard = () => {
                 </article>
 
                 <footer className="profile-actions">
-                    <button className="btn primary" onClick={handeEditProfile}>
+                    <button className="btn primary" onClick={handleEditProfile}>
                         <EditIcon className="btn-icon" /> Edit Profile
                     </button>
                 </footer>
             </article>
 
-            {isModalOpen && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h2>Edit Profile</h2>
-                            <button className="close-modal-btn" onClick={closeEditModal}>
-                                <CloseIcon />
-                            </button>
-                        </div>
-                        <form onSubmit={handleEditFormSubmit} className="edit-profile-form">
-                            <div className={`form-group dropdown ${expandedFields.username ? 'expanded' : ''}`}>
-                                <div className="dropdown-header" onClick={() => toggleField('username')}>
-                                    <label htmlFor="username">Change Username</label>
-                                    <KeyboardArrowDownIcon className="dropdown-icon" />
-                                </div>
-                                <div className="dropdown-content">
-                                    <input
-                                        type="text"
-                                        id="username"
-                                        name="username"
-                                        value={editFormData.username}
-                                        onChange={handleEditFormChange}
-                                        placeholder="Enter new username"
-                                    />
-                                </div>
-                            </div>
-                            <div className={`form-group dropdown ${expandedFields.email ? 'expanded' : ''}`}>
-                                <div className="dropdown-header" onClick={() => toggleField('email')}>
-                                    <label htmlFor="email">Change Email</label>
-                                    <KeyboardArrowDownIcon className="dropdown-icon" />
-                                </div>
-                                <div className="dropdown-content">
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={editFormData.email}
-                                        onChange={handleEditFormChange}
-                                        placeholder="Enter new email"
-                                    />
-                                </div>
-                            </div>
-                            <div className={`form-group dropdown ${expandedFields.password ? 'expanded' : ''}`}>
-                                <div className="dropdown-header" onClick={() => toggleField('password')}>
-                                    <label htmlFor="password">Change Password</label>
-                                    <KeyboardArrowDownIcon className="dropdown-icon" />
-                                </div>
-                                <div className="dropdown-content password-change-fields">
-                                    <div className="password-field">
-                                        <label htmlFor="currentPassword">Current Password</label>
-                                        <input
-                                            type="password"
-                                            id="currentPassword"
-                                            name="password"
-                                            value={editFormData.password}
-                                            onChange={handleEditFormChange}
-                                            placeholder="Enter current password"
-                                        />
-                                    </div>
-                                    <div className="password-field">
-                                        <label htmlFor="newPassword">New Password</label>
-                                        <input
-                                            type="password"
-                                            id="newPassword"
-                                            name="newPassword"
-                                            value={editFormData.newPassword}
-                                            onChange={handleEditFormChange}
-                                            placeholder="Enter new password"
-                                        />
-                                    </div>
-                                    <div className="password-field">
-                                        <label htmlFor="confirmPassword">Confirm Password</label>
-                                        <input
-                                            type="password"
-                                            id="confirmPassword"
-                                            name="confirmPassword"
-                                            value={editFormData.confirmPassword}
-                                            onChange={handleEditFormChange}
-                                            placeholder="Confirm new password"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="modal-actions">
-                                <button type="button" className="btn secondary" onClick={closeEditModal}>Cancel</button>
-                                <button type="submit" className="btn primary">Save Changes</button>
-                            </div>
-                        </form>
+{isModalOpen && (
+    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
+        <section className="modal-content">
+            <header className="modal-header">
+                <h2 id="edit-profile-title">Edit Profile</h2>
+                <button 
+                    className="close-modal-btn" 
+                    onClick={closeEditModal} 
+                    aria-label="Close modal"
+                >
+                    <CloseIcon />
+                </button>
+            </header>
+            <form onSubmit={handleEditFormSubmit} className="edit-profile-form">
+                <fieldset className={`form-group dropdown ${expandedFields.username ? 'expanded' : ''}`}>
+                    <legend className="dropdown-header" onClick={() => toggleField('username')}>
+                        <span>Change Username</span>
+                        <KeyboardArrowDownIcon className="dropdown-icon" />
+                    </legend>
+                    <div className="dropdown-content">
+                        <label htmlFor="username" className="visually-hidden">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={editFormData.username}
+                            onChange={handleEditFormChange}
+                            placeholder="Enter new username"
+                        />
                     </div>
-                </div>
-            )}
+                </fieldset>
+                
+                <fieldset className={`form-group dropdown ${expandedFields.email ? 'expanded' : ''}`}>
+                    <legend className="dropdown-header" onClick={() => toggleField('email')}>
+                        <span>Change Email</span>
+                        <KeyboardArrowDownIcon className="dropdown-icon" />
+                    </legend>
+                    <div className="dropdown-content">
+                        <label htmlFor="email" className="visually-hidden">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={editFormData.email}
+                            onChange={handleEditFormChange}
+                            placeholder="Enter new email"
+                        />
+                    </div>
+                </fieldset>
+                
+                <fieldset className={`form-group dropdown ${expandedFields.password ? 'expanded' : ''}`}>
+                    <legend className="dropdown-header" onClick={() => toggleField('password')}>
+                        <span>Change Password</span>
+                        <KeyboardArrowDownIcon className="dropdown-icon" />
+                    </legend>
+                    <div className="dropdown-content password-change-fields">
+                        <div className="password-field">
+                            <label htmlFor="currentPassword">Current Password</label>
+                            <input
+                                type="password"
+                                id="currentPassword"
+                                name="password"
+                                value={editFormData.password}
+                                onChange={handleEditFormChange}
+                                placeholder="Enter current password"
+                            />
+                        </div>
+                        <div className="password-field">
+                            <label htmlFor="newPassword">New Password</label>
+                            <input
+                                type="password"
+                                id="newPassword"
+                                name="newPassword"
+                                value={editFormData.newPassword}
+                                onChange={handleEditFormChange}
+                                placeholder="Enter new password"
+                            />
+                        </div>
+                        <div className="password-field">
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                value={editFormData.confirmPassword}
+                                onChange={handleEditFormChange}
+                                placeholder="Confirm new password"
+                            />
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <footer className="modal-actions">
+                    <button type="button" className="btn secondary" onClick={closeEditModal}>Cancel</button>
+                    <button type="submit" className="btn primary">Save Changes</button>
+                </footer>
+            </form>
+        </section>
+    </div>
+)}
         </section>
     );
 };
