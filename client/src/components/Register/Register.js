@@ -22,6 +22,7 @@ const Register = () => {
             });
             const data = await response.json();
             if (response.ok) {
+                showAlert("success", "Registration successful");
                 navigate("/login");
             } else {
                 if (data.message) {
@@ -31,7 +32,7 @@ const Register = () => {
                 }
             }
         } catch (error) {
-            console.error("Fejl:", error);
+            console.error("Error:", error);
         }
     };
 
