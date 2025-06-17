@@ -3,6 +3,7 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
+// fix
 router.get('/:deviceId', async (req, res) => {
     try {
         const messages = await Models.Messages.findAll({
@@ -22,6 +23,7 @@ router.get('/:deviceId', async (req, res) => {
     }
 });
 
+// fix
 router.post('/send', async (req, res) => {
     try {
         const { id } = req.user;

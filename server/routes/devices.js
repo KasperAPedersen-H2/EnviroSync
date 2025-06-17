@@ -3,6 +3,8 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
+
+// fix
 router.get("/", async (req, res) => {
     try {
         const devices = await Models.Devices.findAll();
@@ -38,7 +40,17 @@ router.post("/", async (req, res) => {
     }
 
     try {
-        const newDevice = await Models.Devices.create({ name, room_id, serial_number });
+        const sensor = await Models.Sensors.findOne({ where: { serial_number } });
+        if(!sensor) {
+            return res.status(409).json({ message: "Couldnt find sensor" });
+        }
+
+        const newDevice = await Models.Devices.create({
+            room_id,
+            sensor_id: sensor.id,
+            name
+        });
+
         return res.status(201).json(newDevice);
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });

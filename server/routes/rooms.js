@@ -14,6 +14,8 @@ router.get("/all", async (req, res) => {
     }
 });
 
+
+// fix
 router.get("/:roomId/devices", async (req, res) => {
     const { roomId } = req.params;
 
