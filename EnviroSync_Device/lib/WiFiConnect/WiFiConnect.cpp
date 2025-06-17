@@ -41,12 +41,12 @@ void WiFiConnect::autoConnect(){
     String ssid, password;
     if (loadCredentials(ssid, password))
     {
-        //if (connectSTA(ssid.c_str(), password.c_str()))
-        //{
-        //    getSerialNumber();
-        //    Serial.println("WiFi: Connect to STA!");
-        //    return;
-        //}
+        if (connectSTA(ssid.c_str(), password.c_str()))
+        {
+            getSerialNumber();
+            Serial.println("WiFi: Connect to STA!");
+            return;
+        }
     }
     Serial.println("WiFi: Starter AP");
     getSerialNumber();
