@@ -23,8 +23,8 @@ router.post('/register', async (req, res) => {
 // Add new data from sensor
 router.post('/data/new', async (req, res) => {
     try {
-        const { sn, temp, humidity, pressure, tvoc } = req.body;
-        if(!sn || !temp || !humidity || !pressure || !tvoc) {
+        const { serial_number, temp, humidity, pressure, tvoc } = req.body;
+        if(!serial_number || !temp || !humidity || !pressure || !tvoc) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 
@@ -32,7 +32,7 @@ router.post('/data/new', async (req, res) => {
             return res.status(400).json({ message: 'Invalid data' });
         }
 
-        const sensor = await Models.Sensors.findOne({ where: { serial_number: sn } });
+        const sensor = await Models.Sensors.findOne({ where: { serial_number: serial_number } });
         if(!sensor) {
             return res.status(400).json({ message: 'Invalid serial number' });
         }
