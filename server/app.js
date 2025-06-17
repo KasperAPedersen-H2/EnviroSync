@@ -45,6 +45,7 @@ app.use("/device", authenticateToken, devicesRoute);
 app.use("/api", apiRoute);
 
 const server = app.listen(5000, (e) => {
+    console.clear();
     if(e) {
         console.log(e);
         return;

@@ -6,8 +6,6 @@ const router = Router();
 // Get all messages for specific sensor
 router.get('/:deviceId', async (req, res) => {
     try {
-        console.log(req.params.deviceId);
-
         const { deviceId } = req.params;
 
         const device = await Models.Devices.findByPk(deviceId);
