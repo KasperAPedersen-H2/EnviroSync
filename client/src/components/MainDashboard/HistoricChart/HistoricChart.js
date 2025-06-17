@@ -52,7 +52,6 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
         socketService.connect();
 
         socketService.on("new-data", () => {
-            console.log("new data on historic chart");
             fetchData();
         })
 
