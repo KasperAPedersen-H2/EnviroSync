@@ -7,12 +7,12 @@ let Data = sequelize.define('data', {
         autoIncrement: true,
         primaryKey: true
     },
-    device_id: {
-        type: DataTypes.STRING,
+    sensor_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'devices',
-            key: 'serial_number'
+            model: 'sensors',
+            key: 'id'
         }
     },
     temperature: {

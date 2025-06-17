@@ -7,16 +7,19 @@ let Devices = sequelize.define('devices', {
         autoIncrement: true,
         primaryKey: true
     },
-    serial_number: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
     room_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: 'rooms',
+            key: 'id'
+        }
+    },
+    sensor_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'sensors',
             key: 'id'
         }
     },

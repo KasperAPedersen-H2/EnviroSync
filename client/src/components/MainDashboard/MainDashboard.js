@@ -26,7 +26,7 @@ const MainDashboard = () => {
 
         const fetchData = async () => {
             if (!selectedDevice) return;
-            
+
             setIsLoading(true);
             try {
                 const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/data/latest/${selectedDevice}`, {

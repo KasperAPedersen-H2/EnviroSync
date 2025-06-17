@@ -8,7 +8,7 @@ const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
 
     const handleAddRoom = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/new`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -119,7 +119,7 @@ const Header = () => {
                         Choose Device
                     </option>
                     {devices.map((device) => (
-                        <option key={device.serial_number} value={device.serial_number}>
+                        <option key={device.sensor_id} value={device.sensor_id}>
                             {device.name}
                         </option>
                     ))}
