@@ -9,6 +9,11 @@ router.post('/register', async (req, res) => {
     try {
         const { serial_number } = req.body;
 
+        let sensor = await Models.Sensors.findOne({ where: { serial_number } });
+        if(sensor) {
+            return res.status(409).json({ message: 'Sensor already registered' });
+        }
+
         await Models.Sensors.create({
             serial_number: serial_number
         });
