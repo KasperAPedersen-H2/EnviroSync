@@ -28,8 +28,9 @@ router.post('/register', async (req, res) => {
 // Add new data from sensor
 router.post('/data/new', async (req, res) => {
     try {
+        console.log(123);
         const { serial_number, temp, humidity, co2, tvoc } = req.body;
-        if(!serial_number || !temp || !humidity || !co2 || !tvoc) {
+        if(serial_number == undefined || temp == undefined || humidity == undefined || co2 == undefined || tvoc == undefined) {
             return res.status(400).json({ message: 'Missing required fields' });
         }
 

@@ -7,6 +7,15 @@ let Users = sequelize.define('users', {
         autoIncrement: true,
         primaryKey: true
     },
+    role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'roles',
+            key: 'id'
+        },
+        defaultValue: 1
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,

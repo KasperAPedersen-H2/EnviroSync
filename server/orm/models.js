@@ -5,9 +5,11 @@ import Devices from './models/devices.js';
 import Data from './models/data.js';
 import Messages from './models/messages.js';
 import Sensors from './models/sensors.js';
+import Roles from './models/roles.js';
 
 export default {
     sequelize,
+    Roles,
     Users,
     Sensors,
     Rooms,

@@ -5,6 +5,14 @@ const Dummy = async () => {
     try {
         if (await Models.Users.count() > 0) return;
 
+        const rolesData = [
+            { name: 'User' },
+            { name: 'Admin' }
+        ];
+
+        await Models.Roles.bulkCreate(rolesData);
+        console.log('Roles added!');
+
         const usersData = [
             { username: 'user1', email:'user1@dummy.dk', password: 'password1' },
             { username: 'user2', email:'user2@dummy.dk', password: 'password2' },
