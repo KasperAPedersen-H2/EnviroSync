@@ -3,6 +3,8 @@ import "./DeviceChat.css";
 
 import { useSession } from "../../../context/SessionProvider";
 import { useAvatar } from "../../../context/AvatarContext";
+import { useRoomDevice } from '../../../context/RoomDeviceContext';
+import socketService from "../../../services/socketService"
 
 const DeviceChat = ({ deviceId }) => {
     const { globalAvatar } = useAvatar();
@@ -11,18 +13,35 @@ const DeviceChat = ({ deviceId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
     const { session } = useSession();
+    const { selectedRoom } = useRoomDevice();
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     useEffect(() => {
+        socketService.connect();
+
+        socketService.on("new-message", (data) => {
+            const { roomId, userId } = data;
+
+            if(Number(roomId) !== Number(selectedRoom)) {
+                return;
+            }
+
+            if(Number(userId) === Number(session?.id)) {
+                return;
+            }
+
+            fetchMessages();
+        });
+
         const fetchMessages = async () => {
             if (!deviceId) return;
             
             setIsLoading(true);
             try {
-                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/message/${deviceId}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/message/${selectedRoom}`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -40,7 +59,11 @@ const DeviceChat = ({ deviceId }) => {
         };
 
         fetchMessages();
-    }, [deviceId]);
+
+        return () => {
+            socketService.disconnect();
+        };
+    }, [deviceId, selectedRoom, session?.id]);
 
     useEffect(() => {
         scrollToBottom();
@@ -60,7 +83,7 @@ const DeviceChat = ({ deviceId }) => {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
-                    device_id: deviceId,
+                    roomId: selectedRoom,
                     message: newMessageText,
                 }),
             });

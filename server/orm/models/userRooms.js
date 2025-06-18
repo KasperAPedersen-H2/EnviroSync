@@ -1,11 +1,19 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../database.js';
 
-let Devices = sequelize.define('devices', {
+let UserRooms = sequelize.define('user_rooms', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
     },
     room_id: {
         type: DataTypes.INTEGER,
@@ -15,22 +23,10 @@ let Devices = sequelize.define('devices', {
             key: 'id'
         },
         onDelete: 'CASCADE'
-    },
-    sensor_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'sensors',
-            key: 'id'
-        }
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
     }
 }, {
-    tableName: 'devices',
+    tableName: 'user_rooms',
     timestamps: false
 });
 
-export default Devices;
+export default UserRooms;
