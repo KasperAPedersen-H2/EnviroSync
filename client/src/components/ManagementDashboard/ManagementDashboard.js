@@ -19,7 +19,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import'./ManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
 
-// Modals
 import AddRoomModal from "./Modals/AddRoomModal";
 import EditRoomModal from "./Modals/EditRoomModal";
 import AddDeviceModal from "./Modals/AddDeviceModal";
