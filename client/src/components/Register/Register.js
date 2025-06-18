@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "../../context/AlertContext";
-import "./Register.css"; // Import af CSS-fil
+import "./Register.css";
 
 const Register = () => {
     const [username, setUsername] = useState("");
@@ -20,14 +20,19 @@ const Register = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, email, password, passwordConfirm }),
             });
-            const re = await response.json();
+            const data = await response.json();
             if (response.ok) {
+                showAlert("success", "Registration successful");
                 navigate("/login");
             } else {
-                showAlert("error", re.message);
+                if (data.message) {
+                    showAlert("error", data.message);
+                } else {
+                    showAlert("error", "Registration failed");
+                }
             }
         } catch (error) {
-            console.error("Fejl:", error);
+            showAlert("Error:", error);
         }
     };
 

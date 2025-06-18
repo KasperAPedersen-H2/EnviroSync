@@ -1,3 +1,14 @@
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 .profile-dashboard {
     width: 100%;
     margin: 0 auto;
@@ -365,24 +376,28 @@
     border-radius: 6px;
     overflow: hidden;
     transition: all 0.3s ease;
+    padding: 0;
 }
 
-.form-group.dropdown .dropdown-header {
+.form-group.dropdown legend.dropdown-header {
+    width: 100%;
     padding: 15px;
     background-color: var(--light-bg);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 6px;
     border-bottom: 1px solid transparent;
     transition: all 0.3s ease;
+    margin: 0;
 }
 
-.form-group.dropdown .dropdown-header:hover {
+.form-group.dropdown legend.dropdown-header:hover {
     background-color: var(--light-bg-hover);
 }
 
-.form-group.dropdown .dropdown-header label {
+.form-group.dropdown legend.dropdown-header label {
     font-weight: 500;
     margin: 0;
     color: var(--text-dark);
@@ -411,7 +426,7 @@
     border-top: 1px solid var(--border);
 }
 
-.form-group.dropdown.expanded .dropdown-header {
+.form-group.dropdown.expanded legend.dropdown-header {
     border-bottom-color: var(--border);
 }
 

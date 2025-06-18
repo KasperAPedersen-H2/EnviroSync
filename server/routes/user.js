@@ -3,6 +3,7 @@ import Models from "../orm/models.js";
 import multer from 'multer';
 import sharp from 'sharp';
 import bcrypt from 'bcryptjs';
+import { validateUsername, validateEmail, validatePasswordChange } from "../utils/validation.js";
 
 const router = Router();
 
@@ -37,14 +38,12 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// Avatar upload route
 router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ message: 'No file uploaded' });
         }
 
-        // Resize og optimer billedet
         const optimizedImageBuffer = await sharp(req.file.buffer)
             .resize(200, 200, {
                 fit: 'cover',
@@ -53,7 +52,6 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
             .png()
             .toBuffer();
 
-        // Gem i databasen
         await Models.Users.update(
             { avatar: optimizedImageBuffer },
             { where: { id: req.params.id } }
@@ -74,50 +72,62 @@ router.put("/:id/edit", async (req, res) => {
         const user = await Models.Users.findOne({
             where: { id }
         });
+
         if (!user) {
             return res.status(404).json({ message: "User data not found" });
         }
 
-        if (password && newPassword && confirmPassword) {
-            const isPasswordValid = bcrypt.compareSync(password, user.password);
-            if (!isPasswordValid) {
-                return res.status(401).json({ message: "Current password is incorrect" });
+        const fieldsToUpdate = {};
+        const errors = [];
+
+        if (username && username !== user.username) {
+            const usernameError = validateUsername(username);
+            if (usernameError) {
+                errors.push(usernameError);
+            } else {
+                fieldsToUpdate.username = username;
             }
-
-            let errorMessages = "";
-            if (newPassword.length < 8) {errorMessages = "Password must be at least 8 characters long";}
-            else if (newPassword.length > 20) {errorMessages = "Password must be less than 20 characters long.";}
-            else if (!newPassword.match(/[0-9]/)) {errorMessages = "Password must contain at least one number.";}
-            else if (!newPassword.match(/[a-z]/)) {errorMessages = "Password must contain at least one lowercase letter.";}
-            else if (!newPassword.match(/[A-Z]/)) {errorMessages = "Password must contain at least one uppercase letter.";}
-            else if (!newPassword.match(/[^a-zA-Z0-9]/)) {errorMessages = "Password must contain at least one special character.";}
-            else if (newPassword !== confirmPassword) {errorMessages = "Passwords do not match.";}
-
-            if (errorMessages.length > 0) {
-                return res.status(400).json({ message: errorMessages });
-            }
-
-            const hashedPassword = bcrypt.hashSync(newPassword, 10);
-
-            await user.update({
-                username: username || user.username,
-                email: email || user.email,
-                password: hashedPassword
-            });
-        } else {
-            await user.update({
-                username: username || user.username,
-                email: email || user.email
-            });
         }
 
-        const updatedUserData = {
-            id: user.id,
-            username: user.username,
-            email: user.email
-        };
+        if (email && email !== user.email) {
+            const emailError = validateEmail(email);
+            if (emailError) {
+                errors.push(emailError);
+            } else {
+                fieldsToUpdate.email = email;
+            }
+        }
 
-        return res.status(200).json(updatedUserData);
+        if (newPassword) {
+            if (!password) {
+                errors.push("Current password is required to change the password.");
+            } else if (!bcrypt.compareSync(password, user.password)) {
+                errors.push("Current password is incorrect.");
+            } else {
+                const passwordError = validatePasswordChange({
+                    newPassword,
+                    confirmPassword
+                });
+
+                if (passwordError) {
+                    errors.push(passwordError);
+                } else {
+                    fieldsToUpdate.password = bcrypt.hashSync(newPassword, 10);
+                }
+            }
+        }
+
+        if (errors.length > 0) {
+            return res.status(400).json({ message: "Validation failed", errors });
+        }
+
+        if (Object.keys(fieldsToUpdate).length === 0) {
+            return res.status(200).json({ message: "No changes were made" });
+        }
+
+        await user.update(fieldsToUpdate);
+
+        return res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
         console.error("Error updating user:", error);
         return res.status(500).json({ message: "Internal server error" });
