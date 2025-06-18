@@ -65,7 +65,7 @@ const ManagementDashboard = () => {
 
 
         fetchRoomsAndDevices();
-    }, [showAlert]);
+    });
 
     const sortedRooms = [...rooms].sort((a, b) => {
         if (sortOrder === "asc") {
