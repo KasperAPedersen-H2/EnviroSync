@@ -24,6 +24,7 @@ router.get("/:id", async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User data not found" });
         }
+        user.avatar = user.avatar ? user.avatar.toString('base64') : null;
 
         return res.status(200).json(user);
     } catch (error) {
