@@ -6,10 +6,17 @@
 
 void uploadToServer::uploadToAPI(const char* endpoint,const char* data)
 {
-    if (!wifiClient.connect(serverDomain, serverPort)){
-        Serial.println("Forbindelse ikke oprettet");
-        return;
+    if (endpoint == "/sensor/register")
+        do {
+            delay(100);
+        } while (!wifiClient.connect(serverDomain, serverPort));
+    else {
+        if (!wifiClient.connect(serverDomain, serverPort)){
+            Serial.println("Forbindelse ikke oprettet");
+            return;
+        }
     }
+
     const String request = String("POST ") + endpoint + " HTTP/1.1\r\n" +
                     "Host: " + serverDomain + "\r\n" +
                     "Content-Type: application/json\r\n" +
