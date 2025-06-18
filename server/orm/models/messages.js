@@ -7,14 +7,6 @@ let Messages = sequelize.define('messages', {
         autoIncrement: true,
         primaryKey: true
     },
-    sensor_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'sensors',
-            key: 'id'
-        }
-    },
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -23,8 +15,18 @@ let Messages = sequelize.define('messages', {
             key: 'id'
         }
     },
+    room_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'rooms',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
     message: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     tableName: 'messages',

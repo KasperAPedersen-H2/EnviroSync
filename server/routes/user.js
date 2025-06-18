@@ -19,19 +19,13 @@ router.get("/:id", async (req, res) => {
     try {
         const user = await Models.Users.findOne({
             where: { id },
-            attributes: [ 'id', 'username', 'avatar' ]
+            attributes: [ 'id', 'username', 'email', 'avatar' ]
         });
         if (!user) {
             return res.status(404).json({ message: "User data not found" });
         }
 
-        const userData = {
-            username: user.username,
-            avatar: user.avatar ? user.avatar.toString('base64') : null
-        };
-
-
-        return res.status(200).json(userData);
+        return res.status(200).json(user);
     } catch (error) {
         console.error("Error fetching user:", error);
         return res.status(500).json({ message: "Internal server error" });
