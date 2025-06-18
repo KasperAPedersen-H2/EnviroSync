@@ -17,6 +17,11 @@ void setup() {
     wifi.autoConnect();
     Clock.startNTP();
     sensor.startSensor();
+    JsonDocument doc;
+    doc["serial_number"] = wifi.serialNumber;
+    String jsonOutput;
+    serializeJson(doc, jsonOutput);
+    uploadToServer.uploadToAPI("/sensor/register", jsonOutput.c_str());
 }
 
 void loop() {
@@ -25,18 +30,17 @@ void loop() {
     if (Clock.timeToSendData())
     {
         JsonDocument doc;
-        doc["sn"] = wifi.serialNumber;
+        doc["serial_number"] = wifi.serialNumber;
         doc["temp"] = sensor.getTemp();
         doc["humidity"] = sensor.getHumidity();
-        doc["pressure"] = sensor.getPressure();
+        doc["co2"] = sensor.getPressure();
         doc["tvoc"] = sensor.getTVOC();
 
         String jsonOutput;
         serializeJson(doc, jsonOutput);
 
         Serial.println(jsonOutput);
-
-        uploadToServer.uploadToAPI("/api/data",jsonOutput.c_str());
+        uploadToServer.uploadToAPI("/sensor/data/new",jsonOutput.c_str());
     }
 
     if (Clock.timeToSendStatus())
