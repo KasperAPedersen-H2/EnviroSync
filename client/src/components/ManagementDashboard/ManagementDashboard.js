@@ -60,7 +60,7 @@ const ManagementDashboard = () => {
                 const allDevices = devicesArrays.flat();
                 setDevices(allDevices || []);
             } catch (error) {
-                console.error("Error fetching rooms and devices!");
+                showAlert("error", "Failed to fetch rooms and devices");
             }
         };
 
