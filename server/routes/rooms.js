@@ -3,20 +3,28 @@ import Models from "../orm/models.js";
 
 const router = Router();
 
-// Get all rooms
+// Get all rooms assigned  to user
 router.get("/all", async (req, res) => {
     try {
         const { id } = req.user;
 
-        const rooms = await Models.Rooms.findAll({ where: { user_id: id } });
-        return res.status(200).json(rooms);
-    } catch (error) {
+        const userRooms = await Models.UserRooms.findAll({ where: { user_id: id } });
+        let allUserRooms = [];
+
+        for(let room of userRooms) {
+            const foundRoom = await Models.Rooms.findOne({ where: { id: room.room_id } });
+            allUserRooms.push(foundRoom);
+        }
+
+        return res.status(200).json(allUserRooms);
+    } catch(e) {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
 
 // Create new room
 router.post("/new", async (req, res) => {
+    const { id } = req.user;
     const { name } = req.body;
 
     if (!name) {
@@ -24,8 +32,8 @@ router.post("/new", async (req, res) => {
     }
 
     try {
-        const { id: user_id } = req.user;
         const newRoom = await Models.Rooms.create({ name, user_id });
+        const newUserRoom = await Models.UserRooms.create({ user_id: id, room_id: newRoom.id });
         return res.status(201).json(newRoom);
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
