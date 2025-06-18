@@ -32,7 +32,7 @@ const Register = () => {
                 }
             }
         } catch (error) {
-            console.error("Error:", error);
+            showAlert("Error:", error);
         }
     };
 
