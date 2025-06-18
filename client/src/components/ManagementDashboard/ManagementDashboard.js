@@ -19,7 +19,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import'./ManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
 
-// Modals
 import AddRoomModal from "./Modals/AddRoomModal";
 import EditRoomModal from "./Modals/EditRoomModal";
 import AddDeviceModal from "./Modals/AddDeviceModal";
@@ -60,13 +59,13 @@ const ManagementDashboard = () => {
                 const allDevices = devicesArrays.flat();
                 setDevices(allDevices || []);
             } catch (error) {
-                console.error("Error fetching rooms and devices!");
+                showAlert("error", "Failed to fetch rooms and devices");
             }
         };
 
 
         fetchRoomsAndDevices();
-    }, []);
+    }, [showAlert]);
 
     const sortedRooms = [...rooms].sort((a, b) => {
         if (sortOrder === "asc") {
