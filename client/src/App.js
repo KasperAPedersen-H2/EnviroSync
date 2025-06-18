@@ -18,6 +18,7 @@ import ProfileDashboard from "./components/ProfileDashboard/ProfileDashboard";
 import MainDashboard from "./components/MainDashboard/MainDashboard";
 import SettingsDashboard from "./components/SettingsDashboard/SettingsDashboard";
 import ManagementDashboard from "./components/ManagementDashboard/ManagementDashboard";
+import AdminManagementDashboard from "./components/AdminManagementDashboard/AdminManagementDashboard";
 
 function App() {
     const [darkMode, setDarkMode] = useState(false);
@@ -58,6 +59,7 @@ function App() {
                                             <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
                                             <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
                                             <Route path="/manage" element={<ProtectedRoute element={<ManagementDashboard />} />} />
+                                            <Route path="/adminpanel" element={<ProtectedRoute element={<AdminManagementDashboard />} />} />
                                         </Routes>
                                     </section>
                                 </main>

@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
     try {
         const user = await Models.Users.findOne({
             where: { id },
-            attributes: [ 'id', 'username', 'avatar' ]
+            attributes: [ 'id', 'username', 'email', 'avatar' ]
         });
         if (!user) {
             return res.status(404).json({ message: "User data not found" });
@@ -27,7 +27,8 @@ router.get("/:id", async (req, res) => {
 
         const userData = {
             username: user.username,
-            avatar: user.avatar ? user.avatar.toString('base64') : null
+            avatar: user.avatar ? user.avatar.toString('base64') : null,
+            email: user.email
         };
 
 

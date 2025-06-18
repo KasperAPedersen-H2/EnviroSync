@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useSession } from "../../context/SessionProvider";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -8,6 +9,7 @@ import "./Sidebar.css";
 const Sidebar = () => {
     const [menuVisible, setMenuVisible] = useState(false);
     const sidebarRef = useRef(null);
+    const { session } = useSession();
 
     const toggleMenu = () => {
         setMenuVisible((prevVisible) => !prevVisible);
@@ -31,6 +33,7 @@ const Sidebar = () => {
         };
     }, [menuVisible]);
 
+    console.log(session.role);
     return (
         <div ref={sidebarRef} className="sidebar-container">
             <aside className="sidebar">
@@ -45,26 +48,24 @@ const Sidebar = () => {
                         <DashboardIcon />
                         Dashboard
                     </Link>
-                    <Link to="/manage" className="sidebar-link">
-                        <DashboardCustomizeIcon />
-                        Management
-                    </Link>
+                    { session.role === 1 && (
+                        <>
+                            <Link to="/manage" className="sidebar-link">
+                                <DashboardCustomizeIcon />
+                                Management
+                            </Link>
+                        </>
+                    )}
+                    { session.role === 1 && (
+                        <>
+                            <Link to="/manage" className="sidebar-link">
+                                <DashboardCustomizeIcon />
+                                Admin Panel
+                            </Link>
+                        </>
+                    )}
                 </nav>
             </aside>
-
-            <div className={`sidebar-menu ${menuVisible ? "visible" : ""}`}>
-                <h3>Navigation</h3>
-                <nav>
-                    <Link to="/" onClick={() => setMenuVisible(false)}>
-                        <DashboardIcon />
-                        Dashboard
-                    </Link>
-                    <Link to="/manage" onClick={() => setMenuVisible(false)}>
-                        <DashboardCustomizeIcon />
-                        Management
-                    </Link>
-                </nav>
-            </div>
         </div>
     );
 };

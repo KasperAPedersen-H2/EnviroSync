@@ -18,6 +18,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import'./ManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
+import { useSession } from "../../context/SessionProvider";
 
 import AddRoomModal from "./Modals/AddRoomModal";
 import EditRoomModal from "./Modals/EditRoomModal";
@@ -35,6 +36,7 @@ const ManagementDashboard = () => {
     const [currentDevice, setCurrentDevice] = useState({});
     const [selectedFilterRoom, setSelectedFilterRoom] = useState("");
     const { showAlert } = useAlert();
+    const { session } = useSession();
     const [sortOrder, setSortOrder] = useState("asc");
 
     useEffect(() => {
