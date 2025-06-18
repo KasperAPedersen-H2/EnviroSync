@@ -17,6 +17,13 @@ import { useDataLimit } from "../../../context/DataLimitContext";
 
 ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, PointElement, CategoryScale, Filler);
 
+const getDisplayName = (type) => {
+    if (type === 'pressure') {
+        return 'CO₂';
+    }
+    return type.charAt(0).toUpperCase() + type.slice(1);
+};
+
 const HistoricChart = ({ deviceId, selectedDataType }) => {
     const [chartData, setChartData] = useState(null);
     const { dataLimit } = useDataLimit();
@@ -100,7 +107,7 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
                     labels,
                     datasets: [
                         {
-                            label: `${selectedDataType.charAt(0).toUpperCase() + selectedDataType.slice(1)} Data`,
+                            label: `${getDisplayName(selectedDataType)} Data`,
                             data: selectedData,
                             borderColor: "rgba(75, 192, 192, 1)",
                             backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -129,14 +136,14 @@ const HistoricChart = ({ deviceId, selectedDataType }) => {
     const getChartOptions = () => {
         const isMobile = windowWidth <= 768;
         const isSmallMobile = windowWidth <= 480;
-        
+
         return {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
-                    text: selectedDataType.charAt(0).toUpperCase() + selectedDataType.slice(1) + " Over Time",
+                    text: getDisplayName(selectedDataType) + " Over Time",
                     font: {
                         size: isSmallMobile ? 14 : (isMobile ? 16 : 18)
                     }
