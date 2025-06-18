@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Models from "../orm/models.js";
+import Socket from "../socket.js";
 
 const router = Router();
 
@@ -27,32 +28,6 @@ router.get('/:roomId', async (req, res) => {
 
 // Create new message
 router.post('/send', async (req, res) => {
-    /*try {
-        const { id } = req.user;
-        const { roomId, message } = req.body;
-
-        if(!roomId || !message) {
-            return res.status(400).json({ error: 'Missing required fields' });
-        }
-
-        const device = await Models.Devices.findByPk(roomId);
-        if(!device) {
-            return res.status(404).json({ error: 'Device not found' });
-        }
-
-        const sensorId = device.sensor_id;
-        const newMessage = await Models.Messages.create({
-            sensor_id: sensorId,
-            user_id: id,
-            message
-        })
-
-        newMessage.dataValues.username = req.user.username;
-        res.status(201).json(newMessage);
-    } catch (err) {
-        res.status(500).json({ error: 'Failed to send message' });
-    }*/
-
     try {
         const { id } = req.user;
         const { roomId, message } = req.body;
@@ -73,6 +48,7 @@ router.post('/send', async (req, res) => {
         });
 
         newMessage.dataValues.username = req.user.username;
+        Socket.getIO().emit('new-message', { roomId: roomId, userId: id });
         res.status(201).json(newMessage);
     } catch(e) {
         return res.status(500).json({ error: 'Internal server error' });

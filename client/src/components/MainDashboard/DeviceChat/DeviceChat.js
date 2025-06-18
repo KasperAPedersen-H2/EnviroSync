@@ -4,6 +4,7 @@ import "./DeviceChat.css";
 import { useSession } from "../../../context/SessionProvider";
 import { useAvatar } from "../../../context/AvatarContext";
 import { useRoomDevice } from '../../../context/RoomDeviceContext';
+import socketService from "../../../services/socketService"
 
 const DeviceChat = ({ deviceId }) => {
     const { globalAvatar } = useAvatar();
@@ -19,6 +20,22 @@ const DeviceChat = ({ deviceId }) => {
     };
 
     useEffect(() => {
+        socketService.connect();
+
+        socketService.on("new-message", (data) => {
+            const { roomId, userId } = data;
+
+            if(Number(roomId) !== Number(selectedRoom)) {
+                return;
+            }
+
+            if(Number(userId) === Number(session?.id)) {
+                return;
+            }
+
+            fetchMessages();
+        });
+
         const fetchMessages = async () => {
             if (!deviceId) return;
             
@@ -42,7 +59,11 @@ const DeviceChat = ({ deviceId }) => {
         };
 
         fetchMessages();
-    }, [deviceId]);
+
+        return () => {
+            socketService.disconnect();
+        };
+    }, [deviceId, selectedRoom, session?.id]);
 
     useEffect(() => {
         scrollToBottom();
