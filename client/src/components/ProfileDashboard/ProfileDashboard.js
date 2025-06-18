@@ -79,7 +79,7 @@ const ProfileDashboard = () => {
                 fetchUserData();
             }
         }
-    }, [session, globalAvatar]);
+    }, [session, globalAvatar, setGlobalAvatar, showAlert]);
 
 
     const handleFileChange = (event) => {
