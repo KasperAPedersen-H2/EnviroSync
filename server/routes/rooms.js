@@ -32,7 +32,7 @@ router.post("/new", async (req, res) => {
     }
 
     try {
-        const newRoom = await Models.Rooms.create({ name, user_id });
+        const newRoom = await Models.Rooms.create({ name });
         const newUserRoom = await Models.UserRooms.create({ user_id: id, room_id: newRoom.id });
         return res.status(201).json(newRoom);
     } catch (error) {
@@ -68,7 +68,7 @@ router.put("/:roomId", async (req, res) => {
 // Delete room
 router.delete("/:roomId", async (req, res) => {
     const { roomId } = req.params;
-
+    console.log(roomId);
     try {
         const room = await Models.Rooms.findByPk(roomId);
 

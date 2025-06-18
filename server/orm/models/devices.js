@@ -13,7 +13,8 @@ let Devices = sequelize.define('devices', {
         references: {
             model: 'rooms',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     },
     sensor_id: {
         type: DataTypes.INTEGER,

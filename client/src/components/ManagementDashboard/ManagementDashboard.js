@@ -67,12 +67,16 @@ const ManagementDashboard = () => {
     }, []);
 
     const sortedRooms = [...rooms].sort((a, b) => {
+        const nameA = a.name || ""; // Fallback til tom streng, hvis der mangler et navn
+        const nameB = b.name || "";
+
         if (sortOrder === "asc") {
-            return a.name.localeCompare(b.name);
+            return nameA.localeCompare(nameB);
         } else {
-            return b.name.localeCompare(a.name);
+            return nameB.localeCompare(nameA);
         }
     });
+
 
 
     const handleDeleteRoom = async (roomId) => {

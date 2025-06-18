@@ -21,7 +21,8 @@ let UserRooms = sequelize.define('user_rooms', {
         references: {
             model: 'rooms',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     }
 }, {
     tableName: 'user_rooms',

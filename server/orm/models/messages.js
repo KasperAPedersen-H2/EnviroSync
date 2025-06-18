@@ -21,7 +21,8 @@ let Messages = sequelize.define('messages', {
         references: {
             model: 'rooms',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     },
     message: {
         type: DataTypes.STRING,
