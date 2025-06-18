@@ -36,7 +36,6 @@ const ManagementDashboard = () => {
     const [currentDevice, setCurrentDevice] = useState({});
     const [selectedFilterRoom, setSelectedFilterRoom] = useState("");
     const { showAlert } = useAlert();
-    const [sortOrder, setSortOrder] = useState("asc");
 
     useEffect(() => {
         const fetchRoomsAndDevices = async () => {
@@ -67,14 +66,6 @@ const ManagementDashboard = () => {
 
         fetchRoomsAndDevices();
     }, []);
-
-    const sortedRooms = [...rooms].sort((a, b) => {
-        if (sortOrder === "asc") {
-            return a.name.localeCompare(b.name);
-        } else {
-            return b.name.localeCompare(a.name);
-        }
-    });
 
 
     const handleDeleteRoom = async (roomId) => {
@@ -112,24 +103,6 @@ const ManagementDashboard = () => {
                     <CardContent>
                         <Box className="card-header">
                             <Typography variant="h5" className="card-header-title">Rooms</Typography>
-
-                            <TextField
-                                select
-                                label="Sort by"
-                                value={sortOrder || "asc"}
-                                onChange={(e) => setSortOrder(e.target.value)}
-                                sx={{
-                                    width: "200px",
-                                }}
-                                SelectProps={{
-                                    native: true,
-                                }}
-                            >
-                                <option value="asc">A-Z</option>
-                                <option value="desc">Z-A</option>
-                            </TextField>
-
-
                             <Button className="card-header-button"
                                 variant="contained"
                                 startIcon={<AddIcon />}
@@ -146,23 +119,19 @@ const ManagementDashboard = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody className="table-body">
-                                {sortedRooms.map((room) => (
+                                {rooms.map((room) => (
                                     <TableRow key={room.id} className="table-row">
                                         <TableCell className="table-cell">{room.name}</TableCell>
                                         <TableCell className="table-cell">
-                                            <IconButton
-                                                color="primary"
-                                                onClick={() => {
+                                            <IconButton color="primary" onClick={() => {
                                                     setCurrentRoom(room);
                                                     setEditRoomModalOpen(true);
                                                 }}
                                             >
                                                 <EditIcon />
                                             </IconButton>
-                                            <IconButton
-                                                color="error"
-                                                onClick={() => {
-                                                    handleDeleteRoom(room.id);
+                                            <IconButton color="error" onClick={() => {
+                                                    handleDeleteRoom(room.id)
                                                 }}
                                             >
                                                 <DeleteIcon />
@@ -194,7 +163,7 @@ const ManagementDashboard = () => {
 
                                 <option value="" disabled hidden></option>
                                 <option value="all">All Rooms</option>
-                                {sortedRooms.map((room) => (
+                                {rooms.map((room) => (
                                     <option key={room.id} value={room.id}>
                                         {room.name}
                                     </option>
