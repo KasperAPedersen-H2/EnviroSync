@@ -1,7 +1,7 @@
 import {DataTypes} from 'sequelize';
 import sequelize from '../database.js';
 
-let Messages = sequelize.define('messages', {
+let UserRooms = sequelize.define('user_rooms', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -22,14 +22,10 @@ let Messages = sequelize.define('messages', {
             model: 'rooms',
             key: 'id'
         }
-    },
-    message: {
-        type: DataTypes.STRING,
-        allowNull: false
     }
 }, {
-    tableName: 'messages',
-    timestamps: true
+    tableName: 'user_rooms',
+    timestamps: false
 });
 
-export default Messages;
+export default UserRooms;
