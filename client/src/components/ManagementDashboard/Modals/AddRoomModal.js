@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Modal, TextField, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useAlert } from "../../../context/AlertContext";
 
-const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
+const AddRoomModal = ({ roomModalOpen, setRoomModalOpen, setRooms, rooms }) => {
     const [newRoomName, setNewRoomName] = useState("");
     const { showAlert } = useAlert();
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleAddRoom = async () => {
         try {
@@ -14,7 +18,7 @@ const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-                body: JSON.stringify({name: newRoomName, user_id: 1}),
+                body: JSON.stringify({ name: newRoomName, user_id: 1 }),
             });
 
             const newRoom = await response.json();
@@ -36,7 +40,7 @@ const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
                 sx={{
                     padding: 4,
                     backgroundColor: "var(--card-bg)",
-                    width: "30%",
+                    width: isSmallScreen ? "90%" : "30%",
                     margin: "20vh auto",
                     borderRadius: "8px",
                     boxShadow: 24,
@@ -50,12 +54,16 @@ const AddRoomModal = ({roomModalOpen, setRoomModalOpen, setRooms, rooms}) => {
                     label="Room Name"
                     value={newRoomName}
                     onChange={(e) => setNewRoomName(e.target.value)}
-                    sx={{marginBottom: 2}}
+                    sx={{ marginBottom: 2 }}
                 />
                 <Button
                     variant="contained"
                     onClick={handleAddRoom}
-                    sx={{backgroundColor: "var(--btn-bg)"}}
+                    sx={{
+                        backgroundColor: "var(--btn-bg)",
+                        width: "100%",
+                        padding: isSmallScreen ? "10px" : "14px",
+                    }}
                 >
                     Create Room
                 </Button>
