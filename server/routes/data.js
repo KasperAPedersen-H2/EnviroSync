@@ -17,6 +17,17 @@ router.get('/latest/:sensorId', async (req, res) => {
     return res.status(200).json(data);
 })
 
+router.get('/latest/avg/:roomId', async (req, res) => {
+    const { roomId } = req.params;
+
+    const data = await Models.Data.findAll({
+        where: { room_id: roomId },
+        order: [
+            ['createdAt', 'DESC']
+        ]
+    });
+})
+
 // Get all data from sensor
 router.get('/:sensorId', async (req, res) => {
     const { sensorId } = req.params;
