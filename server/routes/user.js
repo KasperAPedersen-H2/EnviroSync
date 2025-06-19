@@ -13,6 +13,36 @@ const upload = multer({
     }
 });
 
+router.get("/all", async (req, res) => {
+    try {
+        const users = await Models.Users.findAll({
+            attributes: [ 'id', 'username', 'avatar', 'role_id' ],
+        });
+
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: "No users found" });
+        }
+
+        const formattedUsers = [];
+        for (let user of users) {
+            const role = await Models.Roles.findByPk(user.role_id);
+
+            formattedUsers.push({
+                id: user.id,
+                username: user.username,
+                avatar: user.avatar ? user.avatar.toString('base64') : null,
+                role: role ? role.name : 'Unknown'
+            });
+        }
+
+
+        return res.status(200).json(formattedUsers);
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
 
@@ -31,7 +61,7 @@ router.get("/:id", async (req, res) => {
             email: user.email
         };
 
-        return res.status(200).json(user);
+        return res.status(200).json(userData);
     } catch (error) {
         console.error("Error fetching user:", error);
         return res.status(500).json({ message: "Internal server error" });
@@ -66,7 +96,7 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res) => {
 
 router.put("/:id/edit", async (req, res) => {
     const { id } = req.params;
-    const { username, email, password, newPassword, confirmPassword } = req.body;
+    const { username, email, password, newPassword, confirmPassword, role_id } = req.body;
 
     try {
         const user = await Models.Users.findOne({
@@ -76,6 +106,10 @@ router.put("/:id/edit", async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User data not found" });
         }
+
+        const currentUser = await Models.Users.findOne({
+            where: { id: req.user.id }
+        });
 
         const fieldsToUpdate = {};
         const errors = [];
@@ -115,6 +149,10 @@ router.put("/:id/edit", async (req, res) => {
                     fieldsToUpdate.password = bcrypt.hashSync(newPassword, 10);
                 }
             }
+        }
+
+        if (role_id && role_id !== user.role_id && currentUser.role_id === 2) {
+            fieldsToUpdate.role_id = role_id;
         }
 
         if (errors.length > 0) {

@@ -48,7 +48,7 @@ const Sidebar = () => {
                         <DashboardIcon />
                         Dashboard
                     </Link>
-                    { session.role === 1 && (
+                    { session.role === 2 && (
                         <>
                             <Link to="/manage" className="sidebar-link">
                                 <DashboardCustomizeIcon />
@@ -56,9 +56,9 @@ const Sidebar = () => {
                             </Link>
                         </>
                     )}
-                    { session.role === 1 && (
+                    { session.role === 2 && (
                         <>
-                            <Link to="/manage" className="sidebar-link">
+                            <Link to="/adminpanel" className="sidebar-link">
                                 <DashboardCustomizeIcon />
                                 Admin Panel
                             </Link>

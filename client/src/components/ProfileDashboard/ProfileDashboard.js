@@ -5,33 +5,23 @@ import PersonIcon from '@mui/icons-material/Person';
 import BadgeIcon from '@mui/icons-material/Badge';
 import SecurityIcon from '@mui/icons-material/Security';
 import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { PhotoCamera } from '@mui/icons-material';
 import { useAvatar } from "../../context/AvatarContext";
 import { useAlert } from "../../context/AlertContext";
+import EditUserModal from "../Modals/EditUserModal";
 
 const ProfileDashboard = () => {
     const [avatar, setAvatar] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const session = useSessionCheck();
     const { globalAvatar, setGlobalAvatar } = useAvatar();
     const { showAlert } = useAlert();
     const [userData, setUserData] = useState({
         username: '',
         email: ''
-    });
-    const [editFormData, setEditFormData] = useState({
-        username: '',
-        email: '',
-    });
-    const [expandedFields, setExpandedFields] = useState({
-        username: false,
-        email: false,
-        password: false
     });
 
     useEffect(() => {
@@ -62,14 +52,6 @@ const ProfileDashboard = () => {
                             setUserData({
                                 username: fetchedUserData.username || '',
                                 email: fetchedUserData.email || ''
-                            });
-
-                            setEditFormData({
-                                username: fetchedUserData.username || '',
-                                email: fetchedUserData.email || '',
-                                password: '',
-                                newPassword: '',
-                                confirmPassword: ''
                             });
                         }
                     } catch (error) {
@@ -126,85 +108,6 @@ const ProfileDashboard = () => {
 
     const triggerFileInput = () => {
         document.getElementById('avatar-upload').click();
-    };
-
-    const handleEditProfile = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeEditModal = () => {
-        setIsModalOpen(false);
-    }
-
-    const handleEditFormChange = (event) => {
-        const { name, value } = event.target;
-        setEditFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    }
-
-    const toggleField = (fieldName) => {
-        setExpandedFields(prev => ({
-            ...prev,
-            [fieldName]: !prev[fieldName]
-        }));
-    }
-
-    const handleEditFormSubmit = async (event) => {
-        event.preventDefault();
-
-        const isPasswordChangeAttempt = expandedFields.password &&
-            editFormData.password &&
-            editFormData.newPassword &&
-            editFormData.confirmPassword;
-
-        if (isPasswordChangeAttempt && editFormData.newPassword !== editFormData.confirmPassword) {
-            showAlert("error", "New passwords do not match");
-            return;
-        }
-
-        try {
-            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${session?.id}/edit`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-                body: JSON.stringify(editFormData)
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                showAlert("success", "Profile updated successfully");
-                
-                setUserData({
-                    username: editFormData.username || '',
-                    email: editFormData.email || ''
-                });
-                
-                closeEditModal();
-
-                setEditFormData(prev => ({
-                    ...prev,
-                    password: '',
-                    newPassword: '',
-                    confirmPassword: ''
-                }));
-
-            } else {
-                if (data.message === "Validation failed" && data.errors && data.errors.length > 0) {
-                    showAlert("error", data.errors[0]);
-                } else if (data.message) {
-                    showAlert("error", data.message);
-                } else {
-                    showAlert("error", "Profile update failed");
-                }
-            }
-        } catch (error) {
-            showAlert("error", "Profile update failed");
-        }
     };
 
     return (
@@ -280,112 +183,16 @@ const ProfileDashboard = () => {
                 </article>
 
                 <footer className="profile-actions">
-                    <button className="btn primary" onClick={handleEditProfile}>
+                    <button className="btn primary" onClick={() => setIsEditModalOpen(true)} aria-label="Edit profile">
                         <EditIcon className="btn-icon" /> Edit Profile
                     </button>
                 </footer>
             </article>
 
-{isModalOpen && (
-    <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
-        <section className="modal-content">
-            <header className="modal-header">
-                <h2 id="edit-profile-title">Edit Profile</h2>
-                <button 
-                    className="close-modal-btn" 
-                    onClick={closeEditModal} 
-                    aria-label="Close modal"
-                >
-                    <CloseIcon />
-                </button>
-            </header>
-            <form onSubmit={handleEditFormSubmit} className="edit-profile-form">
-                <fieldset className={`form-group dropdown ${expandedFields.username ? 'expanded' : ''}`}>
-                    <legend className="dropdown-header" onClick={() => toggleField('username')}>
-                        <span>Change Username</span>
-                        <KeyboardArrowDownIcon className="dropdown-icon" />
-                    </legend>
-                    <div className="dropdown-content">
-                        <label htmlFor="username" className="visually-hidden">Username</label>
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={editFormData.username}
-                            onChange={handleEditFormChange}
-                            placeholder="Enter new username"
-                        />
-                    </div>
-                </fieldset>
-                
-                <fieldset className={`form-group dropdown ${expandedFields.email ? 'expanded' : ''}`}>
-                    <legend className="dropdown-header" onClick={() => toggleField('email')}>
-                        <span>Change Email</span>
-                        <KeyboardArrowDownIcon className="dropdown-icon" />
-                    </legend>
-                    <div className="dropdown-content">
-                        <label htmlFor="email" className="visually-hidden">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={editFormData.email}
-                            onChange={handleEditFormChange}
-                            placeholder="Enter new email"
-                        />
-                    </div>
-                </fieldset>
-                
-                <fieldset className={`form-group dropdown ${expandedFields.password ? 'expanded' : ''}`}>
-                    <legend className="dropdown-header" onClick={() => toggleField('password')}>
-                        <span>Change Password</span>
-                        <KeyboardArrowDownIcon className="dropdown-icon" />
-                    </legend>
-                    <div className="dropdown-content password-change-fields">
-                        <div className="password-field">
-                            <label htmlFor="currentPassword">Current Password</label>
-                            <input
-                                type="password"
-                                id="currentPassword"
-                                name="password"
-                                value={editFormData.password}
-                                onChange={handleEditFormChange}
-                                placeholder="Enter current password"
-                            />
-                        </div>
-                        <div className="password-field">
-                            <label htmlFor="newPassword">New Password</label>
-                            <input
-                                type="password"
-                                id="newPassword"
-                                name="newPassword"
-                                value={editFormData.newPassword}
-                                onChange={handleEditFormChange}
-                                placeholder="Enter new password"
-                            />
-                        </div>
-                        <div className="password-field">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                value={editFormData.confirmPassword}
-                                onChange={handleEditFormChange}
-                                placeholder="Confirm new password"
-                            />
-                        </div>
-                    </div>
-                </fieldset>
-                
-                <footer className="modal-actions">
-                    <button type="button" className="btn secondary" onClick={closeEditModal}>Cancel</button>
-                    <button type="submit" className="btn primary">Save Changes</button>
-                </footer>
-            </form>
-        </section>
-    </div>
-)}
+            <EditUserModal
+                isOpen={isEditModalOpen}
+                onClose={() => setIsEditModalOpen(false)}
+            />
         </section>
     );
 };
