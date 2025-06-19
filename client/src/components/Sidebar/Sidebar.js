@@ -33,7 +33,6 @@ const Sidebar = () => {
         };
     }, [menuVisible]);
 
-    console.log(session.role);
     return (
         <div ref={sidebarRef} className="sidebar-container">
             <aside className="sidebar">
@@ -43,7 +42,7 @@ const Sidebar = () => {
                 <div className="menu-trigger" onClick={toggleMenu}>
                     <MenuIcon />
                 </div>
-                <nav className="sidebar-nav desktop-nav">
+                <nav className="sidebar-nav">
                     <Link to="/" className="sidebar-link">
                         <DashboardIcon />
                         Dashboard

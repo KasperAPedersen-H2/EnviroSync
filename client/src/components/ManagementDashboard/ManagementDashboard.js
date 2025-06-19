@@ -16,6 +16,7 @@ import {
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import'./ManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
 import { useSession } from "../../context/SessionProvider";
@@ -24,6 +25,8 @@ import AddRoomModal from "./Modals/AddRoomModal";
 import EditRoomModal from "./Modals/EditRoomModal";
 import AddDeviceModal from "./Modals/AddDeviceModal";
 import EditDeviceModal from "./Modals/EditDeviceModal";
+import ViewRoomDetailsModal from "./Modals/ViewRoomDetailsModal";
+
 
 const ManagementDashboard = () => {
     const [rooms, setRooms] = useState([]);
@@ -38,6 +41,8 @@ const ManagementDashboard = () => {
     const { showAlert } = useAlert();
     const { session } = useSession();
     const [sortOrder, setSortOrder] = useState("asc");
+    const [viewRoomDetailsModalOpen, setViewRoomDetailsModalOpen] = useState(false);
+    const [roomUsers, setRoomUsers] = useState([]);
 
     useEffect(() => {
         const fetchRoomsAndDevices = async () => {
@@ -69,7 +74,7 @@ const ManagementDashboard = () => {
     }, []);
 
     const sortedRooms = [...rooms].sort((a, b) => {
-        const nameA = a.name || ""; // Fallback til tom streng, hvis der mangler et navn
+        const nameA = a.name || "";
         const nameB = b.name || "";
 
         if (sortOrder === "asc") {
@@ -79,7 +84,23 @@ const ManagementDashboard = () => {
         }
     });
 
+    const fetchRoomUsers = async (roomId) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/room/${roomId}/users`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
 
+            if (!response.ok) {
+                throw new Error("Unable to fetch room users");
+            }
+
+            const usersData = await response.json();
+            setRoomUsers(usersData);
+        } catch (error) {
+            console.error("Error fetching room users: ", error);
+            showAlert("error", "Failed to fetch room users");
+        }
+    };
 
     const handleDeleteRoom = async (roomId) => {
         try {
@@ -154,6 +175,19 @@ const ManagementDashboard = () => {
                                     <TableRow key={room.id} className="table-row">
                                         <TableCell className="table-cell">{room.name}</TableCell>
                                         <TableCell className="table-cell">
+                                            <IconButton
+                                                color="primary"
+                                                onClick={async () => {
+                                                    setCurrentRoom(room);
+                                                    await fetchRoomUsers(room.id);
+                                                    setViewRoomDetailsModalOpen(true);
+                                                }}
+                                            >
+                                                <VisibilityIcon />
+                                            </IconButton>
+
+
+
                                             <IconButton
                                                 color="primary"
                                                 onClick={() => {
@@ -296,6 +330,16 @@ const ManagementDashboard = () => {
                 setRooms={setRooms}
                 setDevices={setDevices}
             />
+
+            <ViewRoomDetailsModal
+                viewRoomDetailsModalOpen={viewRoomDetailsModalOpen}
+                setViewRoomDetailsModalOpen={setViewRoomDetailsModalOpen}
+                currentRoom={currentRoom}
+                roomUsers={roomUsers}
+                setRoomUsers={setRoomUsers}
+            />
+
+
         </Box>
     );
 };

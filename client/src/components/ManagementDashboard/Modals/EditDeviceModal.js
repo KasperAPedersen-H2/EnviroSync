@@ -1,9 +1,13 @@
-import React from 'react';
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import React from "react";
+import { Box, Button, Modal, TextField, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useAlert } from "../../../context/AlertContext";
 
 const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentDevice, setCurrentDevice, rooms, setRooms, setDevices }) => {
     const { showAlert } = useAlert();
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleEditDevice = async () => {
         try {
@@ -55,8 +59,19 @@ const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentD
 
     return (
         <Modal open={editDeviceModalOpen} onClose={() => setEditDeviceModalOpen(false)}>
-            <Box sx={{ padding: 4, backgroundColor: "var(--card-bg)", margin: "20vh auto", width: "30%" }}>
-                <Typography variant="h6">Edit Device</Typography>
+            <Box
+                sx={{
+                    padding: 4,
+                    backgroundColor: "var(--card-bg)",
+                    margin: "20vh auto",
+                    width: isSmallScreen ? "90%" : "30%",
+                    borderRadius: "8px",
+                    boxShadow: 24,
+                }}
+            >
+                <Typography variant="h6" gutterBottom>
+                    Edit Device
+                </Typography>
                 <TextField
                     fullWidth
                     label="Device Name"
@@ -85,7 +100,11 @@ const EditDeviceModal = ({ editDeviceModalOpen, setEditDeviceModalOpen, currentD
                 <Button
                     variant="contained"
                     onClick={handleEditDevice}
-                    sx={{ backgroundColor: "var(--btn-bg)" }}
+                    sx={{
+                        backgroundColor: "var(--btn-bg)",
+                        width: "100%",
+                        padding: isSmallScreen ? "10px" : "14px",
+                    }}
                 >
                     Save Changes
                 </Button>

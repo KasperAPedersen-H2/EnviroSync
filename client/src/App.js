@@ -42,9 +42,9 @@ function App() {
     };
 
     const AppContent = () => {
-        const session = useSession();
+        const { session } = useSession();
 
-        if (session.session?.id) {
+        if (session?.id) {
             return (
                 <>
                     <RoomDeviceProvider>
@@ -58,8 +58,12 @@ function App() {
                                             <Route path="/" element={<ProtectedRoute element={<MainDashboard />} />} />
                                             <Route path="/profile" element={<ProtectedRoute element={<ProfileDashboard />} />} />
                                             <Route path="/settings" element={<ProtectedRoute element={<SettingsDashboard darkMode={darkMode} onDarkModeToggle={toggleDarkMode} />} />} />
-                                            <Route path="/manage" element={<ProtectedRoute element={<ManagementDashboard />} />} />
-                                            <Route path="/adminpanel" element={<ProtectedRoute element={<AdminManagementDashboard />} />} />
+                                            { session?.role === 2 && (
+                                                <>
+                                                    <Route path="/manage" element={<ProtectedRoute element={<ManagementDashboard />} />} />
+                                                    <Route path="/adminpanel" element={<ProtectedRoute element={<AdminManagementDashboard />} />} />
+                                                </>
+                                            )}
                                         </Routes>
                                     </section>
                                 </main>
