@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import {
     Box,
     Card,
@@ -10,33 +10,40 @@ import {
     TableHead,
     TableRow,
     Avatar,
-    Button,
     Chip,
-    IconButton
+    IconButton,
+    TextField,
+    InputAdornment
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import RefreshIcon from '@mui/icons-material/Refresh';
+import PersonIcon from '@mui/icons-material/Person';
+import BadgeIcon from '@mui/icons-material/Badge';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SearchIcon from '@mui/icons-material/Search';
+import LoadingSpinnerMUI from "./LoadingSpinnerMUI";
 import './AdminManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
-import { useSession } from "../../context/SessionProvider";
 import EditUserModal from "../Modals/EditUserModal";
 
 const AdminManagementDashboard = () => {
     const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const { showAlert } = useAlert();
-    const { session } = useSession();
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback( async () => {
         try {
             setLoading(true);
             setError(null);
 
             const url = `${process.env.REACT_APP_SERVER_URL}/user/all`;
-            console.log("Fetching users from:", url);
 
             const response = await fetch(url, {
                 headers: {
@@ -45,8 +52,6 @@ const AdminManagementDashboard = () => {
                 },
             });
 
-            console.log("Response status:", response.status);
-
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
                 console.error("Error response:", errorData);
@@ -54,8 +59,8 @@ const AdminManagementDashboard = () => {
             }
 
             const data = await response.json();
-            console.log("Fetched users:", data);
             setUsers(data);
+            setFilteredUsers(data);
         } catch (error) {
             console.error("Failed to load users:", error);
             setError(error.message);
@@ -63,11 +68,25 @@ const AdminManagementDashboard = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showAlert]);
 
     useEffect(() => {
         fetchUsers();
-    }, []);
+    }, [fetchUsers]);
+
+    useEffect(() => {
+        if (searchQuery.trim() === '') {
+            setFilteredUsers(users);
+        } else {
+            const lowerCaseQuery = searchQuery.toLowerCase();
+            const filtered = users.filter(user => 
+                user.username?.toLowerCase().includes(lowerCaseQuery) || 
+                user.id?.toString().includes(lowerCaseQuery) ||
+                user.role?.toLowerCase().includes(lowerCaseQuery)
+            );
+            setFilteredUsers(filtered);
+        }
+    }, [searchQuery, users]);
 
     const getRoleColor = (role) => {
         switch(role?.toLowerCase()) {
@@ -94,52 +113,124 @@ const AdminManagementDashboard = () => {
         fetchUsers();
     };
 
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
     return (
         <Box className="admin-dashboard">
             <Box className="admin-container">
-                <Card className="admin-card">
+                <Card
+                    className="admin-card"
+                    sx={{
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
+                        padding: '0',
+                        borderTop: '4px solid var(--moonstone)'
+                    }}
+                >
                     <CardContent>
-                        <Box className="admin-card-header">
+                        <Box
+                            className="admin-card-header"
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                marginBottom: '30px',
+                                paddingBottom: '20px',
+                                borderBottom: '1px solid var(--border)'
+                            }}
+                        >
                             <Typography variant="h5" className="admin-card-header-title">
                                 User Management
                             </Typography>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={fetchUsers}
-                                disabled={loading}
-                            >
-                                Refresh Users
-                            </Button>
+                            <Box className="admin-search-container">
+                                <TextField
+                                    placeholder="Search users..."
+                                    variant="outlined"
+                                    size="small"
+                                    value={searchQuery}
+                                    onChange={handleSearchChange}
+                                    className="admin-search-input"
+
+                                    // Note: IntelliJ warns about InputProps being deprecated, but the direct approach doesn't work correctly
+                                    // in Material UI v7. Keeping this approach until a better solution is found.
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                                <IconButton
+                                    color="primary"
+                                    onClick={fetchUsers}
+                                    disabled={loading}
+                                    aria-label="Refresh users"
+                                    className={loading ? "refresh-loading" : ""}
+                                    sx={{
+                                        backgroundColor: 'var(--primary-button-bg)',
+                                        color: 'white',
+                                        '&:hover': {
+                                            backgroundColor: 'var(--primary-button-bg-hover)',
+                                            transform: 'scale(1.1)',
+                                        },
+                                        transition: 'background-color 0.3s, transform 0.2s',
+                                        marginLeft: '10px'
+                                    }}
+                                >
+                                    {loading ? <RefreshIcon /> : <RefreshIcon />}
+                                </IconButton>
+                            </Box>
                         </Box>
                         
                         {loading ? (
-                            <Typography>Loading users...</Typography>
+                            <LoadingSpinnerMUI text="Loading Users"/>
                         ) : error ? (
                             <Box>
                                 <Typography color="error">Error: {error}</Typography>
-                                <Button
-                                    variant="outlined"
+                                <IconButton
+                                    color="primary"
                                     onClick={fetchUsers}
-                                    sx={{ mt: 2 }}
+                                    sx={{ 
+                                        mt: 2,
+                                        backgroundColor: 'var(--primary-button-bg)',
+                                        color: 'white'
+                                    }}
                                 >
-                                    Try Again
-                                </Button>
+                                    <RefreshIcon />
+                                </IconButton>
                             </Box>
                         ) : (
                             <Table className="admin-table">
                                 <TableHead className="admin-table-head">
                                     <TableRow>
-                                        <TableCell className="admin-table-cell">Avatar</TableCell>
-                                        <TableCell className="admin-table-cell">Username</TableCell>
-                                        <TableCell className="admin-table-cell">Role</TableCell>
-                                        <TableCell className="admin-table-cell">User ID</TableCell>
-                                        <TableCell className="admin-table-cell">Actions</TableCell>
+                                        <TableCell className="table-header-cell">
+                                            <PersonIcon className="table-header-icon" />
+                                            Avatar
+                                        </TableCell>
+                                        <TableCell className="table-header-cell">
+                                            <BadgeIcon className="table-header-icon" />
+                                            Username
+                                        </TableCell>
+                                        <TableCell className="table-header-cell">
+                                            <VpnKeyIcon className="table-header-icon" />
+                                            Role
+                                        </TableCell>
+                                        <TableCell className="table-header-cell">
+                                            <BadgeIcon className="table-header-icon" />
+                                            User ID
+                                        </TableCell>
+                                        <TableCell className="table-header-cell">
+                                            <SettingsIcon className="table-header-icon" />
+                                            Actions
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody className="admin-table-body">
-                                    {users.length > 0 ? (
-                                        users.map((user) => (
+                                    {filteredUsers.length > 0 ? (
+                                        filteredUsers.map((user) => (
                                             <TableRow key={user.id} className="admin-table-row">
                                                 <TableCell className="admin-table-cell">
                                                     {user.avatar ? (

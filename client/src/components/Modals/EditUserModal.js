@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import "./EditUserModal.css";
 import { useSession } from "../../context/SessionProvider";
 
@@ -31,10 +31,9 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
     });
     
     const [roles, setRoles] = useState([]);
-    const [userRole, setUserRole] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
 
-    const fetchUserData = async (userId) => {
+    const fetchUserData = useCallback (async (userId) => {
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/user/${userId}`, {
                 headers: {
@@ -52,12 +51,11 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
                     confirmPassword: '',
                     role_id: userData.role_id || ''
                 });
-                setUserRole(userData.role_id);
             }
         } catch (error) {
             showAlert("error", "Failed to fetch user data");
         }
-    };
+    }, [showAlert]);
 
     const fetchRoles = async () => {
         try {
@@ -76,9 +74,9 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
         }
     };
 
-    const checkIfAdmin = () => {
+    const checkIfAdmin = useCallback(() => {
         setIsAdmin(session?.role === 2);
-    };
+    }, [session]);
 
     useEffect(() => {
         if (!isOpen) {
@@ -99,9 +97,8 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
                 confirmPassword: '',
                 role_id: session.role_id || ''
             });
-            setUserRole(session.role_id);
         }
-    }, [isOpen, id, session]);
+    }, [isOpen, id, session, fetchUserData, checkIfAdmin]);
 
     const handleEditFormChange = (event) => {
         const { name, value } = event.target;
@@ -290,7 +287,7 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
                                         {roles.map((role) => (
                                             <div
                                                 key={role.id}
-                                                className={`role-option role-option-${role.name.toLowerCase()} ${editFormData.role_id == role.id ? 'selected' : ''}`}
+                                                className={`role-option role-option-${role.name.toLowerCase()} ${editFormData.role_id === role.id ? 'selected' : ''}`}
                                                 onClick={() => {
                                                     setEditFormData({
                                                         ...editFormData,
@@ -304,10 +301,10 @@ const EditUserModal = ({ id, isOpen, onClose }) => {
                                     </div>
 
                                     {editFormData.role_id && (
-                                        <div className={`selected-role selected-role-${roles.find(r => r.id == editFormData.role_id)?.name.toLowerCase() || 'user'}`}>
+                                        <div className={`selected-role selected-role-${roles.find(r => r.id === editFormData.role_id)?.name.toLowerCase() || 'user'}`}>
                                             Current selection:
-                                            <span className={`selected-role-badge selected-role-badge-${roles.find(r => r.id == editFormData.role_id)?.name.toLowerCase() || 'user'}`}>
-                            {roles.find(r => r.id == editFormData.role_id)?.name || 'Unknown'}
+                                            <span className={`selected-role-badge selected-role-badge-${roles.find(r => r.id === editFormData.role_id)?.name.toLowerCase() || 'user'}`}>
+                            {roles.find(r => r.id === editFormData.role_id)?.name || 'Unknown'}
                         </span>
                                         </div>
                                     )}
