@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Button, Modal, TextField, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useAlert } from "../../../context/AlertContext";
 
 const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, setDevices }) => {
@@ -7,6 +8,9 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
     const [selectedRoomForDevice, setSelectedRoomForDevice] = useState("");
     const [newDeviceSerial, setNewDeviceSerial] = useState("");
     const { showAlert } = useAlert();
+
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleAddDevice = async () => {
         try {
@@ -66,7 +70,7 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
                 sx={{
                     padding: 4,
                     backgroundColor: "var(--card-bg)",
-                    width: "30%",
+                    width: isSmallScreen ? "90%" : "30%",
                     margin: "20vh auto",
                     borderRadius: "8px",
                     boxShadow: 24,
@@ -116,7 +120,11 @@ const AddDeviceModal = ({ deviceModalOpen, setDeviceModalOpen, rooms, setRooms, 
                     color="secondary"
                     onClick={handleAddDevice}
                     disabled={!newDeviceName || !newDeviceSerial || !selectedRoomForDevice}
-                    sx={{ backgroundColor: "var(--btn-bg)" }}
+                    sx={{
+                        backgroundColor: "var(--btn-bg)",
+                        width: "100%",
+                        padding: isSmallScreen ? "10px" : "14px",
+                    }}
                 >
                     Create Device
                 </Button>
