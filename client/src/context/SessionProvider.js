@@ -15,7 +15,7 @@ const getSessionFromLocalStorage = () => {
                 localStorage.removeItem("token");
                 return null;
             }
-            return { id: decoded.id, username: decoded.username };
+            return { id: decoded.id, username: decoded.username, role: decoded.role };
         } catch (error) {
             console.error("Ugyldig token. Log ind igen.", error);
             localStorage.removeItem("token");
