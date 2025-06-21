@@ -16,7 +16,7 @@ const upload = multer({
 router.get("/all", async (req, res) => {
     try {
         const users = await Models.Users.findAll({
-            attributes: [ 'id', 'username', 'avatar', 'role_id' ],
+            attributes: [ 'id', 'username', 'avatar', 'role_id', 'enabled' ],
         });
 
         if (!users || users.length === 0) {
@@ -31,7 +31,8 @@ router.get("/all", async (req, res) => {
                 id: user.id,
                 username: user.username,
                 avatar: user.avatar ? user.avatar.toString('base64') : null,
-                role: role ? role.name : 'Unknown'
+                role: role ? role.name : 'Unknown',
+                enabled: user.enabled
             });
         }
 
@@ -171,5 +172,28 @@ router.put("/:id/edit", async (req, res) => {
         return res.status(500).json({ message: "Internal server error" });
     }
 });
+
+router.put('/:id/enable', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await Models.Users.findOne({ where: { id } });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (user.enabled) {
+            await Models.Users.update({ enabled: false }, { where: { id } });
+            return res.status(200).json({ message: "User disnabled successfully" });
+        } else {
+            await Models.Users.update({ enabled: true }, { where: { id } });
+            return res.status(200).json({ message: "User enabled successfully" });
+        }
+    } catch (error) {
+        console.error("Error enabling user:", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+})
 
 export default router;

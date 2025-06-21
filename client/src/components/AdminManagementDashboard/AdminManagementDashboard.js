@@ -22,9 +22,12 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SearchIcon from '@mui/icons-material/Search';
+import LockIcon from '@mui/icons-material/Lock';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoadingSpinnerMUI from "./LoadingSpinnerMUI";
 import './AdminManagementDashboard.css';
 import { useAlert } from "../../context/AlertContext";
+import { useSession } from "../../context/SessionProvider";
 import EditUserModal from "../Modals/EditUserModal";
 
 const AdminManagementDashboard = () => {
@@ -37,6 +40,7 @@ const AdminManagementDashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const { showAlert } = useAlert();
+    const { session } = useSession();
 
     const fetchUsers = useCallback( async () => {
         try {
@@ -79,11 +83,16 @@ const AdminManagementDashboard = () => {
             setFilteredUsers(users);
         } else {
             const lowerCaseQuery = searchQuery.toLowerCase();
-            const filtered = users.filter(user => 
-                user.username?.toLowerCase().includes(lowerCaseQuery) || 
-                user.id?.toString().includes(lowerCaseQuery) ||
-                user.role?.toLowerCase().includes(lowerCaseQuery)
-            );
+            const filtered = users.filter(user => {
+                if (lowerCaseQuery === 'enabled' && user.enabled === true) return true;
+                if (lowerCaseQuery === 'disabled' && user.enabled === false) return true;
+
+                return user.username?.toLowerCase().includes(lowerCaseQuery) ||
+                    user.id?.toString().includes(lowerCaseQuery) ||
+                    user.role?.toLowerCase().includes(lowerCaseQuery) ||
+                    (user.enabled !== undefined &&
+                        user.enabled?.toString().includes(lowerCaseQuery));
+            });
             setFilteredUsers(filtered);
         }
     }, [searchQuery, users]);
@@ -116,6 +125,41 @@ const AdminManagementDashboard = () => {
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
+
+    const handleToggleUserStatus = async (userId) => {
+        if (session.role !== 2) {
+            showAlert("error", "You do not have permission to perform this action");
+            return;
+        }
+
+        try {
+            setLoading(true);
+            setError(null);
+
+            const url = `${process.env.REACT_APP_SERVER_URL}/user/${userId}/enable`;
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error("Error response:", errorData);
+                throw new Error(errorData.message || `Server returned ${response.status}`);
+            }
+
+            showAlert("success", "User status updated successfully");
+            fetchUsers();
+        } catch (error) {
+            console.error("Failed to toggle user status:", error);
+            showAlert("error", "Failed to toggle user status: " + error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <Box className="admin-dashboard">
@@ -252,13 +296,24 @@ const AdminManagementDashboard = () => {
                                                 </TableCell>
                                                 <TableCell className="admin-table-cell">{user.id}</TableCell>
                                                 <TableCell className="admin-table-cell">
-                                                    <IconButton
-                                                        color="primary"
-                                                        onClick={() => handleEditUser(user.id)}
-                                                        aria-label="Edit user"
-                                                    >
-                                                        <EditIcon />
-                                                    </IconButton>
+                                                    <Box sx={{ display: 'flex' }}>
+                                                        <IconButton
+                                                            color="primary"
+                                                            onClick={() => handleEditUser(user.id)}
+                                                            aria-label="Edit user"
+                                                        >
+                                                            <EditIcon />
+                                                        </IconButton>
+                                                        <IconButton
+                                                            color={user.enabled ? "success" : "error"}
+                                                            onClick={() => handleToggleUserStatus(user.id, user.enabled)}
+                                                            aria-label={user.enabled ? "Disable user" : "Enable user"}
+                                                            title={user.enabled ? "Disable user" : "Enable user"}
+                                                        >
+                                                            {user.enabled ? <LockOpenIcon /> : <LockIcon />}
+                                                        </IconButton>
+                                                    </Box>
+
                                                 </TableCell>
                                             </TableRow>
                                         ))

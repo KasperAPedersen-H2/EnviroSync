@@ -29,7 +29,13 @@ const Login = () => {
                 setSession(jwtDecode(data.token)); // Dekod token og opdater session
                 navigate("/");
             } else {
-                showAlert("error", "Login failed!");
+                let errorMessage = "Login failed";
+                const errorData = await response.json();
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                }
+
+                showAlert("error", errorMessage);
 
                 document.querySelectorAll(".login-input").forEach((element) => element.classList.add("login-error"));
                 document.querySelector(".login-input").focus();

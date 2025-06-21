@@ -33,6 +33,11 @@ let Users = sequelize.define('users', {
     avatar: {
         type: DataTypes.BLOB('long'),
         allowNull: true
+    },
+    enabled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
     }
 }, {
     tableName: 'users',
